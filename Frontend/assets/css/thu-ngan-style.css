@@ -1,0 +1,89 @@
+body {
+    height: 100vh;
+    position: relative;
+    background-image: url(../images/billiards-dangnhap.jpg);
+    background-size: cover;
+}
+
+.login-form {
+    background-color: rgba(0, 0, 0, 0.4);
+    box-sizing: border-box;
+    height: 400px;
+    width: 350px;
+    position: absolute;
+    top: 20vh;
+    right: 20%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 15px;
+    border-radius: 5px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.5);
+}
+
+.login-form > .title {
+    color: var(--color-one);
+}
+
+.login-form >.request {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.login-form > .request > .input {
+    margin-top: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid gainsboro;
+    outline: none;
+}
+
+.login-form > .request > .label {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--color-one);
+}
+
+.login-form > .submit {
+    padding: 5px;
+    margin-top: 20px;
+    border: solid 2px var(--color-one);
+    border-radius: 5px;
+    color: white;
+    background-color: var(--color-one);
+}
+
+.login-form > .submit:hover {
+    background-color: white;
+    color: var(--color-one);
+}
+
+.login-form > .request > .input:focus {
+    box-shadow: 0 0 10px 3px #15929b56;
+}
+
+.login-form > .submit:active {
+    box-shadow: 0 0 10px 3px #15929b56;
+}
+
+.login-form > .chu-quan-login {
+    color: var(--color-one);
+    font-size: 0.8rem;
+    margin-top: 26px;
+    text-decoration: none;
+    align-self:flex-end;
+}
+
+@media screen and (width <= 1024px) {
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-form {
+        position: static;
+
+    }
+}
