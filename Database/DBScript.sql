@@ -1,4 +1,4 @@
-﻿USE [CSDL_QuanLyThuNganBilliards]
+﻿USE [VIPBilliardsPaymentDB]
 GO
 
 --MatHang
@@ -11,7 +11,9 @@ CREATE TABLE [dbo].[MatHang]
 	CONSTRAINT [PK_MatHang] PRIMARY KEY CLUSTERED
 	(
 		[MaHang] ASC
-	) ON [PRIMARY]
+	) ON [PRIMARY],
+	CONSTRAINT [CHK_MatHang_DonGia] CHECK (DonGia >= 0)
+
 ) ON [PRIMARY]
 GO
 
@@ -33,9 +35,14 @@ CREATE TABLE [dbo].[ThuNgan]
 		[MaThuNgan] ASC
 	) ON [PRIMARY],
 	CONSTRAINT [UQ_ThuNgan_SoCCCD] UNIQUE (SoCCCD),
-	CONSTRAINT [UQ_ThuNgan_TenDangNhap] UNIQUE (TenDangNhap)
+	CONSTRAINT [UQ_ThuNgan_TenDangNhap] UNIQUE (TenDangNhap),
+	CONSTRAINT [CHK_ThuNgan_SoDienThoai] CHECK (LEN(SoDienThoai) = 10 AND SoDienThoai LIKE '0[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'),
+	CONSTRAINT [CHK_ThuNgan_SoCCCD] CHECK (LEN(SoCCCD) = 12 AND SoCCCD LIKE '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'),
+	CONSTRAINT [CHK_ThuNgan_TenDangNhap] CHECK (LEN(TenDangNhap) >= 3),
+	CONSTRAINT [CHK_ThuNgan_MatKhau] CHECK (LEN(MatKhau) >= 3)
 ) ON [PRIMARY]
 GO
+
 
 --ChuQuan
 CREATE TABLE [dbo].[ChuQuan]
@@ -48,7 +55,9 @@ CREATE TABLE [dbo].[ChuQuan]
 	(
 		[MaChuQuan] ASC
 	) ON [PRIMARY],
-	CONSTRAINT [UQ_ChuQuan_TenDangNhap] UNIQUE (TenDangNhap)
+	CONSTRAINT [UQ_ChuQuan_TenDangNhap] UNIQUE (TenDangNhap),
+	CONSTRAINT [CHK_ChuQuan_TenDangNhap] CHECK (LEN(TenDangNhap) >= 3),
+	CONSTRAINT [CHK_ChuQuan_MatKhau] CHECK (LEN(MatKhau) >= 3)
 ) ON [PRIMARY]
 GO
 
@@ -63,7 +72,8 @@ CREATE TABLE [dbo].[LoaiBan]
 	(
 		[LoaiBan] ASC
 	) ON [PRIMARY],
-	CONSTRAINT [UQ_LoaiBan_TenLoai] UNIQUE (TenLoai)
+	CONSTRAINT [UQ_LoaiBan_TenLoai] UNIQUE (TenLoai),
+	CONSTRAINT [CHK_LoaiBan_DonGia] CHECK (DonGia >= 0)
 ) ON [PRIMARY]
 GO
 
@@ -77,7 +87,8 @@ CREATE TABLE [dbo].[BanBida]
 	CONSTRAINT [PK_BanBida] PRIMARY KEY CLUSTERED
 	(
 		[SoBan] ASC
-	) ON [PRIMARY]
+	) ON [PRIMARY],
+	CONSTRAINT [CHK_BanBida_TrangThai] CHECK (TrangThai IN (0, 1, 2))
 ) ON [PRIMARY]
 GO
 
@@ -94,7 +105,8 @@ CREATE TABLE [dbo].[CapDoHoiVien]
 		[CapDo] ASC
 	) ON [PRIMARY],
 	CONSTRAINT [UQ_CapDoHoiVien_TenCapDo] UNIQUE (TenCapDo),
-	CONSTRAINT [UQ_CapDoHoiVien_SoGioChoi] UNIQUE (SoGioChoi)
+	CONSTRAINT [UQ_CapDoHoiVien_SoGioChoi] UNIQUE (SoGioChoi),
+	CONSTRAINT [CHK_CapDoHoiVien_UuDai] CHECK (UuDai >= 0)
 ) ON [PRIMARY]
 GO
 
@@ -114,7 +126,9 @@ CREATE TABLE [dbo].[HoiVien]
 	(
 		[MaHoiVien] ASC
 	) ON [PRIMARY],
-	CONSTRAINT [UQ_HoiVien_SoCCCD] UNIQUE (SoCCCD)
+	CONSTRAINT [UQ_HoiVien_SoCCCD] UNIQUE (SoCCCD),
+	CONSTRAINT [CHK_HoiVien_SoDienThoai] CHECK (LEN(SoDienThoai) = 10 AND SoDienThoai LIKE '0[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'),
+	CONSTRAINT [CHK_HoiVien_SoCCCD] CHECK (LEN(SoCCCD) = 12 AND SoCCCD LIKE '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'),
 ) ON [PRIMARY]
 GO
 
@@ -149,7 +163,8 @@ CREATE TABLE [dbo].[MatHangTrongHoaDon]
 	(
 		[MaHang] ASC, 
 		[MaHoaDon] ASC
-	) ON [PRIMARY]
+	) ON [PRIMARY],
+	CONSTRAINT [CHK_MatHangTrongHoaDon_SoLuong] CHECK (SoLuong >= 0)
 ) ON [PRIMARY]
 GO
 
