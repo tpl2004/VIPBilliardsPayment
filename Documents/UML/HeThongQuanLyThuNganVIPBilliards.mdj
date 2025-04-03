@@ -4918,7 +4918,7 @@
 							"top": 344,
 							"width": 144,
 							"height": 83,
-							"text": "Trạng thái bàn bida gồm:\n0: khả dụng\n1: đang bận\n-1: đã xóa"
+							"text": "Trạng thái bàn bida gồm:\n0: khả dụng\n1: đang bận\n2: đã xóa"
 						},
 						{
 							"_type": "UMLNoteLinkView",
