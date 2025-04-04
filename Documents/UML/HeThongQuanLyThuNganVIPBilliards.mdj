@@ -31512,6 +31512,37 @@
 											"templateParameterCompartment": {
 												"$ref": "AAAAAAGVwUyIdkuADd8="
 											}
+										},
+										{
+											"_type": "UMLNoteView",
+											"_id": "AAAAAAGV/yu9cRxyF38=",
+											"_parent": {
+												"$ref": "AAAAAAGVrKpAYY8YeQU="
+											},
+											"font": "Arial;13;0",
+											"parentStyle": false,
+											"left": 232,
+											"top": 56,
+											"width": 144,
+											"height": 38,
+											"text": "Mặc định code = 1000"
+										},
+										{
+											"_type": "UMLNoteLinkView",
+											"_id": "AAAAAAGV/yz9GByAfno=",
+											"_parent": {
+												"$ref": "AAAAAAGVrKpAYY8YeQU="
+											},
+											"font": "Arial;13;0",
+											"parentStyle": false,
+											"head": {
+												"$ref": "AAAAAAGVrKpKuI9f+wk="
+											},
+											"tail": {
+												"$ref": "AAAAAAGV/yu9cRxyF38="
+											},
+											"lineStyle": 1,
+											"points": "231:76;202:76"
 										}
 									]
 								},

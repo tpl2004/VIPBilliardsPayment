@@ -10,8 +10,8 @@ spring:
     password: ${DB_PASSWORD}
     username: ${DB_USERNAME}
 
-jpa:
-  properties:
-    hibernate:
-      physical_naming_strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-  show-sql: true
+  jpa:
+    properties:
+      hibernate:
+        physical_naming_strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
