@@ -1,0 +1,17 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /vipbilliards
+
+spring:
+  datasource:
+    url: ${DB_CONNECTION}
+    driverClassName: "com.microsoft.sqlserver.jdbc.SQLServerDriver"
+    password: ${DB_PASSWORD}
+    username: ${DB_USERNAME}
+
+  jpa:
+    properties:
+      hibernate:
+        physical_naming_strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
