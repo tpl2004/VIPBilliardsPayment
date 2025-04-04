@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -36,4 +37,7 @@ public class ThuNgan extends NguoiDung{
 
     @Column(name = "SoCCCD")
     String soCCCD;
+
+    @OneToMany(mappedBy = "thuNgan", fetch = FetchType.LAZY)
+    List<HoaDon> danhSachHoaDon;
 }
