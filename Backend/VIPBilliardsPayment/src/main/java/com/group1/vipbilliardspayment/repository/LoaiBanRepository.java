@@ -8,5 +8,4 @@ import com.group1.vipbilliardspayment.entity.LoaiBan;
 @Repository
 public interface LoaiBanRepository extends JpaRepository<LoaiBan, Integer>{
 
-	
 }

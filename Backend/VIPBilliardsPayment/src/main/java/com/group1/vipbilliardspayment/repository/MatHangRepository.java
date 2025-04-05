@@ -8,5 +8,4 @@ import com.group1.vipbilliardspayment.entity.MatHang;
 @Repository
 public interface MatHangRepository extends JpaRepository<MatHang, Integer>{
 
-	
 }
