@@ -21719,11 +21719,11 @@
 							},
 							"font": "Arial;13;0",
 							"parentStyle": false,
-							"left": 872,
+							"left": 864,
 							"top": 656,
-							"width": 102,
-							"height": 25,
-							"text": "UuDai >= 0"
+							"width": 126,
+							"height": 40,
+							"text": "-SoGioChoi >= 0\n- UuDai >= 0"
 						},
 						{
 							"_type": "UMLNoteLinkView",
@@ -21740,7 +21740,7 @@
 								"$ref": "AAAAAAGV+gXmnQGa59s="
 							},
 							"lineStyle": 1,
-							"points": "923:655;924:628"
+							"points": "927:655;926:628"
 						},
 						{
 							"_type": "UMLNoteView",
@@ -25071,7 +25071,7 @@
 													"font": "Arial;13;0",
 													"parentStyle": true,
 													"left": -80,
-													"top": -144,
+													"top": -160,
 													"height": 13
 												},
 												{
@@ -25083,7 +25083,7 @@
 													"font": "Arial;13;1",
 													"parentStyle": true,
 													"left": 37,
-													"top": 167,
+													"top": 159,
 													"width": 484.12646484375,
 													"height": 13,
 													"text": "BanBidaController"
@@ -25098,7 +25098,7 @@
 													"font": "Arial;13;0",
 													"parentStyle": true,
 													"left": -80,
-													"top": -144,
+													"top": -160,
 													"width": 130.03173828125,
 													"height": 13,
 													"text": "(from ControllerModel)"
@@ -25113,7 +25113,7 @@
 													"font": "Arial;13;0",
 													"parentStyle": true,
 													"left": -80,
-													"top": -144,
+													"top": -160,
 													"height": 13,
 													"horizontalAlignment": 1
 												}
@@ -25121,7 +25121,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 32,
-											"top": 160,
+											"top": 152,
 											"width": 494.12646484375,
 											"height": 25,
 											"stereotypeLabel": {
@@ -25149,7 +25149,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 32,
-											"top": 185,
+											"top": 177,
 											"width": 494.12646484375,
 											"height": 10
 										},
@@ -25175,7 +25175,7 @@
 													"font": "Arial;13;0",
 													"parentStyle": true,
 													"left": 37,
-													"top": 200,
+													"top": 192,
 													"width": 484.12646484375,
 													"height": 13,
 													"text": "+GetAllBanBida(): ApiResponse<List<BanBidaResponse>>",
@@ -25193,7 +25193,7 @@
 													"font": "Arial;13;0",
 													"parentStyle": true,
 													"left": 37,
-													"top": 215,
+													"top": 207,
 													"width": 484.12646484375,
 													"height": 13,
 													"text": "+GetAllBanBidaChuaXoa(): ApiResponse<List<BanBidaResponse>>",
@@ -25211,7 +25211,7 @@
 													"font": "Arial;13;0",
 													"parentStyle": true,
 													"left": 37,
-													"top": 230,
+													"top": 222,
 													"width": 484.12646484375,
 													"height": 13,
 													"text": "+AddBanBida(request: BanBidaCreateRequest): ApiResponse<BanBidaResponse>",
@@ -25229,7 +25229,7 @@
 													"font": "Arial;13;0",
 													"parentStyle": true,
 													"left": 37,
-													"top": 245,
+													"top": 237,
 													"width": 484.12646484375,
 													"height": 13,
 													"text": "+DeleteBanBida(soBan: int): ApiResponse<BanBidaResponse>",
@@ -25248,7 +25248,7 @@
 													"font": "Arial;13;0",
 													"parentStyle": true,
 													"left": 37,
-													"top": 253,
+													"top": 237,
 													"width": 484.12646484375,
 													"height": 13,
 													"text": "+OpenBanBida(soBan: int): ApiResponse<BanBidaResponse>",
@@ -25258,7 +25258,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 32,
-											"top": 195,
+											"top": 187,
 											"width": 494.12646484375,
 											"height": 68
 										},
@@ -25275,7 +25275,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": -40,
-											"top": -72,
+											"top": -80,
 											"width": 10,
 											"height": 10
 										},
@@ -25292,7 +25292,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": -40,
-											"top": -72,
+											"top": -80,
 											"width": 10,
 											"height": 10
 										}
@@ -25301,7 +25301,7 @@
 									"parentStyle": false,
 									"containerChangeable": true,
 									"left": 32,
-									"top": 160,
+									"top": 152,
 									"width": 493.12646484375,
 									"height": 103,
 									"nameCompartment": {
@@ -35724,6 +35724,7 @@
 															"model": {
 																"$ref": "AAAAAAGV1cAwzVNfY3o="
 															},
+															"visible": false,
 															"font": "Arial;13;0",
 															"parentStyle": true,
 															"left": 205,
@@ -35745,7 +35746,7 @@
 															"font": "Arial;13;0",
 															"parentStyle": true,
 															"left": 205,
-															"top": 733,
+															"top": 720,
 															"width": 144.5078125,
 															"height": 13,
 															"text": "-hoTen: String",
@@ -35763,7 +35764,7 @@
 															"font": "Arial;13;0",
 															"parentStyle": true,
 															"left": 205,
-															"top": 748,
+															"top": 735,
 															"width": 144.5078125,
 															"height": 13,
 															"text": "-email: String",
@@ -35781,7 +35782,7 @@
 															"font": "Arial;13;0",
 															"parentStyle": true,
 															"left": 205,
-															"top": 763,
+															"top": 750,
 															"width": 144.5078125,
 															"height": 13,
 															"text": "-soDienThoai: String",
@@ -35799,7 +35800,7 @@
 															"font": "Arial;13;0",
 															"parentStyle": true,
 															"left": 205,
-															"top": 778,
+															"top": 765,
 															"width": 144.5078125,
 															"height": 13,
 															"text": "-soCCCD: String",
@@ -35811,7 +35812,7 @@
 													"left": 200,
 													"top": 713,
 													"width": 154.5078125,
-													"height": 83
+													"height": 70
 												},
 												{
 													"_type": "UMLOperationCompartmentView",
@@ -35825,7 +35826,7 @@
 													"font": "Arial;13;0",
 													"parentStyle": true,
 													"left": 200,
-													"top": 796,
+													"top": 783,
 													"width": 154.5078125,
 													"height": 10
 												},
@@ -35870,7 +35871,7 @@
 											"left": 200,
 											"top": 688,
 											"width": 153.5078125,
-											"height": 118,
+											"height": 105,
 											"nameCompartment": {
 												"$ref": "AAAAAAGVuF0OE1UtItY="
 											},
