@@ -37,5 +37,4 @@ public class LoaiBan {
 
     @Column(name = "DonGia")
     Double donGia;
-
 }

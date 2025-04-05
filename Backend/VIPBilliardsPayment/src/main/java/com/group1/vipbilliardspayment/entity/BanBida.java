@@ -45,8 +45,4 @@ public class BanBida {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "loaiBan")
     LoaiBan loaiBan;
-
-
-	
-
 }

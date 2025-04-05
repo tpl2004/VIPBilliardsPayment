@@ -7,4 +7,5 @@ import com.group1.vipbilliardspayment.entity.BanBida;
 @Repository
 public interface BanBidaRepository extends JpaRepository<BanBida, Integer>{
 
+	
 }
