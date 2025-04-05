@@ -22,6 +22,8 @@ public enum ErrorCode {
     TENDANGNHAP_INVALID(8, "TenDangNhap must be at least 3 characters"),
     MATKHAU_INVALID(10, "MatKhau must be at least 3 characters"),
     DONGIA_INVALID(12, "DonGia must be greater than or equal to 0"),
+    TENCAPDO_EXISTED(14, "TenCapDo is existed"),
+    SOGIOCHOI_EXISTED(16, "SoGioChoi is existed"),
     ;
 
     int code;
