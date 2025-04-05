@@ -14,5 +14,5 @@ public class MatHangUpdateRequest {
 
     @NotNull(message = "FIELD_NULL")
     @Min(value = 0, message = "DONGIA_INVALID")
-    double donGia;
+    Double donGia;
 }
