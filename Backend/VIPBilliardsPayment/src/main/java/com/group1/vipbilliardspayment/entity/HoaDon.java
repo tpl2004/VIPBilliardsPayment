@@ -1,8 +1,9 @@
 package com.group1.vipbilliardspayment.entity;
 
+import java.util.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,26 +18,43 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Entity
-
-@Table(name = "BanBida")
-
+@Table(name = "HoaDon")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class BanBida {
+public class HoaDon {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "SoBan")
-    Integer soBan;
+    @Column(name = "MaHoaDon")
+    Integer maHoaDon;
 
+    @Column(name = "ThoiDiemVao")
+    Date thoiDiemVao;
+    
+    @Column(name = "ThoiDiemRa")
+    Date thoiDiemRa;
+    
+    @Column(name = "SoGioChoi")
+    double soGioChoi;
+    
     @Column(name = "TrangThai")
-    Integer trangThai;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "loaiBan")
-    LoaiBan loaiBan;
-
+    boolean trangThai;
+    
+    @Column(name = "TongTien")
+    double tongTien;
+    
+    @ManyToOne
+    @JoinColumn(name = "MaThuNgan")
+    ThuNgan thuNgan;
+    
+    @ManyToOne
+    @JoinColumn(name = "MaHoiVien")
+    HoiVien hoiVien;
+    
+    @ManyToOne
+    @JoinColumn(name = "SoBan")
+    BanBida banBida;
 }
