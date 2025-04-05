@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Input</title>
+</head>
+<body>
+
+    <h2>Nhập thông tin</h2>
+    
+    <form id = "inputForm">
+        <label for="input1">ten hàng:</label>
+        <input type="text" id="input1" name="input1" required>
+        <br><br>
+
+        <label for="input2">đơn giá:</label>
+        <input type="text" id="input2" name="input2" required>
+        <br><br>
+
+        <button type="submit">Gửi</button>
+    </form>
+	<script>
+        
+        document.getElementById('inputForm').addEventListener('submit', function(event) {
+            event.preventDefault();  
+
+            
+            const input1 = document.getElementById('input1').value;
+            const input2 = document.getElementById('input2').value;
+
+            
+            fetch('/vipbilliards/themmathang', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',  
+                },
+                body: JSON.stringify({
+                    tenHang: input1,
+                    donGia: input2
+                })
+            })
+            .then(response => response.json())  
+            .then(data => {
+                console.log('Success:', data);
+                alert('Thêm thành công!');
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Error!');
+            });
+        });
+    </script>
+</body>
+</html>

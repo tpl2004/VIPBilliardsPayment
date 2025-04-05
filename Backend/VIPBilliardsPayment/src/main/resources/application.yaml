@@ -5,13 +5,18 @@ server:
 
 spring:
   datasource:
-    url: ${DB_CONNECTION}
-    driverClassName: "com.microsoft.sqlserver.jdbc.SQLServerDriver"
-    password: ${DB_PASSWORD}
-    username: ${DB_USERNAME}
-
+    url: jdbc:sqlserver://localhost:1433;databaseName=VIPBilliardsPaymentDB;encrypt=true;trustServerCertificate=true;
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    username: sa
+    password: 123
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    cache: false
   jpa:
+    show-sql: true
     properties:
       hibernate:
         physical_naming_strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    show-sql: true
