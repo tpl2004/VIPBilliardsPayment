@@ -119,7 +119,7 @@ CREATE TABLE [dbo].[HoiVien]
 	[SoDienThoai] [nvarchar](50) NOT NULL,
 	[SoCCCD] [nvarchar](50) NOT NULL,
 	[SoGioChoi] [float] NOT NULL DEFAULT(0),
-	[NgayDangKy] [date] NOT NULL,
+	[NgayDangKy] [date] NOT NULL DEFAULT(GETDATE()),
 	[CapDo] [int] NOT NULL,
 
 	CONSTRAINT [PK_HoiVien] PRIMARY KEY CLUSTERED

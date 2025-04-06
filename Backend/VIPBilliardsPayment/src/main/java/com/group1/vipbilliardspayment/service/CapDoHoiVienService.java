@@ -30,12 +30,7 @@ public class CapDoHoiVienService {
         List<CapDoHoiVienResponse> danhSachCapDoHoiVienResponse = new ArrayList<>();
 
         for(CapDoHoiVien i : danhSachCapDoHoiVien) {
-            CapDoHoiVienResponse capDoHoiVienResponse = CapDoHoiVienResponse.builder()
-                    .capDo(i.getCapDo())
-                    .tenCapDo(i.getTenCapDo())
-                    .soGioChoi(i.getSoGioChoi())
-                    .uuDai(i.getUuDai())
-                    .build();
+            CapDoHoiVienResponse capDoHoiVienResponse = capDoHoiVienMapper.toCapDoHoiVienResponse(i);
 
             danhSachCapDoHoiVienResponse.add(capDoHoiVienResponse);
         }
