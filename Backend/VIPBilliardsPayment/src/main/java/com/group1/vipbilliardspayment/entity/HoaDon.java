@@ -38,13 +38,13 @@ public class HoaDon {
     Date thoiDiemRa;
     
     @Column(name = "SoGioChoi")
-    double soGioChoi;
+    Double soGioChoi;
     
     @Column(name = "TrangThai")
     boolean trangThai;
     
     @Column(name = "TongTien")
-    double tongTien;
+    Double tongTien;
     
     @ManyToOne
     @JoinColumn(name = "MaThuNgan")

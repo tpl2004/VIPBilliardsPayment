@@ -37,6 +37,9 @@ public enum ErrorCode {
 	TENDANGNHAP_ALREADY_EXISTS(56, "Username already exists"),
 	SOCCCD_ALREADY_EXISTS(57, "SoCCCD already exists"),
 	UNKNOWN_ERROR(99, "An unknown error occurred"),
+    BANBIDA_NOTEXIST(777, "Ban bida not exist"),
+    BANBIDA_NOT_AVAILABLE(482, "Ban bida is not available"),
+    HOADON_NOT_EXIST(888, "Hoa don not exist")
     ;
 
     int code;

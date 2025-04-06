@@ -16,16 +16,16 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class HoaDonResponse {
 
-    String maHoaDon;
+    Integer maHoaDon;
     Date thoiDiemVao;
     Date thoiDiemRa;
-    double soGioChoi;
+    Double soGioChoi;
     Integer soBan;
     String tenLoaiBan;
     double donGia;
     String tenThuNgan;
     String tenHoiVien;
     String tenCapDo;
-    double uuDai;
-    double tongTien;
+    Double uuDai;
+    Double tongTien;
 }
