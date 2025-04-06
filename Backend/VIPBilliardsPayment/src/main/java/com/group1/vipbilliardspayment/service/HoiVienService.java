@@ -62,16 +62,10 @@ public class HoiVienService {
             }
         }
 
-        HoiVien hoiVien = HoiVien.builder()
-                .hoTen(request.getHoTen())
-                .email(request.getEmail())
-                .soDienThoai(request.getSoDienThoai())
-                .soCCCD(request.getSoCCCD())
-                .capDo(danhSachCapDoHoiVien.get(minOfSoGioChoiIndex))
-                .build();
+        HoiVien hoiVien = hoiVienMapper.toHoiVien(request);
+        hoiVien.setNgayDangKy(new Date());
+        hoiVien.setCapDo(danhSachCapDoHoiVien.get(minOfSoGioChoiIndex));
 
-        hoiVienRepository.save(hoiVien);
-
-        return hoiVienMapper.toHoiVienResponse(hoiVien);
+        return hoiVienMapper.toHoiVienResponse(hoiVienRepository.save(hoiVien));
     }
 }
