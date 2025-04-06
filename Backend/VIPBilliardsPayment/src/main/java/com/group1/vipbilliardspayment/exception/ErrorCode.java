@@ -29,6 +29,15 @@ public enum ErrorCode {
     LOAIBAN_EXISTED(555, "Loai ban existed"),
     LOAIBAN_NOTEXIST(492, "Loai ban does not exist"),
     TENLOAIBAN_EXISTED(390, "Ten loai ban existed"),
+	THUNGAN_NOT_FOUND(50, "Thu Ngan not found."),
+    UPDATE_FAILED(51, "Update failed."),
+	CREATE_FAILED(52, "Create failed."),
+	SOBAN_NOT_FOUND(53, "So Ban not found."),
+	LOAIBAN_NOT_FOUND(54, "Loai Ban not found."),
+	DELETE_FAILD(55, "Delete failed."),
+	TENDANGNHAP_ALREADY_EXISTS(56, "Username already exists"),
+	SOCCCD_ALREADY_EXISTS(57, "SoCCCD already exists"),
+	UNKNOWN_ERROR(99, "An unknown error occurred"),
     ;
 
     int code;
