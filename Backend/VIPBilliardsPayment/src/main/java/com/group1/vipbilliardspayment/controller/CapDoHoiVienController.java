@@ -20,14 +20,14 @@ import java.util.List;
 public class CapDoHoiVienController {
     CapDoHoiVienService capDoHoiVienService;
 
-    @GetMapping("/all")
+    @GetMapping()
     public ApiResponse<List<CapDoHoiVienResponse>> getAllCapDoHoiVien() {
         return ApiResponse.<List<CapDoHoiVienResponse>>builder()
                 .result(capDoHoiVienService.getAllCapDoHoiVien())
                 .build();
     }
 
-    @PostMapping("/create")
+    @PostMapping()
     public ApiResponse<CapDoHoiVienResponse> createCapDoHoiVien(@RequestBody @Valid CapDoHoiVienCreateRequest capDoHoiVienCreateRequest) {
         return ApiResponse.<CapDoHoiVienResponse>builder()
                 .result(capDoHoiVienService.createCapDoHoiVien(capDoHoiVienCreateRequest))
