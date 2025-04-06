@@ -23,9 +23,12 @@ public enum ErrorCode {
     MATKHAU_INVALID(10, "MatKhau must be at least 3 characters"),
     DONGIA_INVALID(12, "DonGia must be greater than or equal to 0"),
     MATHANG_EXISTED(473, "Mat hang existed"),
-    MATHANG_NOTEXIST(512, "Mat hang does not existed"),
+    MATHANG_NOTEXIST(512, "Mat hang does not exist"),
     TENCAPDO_EXISTED(14, "TenCapDo is existed"),
     SOGIOCHOI_EXISTED(16, "SoGioChoi is existed"),
+    LOAIBAN_EXISTED(555, "Loai ban existed"),
+    LOAIBAN_NOTEXIST(492, "Loai ban does not exist"),
+    TENLOAIBAN_EXISTED(390, "Ten loai ban existed"),
     ;
 
     int code;
