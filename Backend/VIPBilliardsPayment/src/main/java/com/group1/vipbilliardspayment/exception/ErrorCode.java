@@ -2,7 +2,6 @@ package com.group1.vipbilliardspayment.exception;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 

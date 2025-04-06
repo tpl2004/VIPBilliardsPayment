@@ -2,7 +2,6 @@ package com.group1.vipbilliardspayment.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,47 +17,39 @@ import com.group1.vipbilliardspayment.exception.ErrorCode;
 import com.group1.vipbilliardspayment.service.BanBidaService;
 
 import jakarta.validation.Valid;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @RestController
 @RequestMapping("/banbida")
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BanBidaController {
-	@Autowired
-	BanBidaService banBida;
+
+	BanBidaService banBidaService;
 	
 	@GetMapping("/getallbanbida")
 	ApiResponse<List<BanBidaResponse>> GetAllBanBida() {
-		return ApiResponse.<List<BanBidaResponse>>builder().result(banBida.getAllBanBida()).build();
+		return ApiResponse.<List<BanBidaResponse>>builder().result(banBidaService.getAllBanBida()).build();
 	}
 
 	@GetMapping("/getallbanbidachuaxoa")
 	ApiResponse<List<BanBidaResponse>> GetAllBanBidaChuaXoa() {
-		return ApiResponse.<List<BanBidaResponse>>builder().result(banBida.getAllBanBidaChuaXoa()).build();
+		return ApiResponse.<List<BanBidaResponse>>builder().result(banBidaService.getAllBanBidaChuaXoa()).build();
 	}
 
 	@PostMapping("/thembanbida")
 	ApiResponse<BanBidaResponse> themBanBida(@RequestBody @Valid BanBidaCreateRequest banbida) {
-		
-		try {
-			return ApiResponse.<BanBidaResponse>builder().result(banBida.themBanBida(banbida)).build();
-		} catch (AppException ae) {
-			return new ApiResponse<>(ae.getErrorCode().getCode(), ae.getErrorCode().getMessage(), null);
-		} catch (Exception e) {
-			return new ApiResponse<>(ErrorCode.UNKNOWN_ERROR.getCode(), ErrorCode.UNKNOWN_ERROR.getMessage(), null);
-		}
-
+		return ApiResponse.<BanBidaResponse>builder()
+			.result(banBidaService.themBanBida(banbida))
+			.build();
 	}
 
-	@PostMapping("/xoabanbida/{SoBan}")
-	ApiResponse<BanBidaResponse> xoaBanBida(@PathVariable String SoBan) {
-		
-		try {
-			Integer soBan = Integer.valueOf(SoBan);
-			return ApiResponse.<BanBidaResponse>builder().result(banBida.xoaBanBida(soBan)).build();
-		} catch (AppException ae) {
-			return new ApiResponse<>(ae.getErrorCode().getCode(), ae.getErrorCode().getMessage(), null);
-		} catch (Exception e) {
-			return new ApiResponse<>(ErrorCode.UNKNOWN_ERROR.getCode(), ErrorCode.UNKNOWN_ERROR.getMessage(), null);
-		}
-
+	@PostMapping("/xoabanbida/{soBan}")
+	ApiResponse<BanBidaResponse> xoaBanBida(@PathVariable(name = "soBan") Integer soBan) {
+		return ApiResponse.<BanBidaResponse>builder()
+			.result(banBidaService.xoaBanBida(soBan))
+			.build();
 	}
 }
