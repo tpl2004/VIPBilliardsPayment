@@ -2,10 +2,8 @@ package com.group1.vipbilliardspayment.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.group1.vipbilliardspayment.dto.request.BanBidaCreateRequest;
@@ -15,46 +13,45 @@ import com.group1.vipbilliardspayment.entity.LoaiBan;
 import com.group1.vipbilliardspayment.exception.AppException;
 import com.group1.vipbilliardspayment.exception.ErrorCode;
 import com.group1.vipbilliardspayment.mapper.BanBidaMapper;
-import com.group1.vipbilliardspayment.mapper.DataMapper;
 import com.group1.vipbilliardspayment.repository.BanBidaRepository;
 import com.group1.vipbilliardspayment.repository.LoaiBanRepository;
 
-import lombok.Data;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BanBidaService {
 
-	@Autowired
-	BanBidaRepository banBida;
+	BanBidaRepository banBidaRepository;
 
-	@Autowired
-	LoaiBanRepository loaiBan;
+	LoaiBanRepository loaiBanRepository;
 
-	@Autowired
-	DataMapper dataMapper;
+	BanBidaMapper banBidaMapper;
 
 	public List<BanBidaResponse> getAllBanBida() {
-		List<BanBida> lstBanBida = banBida.findAll();
-		return lstBanBida.stream().map(dataMapper::toBanBidaResponse).collect(Collectors.toList());
+		List<BanBida> lstBanBida = banBidaRepository.findAll();
+		return lstBanBida.stream().map(banBidaMapper::toBanBidaResponse).collect(Collectors.toList());
 	}
 
-//	
 	public List<BanBidaResponse> getAllBanBidaChuaXoa() {
-		List<BanBida> lstBanBida = banBida.findAll();
-		return lstBanBida.stream().filter(ban_ -> ban_.getTrangThai() != -1).map(dataMapper::toBanBidaResponse)
+		List<BanBida> lstBanBida = banBidaRepository.findAll();
+		return lstBanBida.stream().filter(ban_ -> ban_.getTrangThai() != -1).map(banBidaMapper::toBanBidaResponse)
 				.collect(Collectors.toList());
 	}
 
 	public BanBidaResponse themBanBida(BanBidaCreateRequest loaiban_) {
 
-		Optional<LoaiBan> lb = loaiBan.findById(loaiban_.getLoaiBan());
+		Optional<LoaiBan> lb = loaiBanRepository.findById(loaiban_.getLoaiBan());
 		if (lb.isPresent()) {
 			try {
 				BanBida ban_ = new BanBida();
 				ban_.setTrangThai(0);
 				ban_.setLoaiBan(lb.get());
-				ban_ = banBida.save(ban_);
-				return dataMapper.toBanBidaResponse(ban_);
+				ban_ = banBidaRepository.save(ban_);
+				return banBidaMapper.toBanBidaResponse(ban_);
 			} catch (Exception e) {
 				throw new AppException(ErrorCode.CREATE_FAILED);
 			}
@@ -66,13 +63,13 @@ public class BanBidaService {
 	}
 
 	public BanBidaResponse xoaBanBida(Integer soBan) {
-		Optional<BanBida> ban = banBida.findById(soBan);
+		Optional<BanBida> ban = banBidaRepository.findById(soBan);
 		if (ban.isPresent()) {
 			try {
 				BanBida banbida_ = ban.get();
 				banbida_.setTrangThai(0);
-				banbida_ = banBida.save(banbida_);
-				return dataMapper.toBanBidaResponse(banbida_);
+				banbida_ = banBidaRepository.save(banbida_);
+				return banBidaMapper.toBanBidaResponse(banbida_);
 			} catch (Exception e) {
 				throw new AppException(ErrorCode.DELETE_FAILD);
 			}

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.group1.vipbilliardspayment.dto.request.ThuNganCreateRequest;
@@ -13,33 +12,38 @@ import com.group1.vipbilliardspayment.dto.response.ThuNganResponse;
 import com.group1.vipbilliardspayment.entity.ThuNgan;
 import com.group1.vipbilliardspayment.exception.AppException;
 import com.group1.vipbilliardspayment.exception.ErrorCode;
-import com.group1.vipbilliardspayment.mapper.DataMapper;
+import com.group1.vipbilliardspayment.mapper.ThuNganMapper;
 import com.group1.vipbilliardspayment.repository.ThuNganRepository;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ThuNganService {
-	@Autowired
+
 	ThuNganRepository thuNgan;
 	
-	@Autowired
-	DataMapper dataMapper;
+	ThuNganMapper thuNganMapper;
 	
 	public List<ThuNganResponse> GetAlThuNgan()
 	{
 		List<ThuNgan> lstThuNgan = thuNgan.findAll();
-		return lstThuNgan.stream().map(dataMapper::toThuNganReponse).collect(Collectors.toList());
+		return lstThuNgan.stream().map(thuNganMapper::toThuNganReponse).collect(Collectors.toList());
 	}
-//	
+
 	public List<ThuNganResponse> FindThuNganByHoTen(String hoTen)
 	{
 		List<ThuNgan> lstThuNgan = thuNgan.findAll();
-		return lstThuNgan.stream().filter(thungan -> thungan.getHoTen().contains(hoTen)).map(dataMapper::toThuNganReponse).collect(Collectors.toList());
+		return lstThuNgan.stream().filter(thungan -> thungan.getHoTen().contains(hoTen)).map(thuNganMapper::toThuNganReponse).collect(Collectors.toList());
 	}
-//	
+
 	public ThuNganResponse GetThuNganByTenDangNhap(String tenDangNhap)
 	{
 		List<ThuNgan> lstThuNgan = thuNgan.findAll();
-		return lstThuNgan.stream().filter(thungan -> thungan.getTenDangNhap().equals(tenDangNhap)).map(dataMapper::toThuNganReponse).findFirst().orElse(null);
+		return lstThuNgan.stream().filter(thungan -> thungan.getTenDangNhap().equals(tenDangNhap)).map(thuNganMapper::toThuNganReponse).findFirst().orElse(null);
 	}
 	
 	public ThuNganResponse CreateThuNgan(ThuNganCreateRequest thungan_)
@@ -69,7 +73,7 @@ public class ThuNganService {
 			tn = thuNgan.save(tn);
 			
 			
-			return dataMapper.toThuNganReponse(tn);
+			return thuNganMapper.toThuNganReponse(tn);
 		} catch (Exception e) {
 			
 			throw new AppException(ErrorCode.CREATE_FAILED);
@@ -94,7 +98,7 @@ public class ThuNganService {
 			thungan.setMatKhau(thungan_.getMatKhau());
 			
 			thungan = thuNgan.save(thungan);
-			return dataMapper.toThuNganReponse(thungan);	
+			return thuNganMapper.toThuNganReponse(thungan);	
 		} catch (Exception e) {
 			throw new AppException(ErrorCode.UPDATE_FAILED);
 		}

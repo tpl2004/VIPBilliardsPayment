@@ -20,54 +20,47 @@ import com.group1.vipbilliardspayment.exception.ErrorCode;
 import com.group1.vipbilliardspayment.service.ThuNganService;
 
 import jakarta.validation.Valid;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 @RestController
 @RequestMapping("/thungan")
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ThuNganController {
-	@Autowired
-	ThuNganService thuNgan;
+
+	ThuNganService thuNganService;
 	
 	
 	@GetMapping("/getallthungan")
 	ApiResponse<List<ThuNganResponse>> GetAlThuNgan() {
-		return ApiResponse.<List<ThuNganResponse>>builder().result(thuNgan.GetAlThuNgan()).build();
+		return ApiResponse.<List<ThuNganResponse>>builder().result(thuNganService.GetAlThuNgan()).build();
 	}
 
 	@PostMapping("/timthungan")
 	ApiResponse<List<ThuNganResponse>> FindThuNganByHoTen(@RequestBody Map<String, Object> hoTen) {
 		return ApiResponse.<List<ThuNganResponse>>builder()
-				.result(thuNgan.FindThuNganByHoTen(hoTen.get("HoTen").toString())).build();
+				.result(thuNganService.FindThuNganByHoTen(hoTen.get("HoTen").toString())).build();
 	}
 
 	@PostMapping("/getthunganbytendangnhap")
 	ApiResponse<ThuNganResponse> GetThuNganByTenDangNhap(@RequestBody Map<String, Object> tenDangNhap) {
 		return ApiResponse.<ThuNganResponse>builder()
-				.result(thuNgan.GetThuNganByTenDangNhap(tenDangNhap.get("TenDangNhap").toString())).build();
+				.result(thuNganService.GetThuNganByTenDangNhap(tenDangNhap.get("TenDangNhap").toString())).build();
 	}
 
 	@PostMapping("/themthungan")
 	ApiResponse<ThuNganResponse> CreateThuNgan(@RequestBody @Valid ThuNganCreateRequest thungan) {
-		
-		try {
-			return ApiResponse.<ThuNganResponse>builder().result(thuNgan.CreateThuNgan(thungan)).build();
-		} catch (AppException ae) {
-			return new ApiResponse<>(ae.getErrorCode().getCode(), ae.getErrorCode().getMessage(), null);
-		} catch (Exception e) {
-			return new ApiResponse<>(ErrorCode.UNKNOWN_ERROR.getCode(), ErrorCode.UNKNOWN_ERROR.getMessage(), null);
-		}
+		return ApiResponse.<ThuNganResponse>builder()
+			.result(thuNganService.CreateThuNgan(thungan)) 
+			.build();
 	}
 	
 	@PostMapping("/updatethungan/{maThuNgan}")
-	ApiResponse<ThuNganResponse> UpdateThuNgan(@PathVariable String maThuNgan, @RequestBody @Valid ThuNganUpdateRequest request)
+	ApiResponse<ThuNganResponse> UpdateThuNgan(@PathVariable Integer maThuNgan, @RequestBody @Valid ThuNganUpdateRequest request)
 	{
-		try {
-			return ApiResponse.<ThuNganResponse>builder().result(thuNgan.UpdateThuNgan(Integer.valueOf(maThuNgan), request)).build();
-		}
-		catch (AppException ae) {
-			return new ApiResponse<>(ae.getErrorCode().getCode(), ae.getErrorCode().getMessage(), null);
-		}
-		catch (Exception e) {
-			return new ApiResponse<>(ErrorCode.UNKNOWN_ERROR.getCode(), ErrorCode.UNKNOWN_ERROR.getMessage(), null);
-		}
-
+		return ApiResponse.<ThuNganResponse>builder()
+			.result(thuNganService.UpdateThuNgan(maThuNgan, request))
+			.build();
 	}
 }
