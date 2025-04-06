@@ -4,6 +4,7 @@ import com.group1.vipbilliardspayment.dto.request.CapDoHoiVienCreateRequest;
 import com.group1.vipbilliardspayment.dto.response.CapDoHoiVienResponse;
 import com.group1.vipbilliardspayment.dto.response.HoiVienResponse;
 import com.group1.vipbilliardspayment.entity.CapDoHoiVien;
+import com.group1.vipbilliardspayment.exception.AppException;
 import com.group1.vipbilliardspayment.exception.ErrorCode;
 import com.group1.vipbilliardspayment.mapper.CapDoHoiVienMapper;
 import com.group1.vipbilliardspayment.repository.CapDoHoiVienRepository;
