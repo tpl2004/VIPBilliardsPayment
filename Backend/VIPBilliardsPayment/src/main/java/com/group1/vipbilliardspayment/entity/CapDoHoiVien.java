@@ -23,10 +23,10 @@ public class CapDoHoiVien {
     String tenCapDo;
 
     @Column(name = "SoGioChoi")
-    double soGioChoi;
+    Double soGioChoi;
 
     @Column(name = "UuDai")
-    double uuDai;
+    Double uuDai;
 
     @OneToMany(mappedBy = "capDo", fetch = FetchType.LAZY)
     List<HoiVien> danhSachHoiVien;

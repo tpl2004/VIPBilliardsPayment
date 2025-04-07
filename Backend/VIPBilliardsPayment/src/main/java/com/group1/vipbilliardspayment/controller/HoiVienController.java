@@ -1,6 +1,7 @@
 package com.group1.vipbilliardspayment.controller;
 
 import com.group1.vipbilliardspayment.dto.request.HoiVienCreateRequest;
+import com.group1.vipbilliardspayment.dto.request.HoiVienUpdateRequest;
 import com.group1.vipbilliardspayment.dto.response.ApiResponse;
 import com.group1.vipbilliardspayment.dto.response.HoiVienResponse;
 import com.group1.vipbilliardspayment.entity.HoiVien;
@@ -30,7 +31,14 @@ public class HoiVienController {
     @PostMapping
     public ApiResponse<HoiVienResponse> createHoiVien(@RequestBody @Valid HoiVienCreateRequest request) {
         return ApiResponse.<HoiVienResponse>builder()
-                .result(hoiVienService.CreateHoiVien(request))
+                .result(hoiVienService.createHoiVien(request))
+                .build();
+    }
+
+    @PutMapping("/{id}")
+    public ApiResponse<HoiVienResponse> updateHoiVien(@PathVariable(value = "id") Integer maHoiVien, @RequestBody @Valid HoiVienUpdateRequest request) {
+        return ApiResponse.<HoiVienResponse>builder()
+                .result(hoiVienService.updateHoiVien(maHoiVien, request))
                 .build();
     }
 }
