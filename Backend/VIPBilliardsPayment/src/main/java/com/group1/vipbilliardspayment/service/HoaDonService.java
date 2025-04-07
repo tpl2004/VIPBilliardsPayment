@@ -1,7 +1,5 @@
 package com.group1.vipbilliardspayment.service;
 
-import java.time.LocalDateTime;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,13 +23,9 @@ import com.group1.vipbilliardspayment.repository.HoaDonRepository;
 import com.group1.vipbilliardspayment.repository.HoiVienRepository;
 import com.group1.vipbilliardspayment.repository.ThuNganRepository;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.experimental.NonFinal;
 
 @Service
 @RequiredArgsConstructor

@@ -1,15 +1,9 @@
 package com.group1.vipbilliardspayment.entity;
 
 import java.util.Date;
+import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -57,4 +51,7 @@ public class HoaDon {
     @ManyToOne
     @JoinColumn(name = "SoBan")
     BanBida banBida;
+
+    @OneToMany(mappedBy = "hoaDon", fetch = FetchType.LAZY)
+    List<MatHangTrongHoaDon> danhSachMatHangTrongHoaDon;
 }
