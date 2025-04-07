@@ -19,9 +19,7 @@ import java.util.*;
 @AllArgsConstructor
 public class HoiVienService {
     private HoiVienRepository hoiVienRepository;
-
     private CapDoHoiVienRepository capDoHoiVienRepository;
-
     private HoiVienMapper hoiVienMapper;
 
     public List<HoiVienResponse> getAllHoiVien() {
@@ -56,7 +54,6 @@ public class HoiVienService {
         }
 
         int minOfSoGioChoiIndex = 0;
-
         for(int i = 1; i < danhSachCapDoHoiVien.size(); i++) {
             if (danhSachCapDoHoiVien.get(i).getSoGioChoi() < danhSachCapDoHoiVien.get(minOfSoGioChoiIndex).getSoGioChoi()) {
                 minOfSoGioChoiIndex = i;
