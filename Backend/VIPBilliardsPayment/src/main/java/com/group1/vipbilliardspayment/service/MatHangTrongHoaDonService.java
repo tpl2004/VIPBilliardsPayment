@@ -9,11 +9,16 @@ import com.group1.vipbilliardspayment.exception.AppException;
 import com.group1.vipbilliardspayment.exception.ErrorCode;
 import com.group1.vipbilliardspayment.repository.HoaDonRepository;
 import com.group1.vipbilliardspayment.repository.MatHangRepository;
+import com.group1.vipbilliardspayment.dto.response.MatHangTrongHoaDonResponse;
+import com.group1.vipbilliardspayment.mapper.MatHangTrongHoaDonMapper;
 import com.group1.vipbilliardspayment.repository.MatHangTrongHoaDonRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +32,7 @@ public class MatHangTrongHoaDonService {
 
     MatHangTrongHoaDonMapper matHangTrongHoaDonMapper;
 
-    public MatHangTrongHoaDon updateMatHangTrongHoaDon(MatHangTrongHoaDonUpdateRequest request) {
+    public MatHangTrongHoaDonResponse updateMatHangTrongHoaDon(MatHangTrongHoaDonUpdateRequest request) {
         MatHang matHang = matHangRepository.findById(request.getMaHang()).orElseThrow(() -> new AppException(ErrorCode.MATHANGTRONGHOADON_NOT_EXISTED));
 
         HoaDon hoaDon = hoaDonRepository.findById(request.getMaHoaDon()).orElseThrow(() -> new AppException(ErrorCode.MATHANGTRONGHOADON_NOT_EXISTED));
@@ -38,6 +43,21 @@ public class MatHangTrongHoaDonService {
 
         matHangTrongHoaDon.setSoLuong(request.getSoLuong());
 
-        matHangTrongHoaDonMapper.toMatHangTrongHoaDonResponse(matHangTrongHoaDonRepository.save(matHangTrongHoaDon));
+        return matHangTrongHoaDonMapper.toMatHangTrongHoaDonResponse(matHangTrongHoaDonRepository.save(matHangTrongHoaDon));
+    }
+
+    public List<MatHangTrongHoaDonResponse> getMatHangTrongHoaDon(Integer maHoaDon) {
+        HoaDon hoaDon = hoaDonRepository.findById(maHoaDon)
+                .orElseThrow(() -> new AppException(ErrorCode.HOADON_NOT_EXIST));
+
+        List<MatHangTrongHoaDon> matHangTrongHoaDonList = matHangTrongHoaDonRepository.findByHoaDon(hoaDon);
+
+        List<MatHangTrongHoaDonResponse> matHangTrongHoaDonResponseList = new ArrayList<>();
+
+        for(MatHangTrongHoaDon i : matHangTrongHoaDonList) {
+            matHangTrongHoaDonResponseList.add(matHangTrongHoaDonMapper.toMatHangTrongHoaDonResponse(i));
+        }
+
+        return matHangTrongHoaDonResponseList;
     }
 }

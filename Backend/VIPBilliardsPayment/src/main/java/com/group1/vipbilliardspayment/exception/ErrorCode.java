@@ -42,7 +42,8 @@ public enum ErrorCode {
     HOADON_NOT_EXIST(888, "Hoa don not exist"),
     CAPDOHOIVIEN_NOTFOUND(14, "Cap do hoi vien is not found"),
     HOIVIEN_NOT_EXISTED(13, "Hoi vien is not existed"),
-    MATHANGTRONGHOADON_NOT_EXISTED(15, "Mat hang trong hoa don is not existed")
+    MATHANGTRONGHOADON_NOT_EXISTED(15, "Mat hang trong hoa don is not existed"),
+
     ;
 
     int code;

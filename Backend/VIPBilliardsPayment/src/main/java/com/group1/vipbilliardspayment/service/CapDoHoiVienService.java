@@ -61,6 +61,10 @@ public class CapDoHoiVienService {
         CapDoHoiVien capDoHoiVien = capDoHoiVienRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.CAPDOHOIVIEN_NOTFOUND));
 
+        if(capDoHoiVienRepository.existsByTenCapDo(capDoHoiVienUpdateRequest.getTenCapDo())) {
+            throw new AppException(ErrorCode.TENCAPDO_EXISTED);
+        }
+
         capDoHoiVien.setTenCapDo(capDoHoiVienUpdateRequest.getTenCapDo());
         capDoHoiVien.setSoGioChoi(capDoHoiVienUpdateRequest.getSoGioChoi());
         capDoHoiVien.setUuDai(capDoHoiVien.getUuDai());

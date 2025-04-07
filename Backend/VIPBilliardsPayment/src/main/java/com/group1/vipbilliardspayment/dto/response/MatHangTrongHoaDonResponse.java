@@ -17,6 +17,6 @@ public class MatHangTrongHoaDonResponse {
     Integer maHang;
     String tenHang;
     Integer maHoaDon;
-    double donGia;
-    int soLuong;
+    Double donGia;
+    Integer soLuong;
 }
