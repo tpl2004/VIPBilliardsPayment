@@ -61,13 +61,17 @@ public class CapDoHoiVienService {
         CapDoHoiVien capDoHoiVien = capDoHoiVienRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.CAPDOHOIVIEN_NOTFOUND));
 
-        if(capDoHoiVienRepository.existsByTenCapDo(capDoHoiVienUpdateRequest.getTenCapDo())) {
+        if(!capDoHoiVien.getTenCapDo().equals(capDoHoiVienUpdateRequest.getTenCapDo()) && capDoHoiVienRepository.existsByTenCapDo(capDoHoiVienUpdateRequest.getTenCapDo())) {
             throw new AppException(ErrorCode.TENCAPDO_EXISTED);
+        }
+
+        if(capDoHoiVien.getSoGioChoi() != capDoHoiVienUpdateRequest.getSoGioChoi() && capDoHoiVienRepository.existsBySoGioChoi(capDoHoiVienUpdateRequest.getSoGioChoi())) {
+            throw new AppException(ErrorCode.SOGIOCHOI_EXISTED);
         }
 
         capDoHoiVien.setTenCapDo(capDoHoiVienUpdateRequest.getTenCapDo());
         capDoHoiVien.setSoGioChoi(capDoHoiVienUpdateRequest.getSoGioChoi());
-        capDoHoiVien.setUuDai(capDoHoiVien.getUuDai());
+        capDoHoiVien.setUuDai(capDoHoiVienUpdateRequest.getUuDai());
 
         return capDoHoiVienMapper.toCapDoHoiVienResponse(capDoHoiVienRepository.save(capDoHoiVien));
     }
