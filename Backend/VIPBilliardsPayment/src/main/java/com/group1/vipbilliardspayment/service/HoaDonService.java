@@ -1,9 +1,11 @@
 package com.group1.vipbilliardspayment.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import com.group1.vipbilliardspayment.dto.response.MatHangTrongHoaDonResponse;
 import org.springframework.stereotype.Service;
 
 import com.group1.vipbilliardspayment.dto.request.HoaDonCreateRequest;
@@ -21,13 +23,9 @@ import com.group1.vipbilliardspayment.repository.HoaDonRepository;
 import com.group1.vipbilliardspayment.repository.HoiVienRepository;
 import com.group1.vipbilliardspayment.repository.ThuNganRepository;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.experimental.NonFinal;
 
 @Service
 @RequiredArgsConstructor
@@ -39,6 +37,7 @@ public class HoaDonService {
     BanBidaRepository banBidaRepository;
     ThuNganRepository thuNganRepository;
     HoiVienRepository hoiVienRepository;
+    MatHangTrongHoaDonService matHangTrongHoaDonService;
     
     public List<HoaDonResponse> getAllHoaDon() {
         return hoaDonRepository.findAll().stream().map(hoaDonMapper::toHoaDonResponse).toList();
@@ -79,5 +78,58 @@ public class HoaDonService {
         }
         hoaDon = hoaDonRepository.save(hoaDon);
         return hoaDonMapper.toHoaDonResponse(hoaDon);
+    }
+
+    public List<HoaDonResponse> findHoaDonByDate(Date createdDate) {
+        List<HoaDon> hoaDonList = hoaDonRepository.findByThoiDiemVao(createdDate);
+
+        List<HoaDonResponse> hoaDonResponseList = new ArrayList<>();
+
+        for(HoaDon i : hoaDonList) {
+            hoaDonResponseList.add(hoaDonMapper.toHoaDonResponse(i));
+        }
+
+        return hoaDonResponseList;
+    }
+
+    public HoaDonResponse thanhToanHoaDon(Integer soBan) {
+        BanBida banBida = banBidaRepository.findById(soBan).orElseThrow(() -> new AppException(ErrorCode.BANBIDA_NOTEXIST));
+
+        if(banBida.getTrangThai() == 0 || banBida.getTrangThai() == 2) {
+            throw new AppException(ErrorCode.HOADON_CANNOTTPAY);
+        }
+
+        List<HoaDon> hoaDonList = hoaDonRepository.findByBanBida(banBida);
+
+        HoaDon hoaDon = null;
+
+        for(HoaDon i : hoaDonList) {
+            if(!i.isTrangThai()) {
+                hoaDon = i;
+                break;
+            }
+        }
+
+        double soGioChoi = (hoaDon.getThoiDiemRa().getTime() - hoaDon.getThoiDiemVao().getTime()) / (double) 60000;
+
+        List<MatHangTrongHoaDonResponse> matHangTrongHoaDonResponseList = matHangTrongHoaDonService.getMatHangTrongHoaDon(hoaDon.getMaHoaDon());
+
+        double tongTienMatHang = 0;
+
+        for(MatHangTrongHoaDonResponse i : matHangTrongHoaDonResponseList) {
+            tongTienMatHang += i.getDonGia() * i.getSoLuong();
+        }
+
+        double tongTien = soGioChoi * hoaDon.getBanBida().getLoaiBan().getDonGia() + tongTienMatHang;
+
+        if(hoaDon.getHoiVien() != null) {
+            tongTien -= tongTien * hoaDon.getHoiVien().getCapDo().getUuDai();
+        }
+
+        hoaDon.setSoGioChoi(soGioChoi);
+        hoaDon.setTongTien(tongTien);
+        hoaDon.setTrangThai(true);
+
+        return hoaDonMapper.toHoaDonResponse(hoaDonRepository.save(hoaDon));
     }
 }

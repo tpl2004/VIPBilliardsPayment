@@ -1,5 +1,6 @@
 package com.group1.vipbilliardspayment.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,5 +52,19 @@ public class HoaDonController {
         return ApiResponse.<HoaDonResponse>builder()
             .result(result)
             .build();
+    }
+
+    @GetMapping("/findbydate")
+    public ApiResponse<List<HoaDonResponse>> findHoaDonByDate(@RequestBody Date createdDate) {
+        return ApiResponse.<List<HoaDonResponse>>builder()
+                .result(hoaDonService.findHoaDonByDate(createdDate))
+                .build();
+    }
+
+    @PutMapping("/thanhtoan/{id}")
+    public ApiResponse<HoaDonResponse> thanhToanHoaDon(@PathVariable(value = "id") Integer soBan) {
+        return ApiResponse.<HoaDonResponse>builder()
+                .result(hoaDonService.thanhToanHoaDon(soBan))
+                .build();
     }
 }
