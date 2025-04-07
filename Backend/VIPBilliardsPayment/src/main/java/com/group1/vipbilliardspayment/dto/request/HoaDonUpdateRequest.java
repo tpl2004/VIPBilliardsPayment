@@ -8,6 +8,6 @@ import lombok.experimental.FieldDefaults;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class HoaDonUpdateRequest {
-    @NotNull(message = "FIELD_NULL")
+
     Integer maHoiVien;
 }
