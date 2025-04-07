@@ -1,8 +1,12 @@
 package com.group1.vipbilliardspayment.repository;
 
+import com.group1.vipbilliardspayment.dto.request.ThongKeDoanhThuTheoNgayRequest;
+import com.group1.vipbilliardspayment.dto.response.ThongKeDoanhThuTheoNgayResponse;
 import com.group1.vipbilliardspayment.entity.BanBida;
 import com.group1.vipbilliardspayment.entity.HoiVien;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.group1.vipbilliardspayment.entity.HoaDon;
@@ -18,4 +22,7 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Integer> {
     public List<HoaDon> findByThoiDiemVao(Date createdDate);
 
     public List<HoaDon> findByBanBida(BanBida banBida);
+
+    @Query(value = "proc_ThongKeDoanhThuTheoNgay(:NgayBatDau, :NgayKetThuc", nativeQuery = true)
+    public List<Object[]> thongKeDoanhThuTheoNgay(@Param("NgayBatDau") Date ngayBatDau, @Param("NgayKetThuc") Date ngayKetThuc);
 }

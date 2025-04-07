@@ -35,7 +35,7 @@ public class MatHangTrongHoaDonController {
     }
 
     @PostMapping
-    public ApiResponse<MatHangTrongHoaDonResponse> createMatHangTrongHoaDon(@RequestBody MatHangTrongHoaDonCreateRequest matHangTrongHoaDonCreateRequest) {
+    public ApiResponse<MatHangTrongHoaDonResponse> createMatHangTrongHoaDon(@RequestBody @Valid MatHangTrongHoaDonCreateRequest matHangTrongHoaDonCreateRequest) {
         return ApiResponse.<MatHangTrongHoaDonResponse>builder()
                 .result(matHangTrongHoaDonService.createMatHangTrongHoaDon(matHangTrongHoaDonCreateRequest))
                 .build();

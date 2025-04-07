@@ -3,6 +3,8 @@ package com.group1.vipbilliardspayment.controller;
 import java.util.Date;
 import java.util.List;
 
+import com.group1.vipbilliardspayment.dto.request.ThongKeDoanhThuTheoNgayRequest;
+import com.group1.vipbilliardspayment.dto.response.ThongKeDoanhThuTheoNgayResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,6 +67,13 @@ public class HoaDonController {
     public ApiResponse<HoaDonResponse> thanhToanHoaDon(@PathVariable(value = "id") Integer soBan) {
         return ApiResponse.<HoaDonResponse>builder()
                 .result(hoaDonService.thanhToanHoaDon(soBan))
+                .build();
+    }
+
+    @GetMapping("/thongke")
+    public ApiResponse<List<ThongKeDoanhThuTheoNgayResponse>> thongKeDoanhThuTheoNgay(@RequestBody @Valid ThongKeDoanhThuTheoNgayRequest thongKeDoanhThuTheoNgayRequest) {
+        return ApiResponse.<List<ThongKeDoanhThuTheoNgayResponse>>builder()
+                .result(hoaDonService.thongKeDoanhThuTheoNgay(thongKeDoanhThuTheoNgayRequest))
                 .build();
     }
 }
