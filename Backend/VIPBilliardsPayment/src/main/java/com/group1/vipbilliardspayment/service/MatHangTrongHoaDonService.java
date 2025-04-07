@@ -46,6 +46,20 @@ public class MatHangTrongHoaDonService {
         return matHangTrongHoaDonMapper.toMatHangTrongHoaDonResponse(matHangTrongHoaDonRepository.save(matHangTrongHoaDon));
     }
 
+    public String deleteMatHangTrongHoaDon(Integer maHang, Integer maHoaDon) {
+        MatHang matHang = matHangRepository.findById(maHang).orElseThrow(() -> new AppException(ErrorCode.MATHANGTRONGHOADON_NOT_EXISTED));
+
+        HoaDon hoaDon = hoaDonRepository.findById(maHoaDon).orElseThrow(() -> new AppException(ErrorCode.MATHANGTRONGHOADON_NOT_EXISTED));
+
+        MatHangTrongHoaDonId matHangTrongHoaDonId = new MatHangTrongHoaDonId(matHang, hoaDon);
+
+        MatHangTrongHoaDon matHangTrongHoaDon = matHangTrongHoaDonRepository.findById(matHangTrongHoaDonId).orElseThrow(() -> new AppException(ErrorCode.MATHANGTRONGHOADON_NOT_EXISTED));
+
+        matHangTrongHoaDonRepository.delete(matHangTrongHoaDon);
+
+        return "Deleted successfully";
+    }
+
     public List<MatHangTrongHoaDonResponse> getMatHangTrongHoaDon(Integer maHoaDon) {
         HoaDon hoaDon = hoaDonRepository.findById(maHoaDon)
                 .orElseThrow(() -> new AppException(ErrorCode.HOADON_NOT_EXIST));

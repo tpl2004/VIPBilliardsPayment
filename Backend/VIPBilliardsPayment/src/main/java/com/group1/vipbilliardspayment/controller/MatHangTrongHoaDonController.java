@@ -5,15 +5,11 @@ import com.group1.vipbilliardspayment.dto.response.ApiResponse;
 import com.group1.vipbilliardspayment.dto.response.MatHangTrongHoaDonResponse;
 import com.group1.vipbilliardspayment.service.MatHangTrongHoaDonService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,6 +31,13 @@ public class MatHangTrongHoaDonController {
     public ApiResponse<List<MatHangTrongHoaDonResponse>> getMatHangTrongHoaDon(@PathVariable(value = "id") Integer maHoaDon) {
         return ApiResponse.<List<MatHangTrongHoaDonResponse>>builder()
                 .result(matHangTrongHoaDonService.getMatHangTrongHoaDon(maHoaDon))
+                .build();
+    }
+
+    @DeleteMapping
+    public ApiResponse<String> deleteMatHangTrongHoaDon(@RequestBody Integer maHang, @RequestBody Integer maHoaDon) {
+        return ApiResponse.<String>builder()
+                .result(matHangTrongHoaDonService.deleteMatHangTrongHoaDon(maHang, maHoaDon))
                 .build();
     }
 }
