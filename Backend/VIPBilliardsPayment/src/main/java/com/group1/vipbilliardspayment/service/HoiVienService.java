@@ -64,6 +64,7 @@ public class HoiVienService {
         }
 
         HoiVien hoiVien = hoiVienMapper.toHoiVien(request);
+        hoiVien.setSoGioChoi(0.0);
         hoiVien.setNgayDangKy(new Date());
         hoiVien.setCapDo(danhSachCapDoHoiVien.get(minOfSoGioChoiIndex));
 
