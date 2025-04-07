@@ -3,12 +3,15 @@ package com.group1.vipbilliardspayment.controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.group1.vipbilliardspayment.dto.request.HoaDonCreateRequest;
+import com.group1.vipbilliardspayment.dto.request.HoaDonUpdateRequest;
 import com.group1.vipbilliardspayment.dto.response.ApiResponse;
 import com.group1.vipbilliardspayment.dto.response.HoaDonResponse;
 import com.group1.vipbilliardspayment.service.HoaDonService;
@@ -37,6 +40,14 @@ public class HoaDonController {
     @PostMapping
     public ApiResponse<HoaDonResponse> createHoaDon(@Valid @RequestBody HoaDonCreateRequest request) {
         var result = hoaDonService.createHoaDon(request);
+        return ApiResponse.<HoaDonResponse>builder()
+            .result(result)
+            .build();
+    }
+    
+    @PutMapping("/{id}")
+    public ApiResponse<HoaDonResponse> updateHoaDon(@PathVariable(name = "id") Integer id, @RequestBody HoaDonUpdateRequest request) {
+        var result = hoaDonService.updateHoaDon(id, request);
         return ApiResponse.<HoaDonResponse>builder()
             .result(result)
             .build();
