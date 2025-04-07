@@ -39,7 +39,8 @@ public enum ErrorCode {
 	UNKNOWN_ERROR(99, "An unknown error occurred"),
     BANBIDA_NOTEXIST(777, "Ban bida not exist"),
     BANBIDA_NOT_AVAILABLE(482, "Ban bida is not available"),
-    HOADON_NOT_EXIST(888, "Hoa don is not exist"),
+    HOADON_NOT_EXIST(888, "Hoa don not exist"),
+    CAPDOHOIVIEN_NOTFOUND(14, "Cap do hoi vien is not found"),
     HOIVIEN_NOT_EXISTED(13, "Hoi vien is not existed")
     ;
 
