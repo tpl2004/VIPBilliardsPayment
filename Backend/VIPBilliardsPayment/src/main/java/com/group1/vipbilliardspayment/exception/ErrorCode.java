@@ -41,7 +41,8 @@ public enum ErrorCode {
     BANBIDA_NOT_AVAILABLE(482, "Ban bida is not available"),
     HOADON_NOT_EXIST(888, "Hoa don not exist"),
     CAPDOHOIVIEN_NOTFOUND(14, "Cap do hoi vien is not found"),
-    HOIVIEN_NOT_EXISTED(13, "Hoi vien is not existed")
+    HOIVIEN_NOT_EXISTED(13, "Hoi vien is not existed"),
+    MATHANGTRONGHOADON_NOTEXISTED(16, "Mat hang trong hoa don is not existed")
     ;
 
     int code;
