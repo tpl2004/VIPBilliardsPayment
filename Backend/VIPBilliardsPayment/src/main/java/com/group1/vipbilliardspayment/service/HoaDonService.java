@@ -5,7 +5,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import com.group1.vipbilliardspayment.dto.request.ThongKeDoanhThuTheoNgayRequest;
 import com.group1.vipbilliardspayment.dto.response.MatHangTrongHoaDonResponse;
+import com.group1.vipbilliardspayment.dto.response.ThongKeDoanhThuTheoNgayResponse;
 import org.springframework.stereotype.Service;
 
 import com.group1.vipbilliardspayment.dto.request.HoaDonCreateRequest;
@@ -46,8 +48,10 @@ public class HoaDonService {
     public HoaDonResponse createHoaDon(HoaDonCreateRequest request) {
         BanBida banBida = banBidaRepository.findById(request.getSoBan())
             .orElseThrow(() -> new AppException(ErrorCode.BANBIDA_NOTEXIST));
+
         ThuNgan thuNgan = thuNganRepository.findById(request.getMaThuNgan())
             .orElseThrow(() -> new AppException(ErrorCode.THUNGAN_NOT_FOUND));
+
         if(banBida.getTrangThai().equals(0)) {
             HoaDon newHoaDon = HoaDon.builder()
                 .banBida(banBida)
@@ -69,6 +73,7 @@ public class HoaDonService {
     public HoaDonResponse updateHoaDon(Integer id, HoaDonUpdateRequest request) {
         HoaDon hoaDon = hoaDonRepository.findById(id)
             .orElseThrow(() -> new AppException(ErrorCode.HOADON_NOT_EXIST));
+
         if(Objects.isNull(request.getMaHoiVien())) {
             hoaDon.setHoiVien(null);
         } else {
@@ -76,7 +81,9 @@ public class HoaDonService {
                 .orElseThrow(() -> new AppException(ErrorCode.HOIVIEN_NOT_EXISTED));
             hoaDon.setHoiVien(hoiVien);
         }
+
         hoaDon = hoaDonRepository.save(hoaDon);
+
         return hoaDonMapper.toHoaDonResponse(hoaDon);
     }
 
@@ -131,5 +138,17 @@ public class HoaDonService {
         hoaDon.setTrangThai(true);
 
         return hoaDonMapper.toHoaDonResponse(hoaDonRepository.save(hoaDon));
+    }
+
+    public List<ThongKeDoanhThuTheoNgayResponse> thongKeDoanhThuTheoNgay(ThongKeDoanhThuTheoNgayRequest thongKeDoanhThuTheoNgayRequest) {
+        List<Object[]> thongKeDoanhThuTheoNgay = hoaDonRepository.thongKeDoanhThuTheoNgay(thongKeDoanhThuTheoNgayRequest.getNgayBatDau(), thongKeDoanhThuTheoNgayRequest.getNgayKetThuc());
+
+        List<ThongKeDoanhThuTheoNgayResponse> thongKeDoanhThuTheoNgayResponseList = new ArrayList<>();
+
+        for(Object[] i : thongKeDoanhThuTheoNgay) {
+            thongKeDoanhThuTheoNgayResponseList.add(new ThongKeDoanhThuTheoNgayResponse((Date) i[1], (Double) i[2]));
+        }
+
+        return thongKeDoanhThuTheoNgayResponseList;
     }
 }
