@@ -1,6 +1,7 @@
 package com.group1.vipbilliardspayment.service;
 
 import com.group1.vipbilliardspayment.dto.request.CapDoHoiVienCreateRequest;
+import com.group1.vipbilliardspayment.dto.request.CapDoHoiVienUpdateRequest;
 import com.group1.vipbilliardspayment.dto.response.CapDoHoiVienResponse;
 import com.group1.vipbilliardspayment.dto.response.HoiVienResponse;
 import com.group1.vipbilliardspayment.entity.CapDoHoiVien;
@@ -52,6 +53,17 @@ public class CapDoHoiVienService {
                 .soGioChoi(capDoHoiVienCreateRequest.getSoGioChoi())
                 .uuDai(capDoHoiVienCreateRequest.getUuDai())
                 .build();
+
+        return capDoHoiVienMapper.toCapDoHoiVienResponse(capDoHoiVienRepository.save(capDoHoiVien));
+    }
+
+    public CapDoHoiVienResponse updateCapDoHoiVien(Integer id, CapDoHoiVienUpdateRequest capDoHoiVienUpdateRequest) {
+        CapDoHoiVien capDoHoiVien = capDoHoiVienRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.CAPDOHOIVIEN_NOTFOUND));
+
+        capDoHoiVien.setTenCapDo(capDoHoiVienUpdateRequest.getTenCapDo());
+        capDoHoiVien.setSoGioChoi(capDoHoiVienUpdateRequest.getSoGioChoi());
+        capDoHoiVien.setUuDai(capDoHoiVien.getUuDai());
 
         return capDoHoiVienMapper.toCapDoHoiVienResponse(capDoHoiVienRepository.save(capDoHoiVien));
     }

@@ -1,6 +1,7 @@
 package com.group1.vipbilliardspayment.controller;
 
 import com.group1.vipbilliardspayment.dto.request.CapDoHoiVienCreateRequest;
+import com.group1.vipbilliardspayment.dto.request.CapDoHoiVienUpdateRequest;
 import com.group1.vipbilliardspayment.dto.response.ApiResponse;
 import com.group1.vipbilliardspayment.dto.response.CapDoHoiVienResponse;
 import com.group1.vipbilliardspayment.entity.CapDoHoiVien;
@@ -9,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,6 +33,13 @@ public class CapDoHoiVienController {
     public ApiResponse<CapDoHoiVienResponse> createCapDoHoiVien(@RequestBody @Valid CapDoHoiVienCreateRequest capDoHoiVienCreateRequest) {
         return ApiResponse.<CapDoHoiVienResponse>builder()
                 .result(capDoHoiVienService.createCapDoHoiVien(capDoHoiVienCreateRequest))
+                .build();
+    }
+
+    @PutMapping("/{id}")
+    public ApiResponse<CapDoHoiVienResponse> updateCapDoHoiVien(@PathVariable(value = "id") Integer id, @RequestBody @Valid CapDoHoiVienUpdateRequest capDoHoiVienUpdateRequest) {
+        return ApiResponse.<CapDoHoiVienResponse>builder()
+                .result(capDoHoiVienService.updateCapDoHoiVien(id, capDoHoiVienUpdateRequest))
                 .build();
     }
 }
