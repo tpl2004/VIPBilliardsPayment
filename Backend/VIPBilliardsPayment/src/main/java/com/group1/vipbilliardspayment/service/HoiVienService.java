@@ -1,6 +1,7 @@
 package com.group1.vipbilliardspayment.service;
 
 import com.group1.vipbilliardspayment.dto.request.HoiVienCreateRequest;
+import com.group1.vipbilliardspayment.dto.request.HoiVienUpdateRequest;
 import com.group1.vipbilliardspayment.dto.response.HoiVienResponse;
 import com.group1.vipbilliardspayment.entity.CapDoHoiVien;
 import com.group1.vipbilliardspayment.entity.HoiVien;
@@ -43,7 +44,7 @@ public class HoiVienService {
         return danhSachHoiVienResponse;
     }
 
-    public HoiVienResponse CreateHoiVien(HoiVienCreateRequest request) {
+    public HoiVienResponse createHoiVien(HoiVienCreateRequest request) {
         List<CapDoHoiVien> danhSachCapDoHoiVien = capDoHoiVienRepository.findAll();
 
         if(danhSachCapDoHoiVien.size() == 0) {
@@ -65,6 +66,24 @@ public class HoiVienService {
         HoiVien hoiVien = hoiVienMapper.toHoiVien(request);
         hoiVien.setNgayDangKy(new Date());
         hoiVien.setCapDo(danhSachCapDoHoiVien.get(minOfSoGioChoiIndex));
+
+        return hoiVienMapper.toHoiVienResponse(hoiVienRepository.save(hoiVien));
+    }
+
+    public HoiVienResponse updateHoiVien(Integer maHoiVien ,HoiVienUpdateRequest request) {
+        if(hoiVienRepository.existsBySoCCCD(request.getSoCCCD())) {
+            throw new AppException(ErrorCode.SOCCCD_EXISTED);
+        }
+
+        HoiVien hoiVien = hoiVienRepository.findById(maHoiVien).orElseThrow(() -> new AppException(ErrorCode.HOIVIEN_NOT_EXISTED));
+
+        hoiVien.setHoTen(request.getHoTen());
+
+        hoiVien.setEmail(request.getEmail());
+
+        hoiVien.setSoDienThoai(request.getSoDienThoai());
+
+        hoiVien.setSoCCCD(request.getSoCCCD());
 
         return hoiVienMapper.toHoiVienResponse(hoiVienRepository.save(hoiVien));
     }

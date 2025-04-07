@@ -1,6 +1,7 @@
 package com.group1.vipbilliardspayment.mapper;
 
 import com.group1.vipbilliardspayment.dto.request.HoiVienCreateRequest;
+import com.group1.vipbilliardspayment.dto.request.HoiVienUpdateRequest;
 import com.group1.vipbilliardspayment.dto.response.HoiVienResponse;
 import com.group1.vipbilliardspayment.entity.CapDoHoiVien;
 import com.group1.vipbilliardspayment.entity.HoiVien;
@@ -19,4 +20,6 @@ public interface HoiVienMapper {
     }
 
     HoiVien toHoiVien(HoiVienCreateRequest hoiVienCreateRequest);
+
+    HoiVien toHoiVien(HoiVienUpdateRequest hoiVienUpdateRequest);
 }

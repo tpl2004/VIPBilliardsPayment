@@ -33,7 +33,7 @@ public class HoiVien {
     String soCCCD;
 
     @Column(name = "SoGioChoi")
-    double soGioChoi;
+    Double soGioChoi;
 
     @Column(name = "NgayDangKy")
     Date ngayDangKy;
