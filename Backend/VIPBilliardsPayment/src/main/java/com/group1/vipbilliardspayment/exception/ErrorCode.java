@@ -45,6 +45,7 @@ public enum ErrorCode {
     MATHANGTRONGHOADON_NOTEXISTED(16, "Mat hang trong hoa don is not existed"),
     HOADON_CANNOTTPAY(18, "Hoa don can not pay"),
     MATHANGTRONGHOADON_NOT_EXISTED(15, "Mat hang trong hoa don is not existed"),
+    HOADON_PAID(17, "Hoa Don is paid")
 
     ;
 

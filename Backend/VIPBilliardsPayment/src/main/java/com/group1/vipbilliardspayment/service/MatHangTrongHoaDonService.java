@@ -26,22 +26,20 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class MatHangTrongHoaDonService {
     MatHangTrongHoaDonRepository matHangTrongHoaDonRepository;
-
     MatHangRepository matHangRepository;
-
     HoaDonRepository hoaDonRepository;
-
     MatHangTrongHoaDonMapper matHangTrongHoaDonMapper;
 
     public MatHangTrongHoaDonResponse updateMatHangTrongHoaDon(MatHangTrongHoaDonUpdateRequest request) {
         MatHang matHang = matHangRepository.findById(request.getMaHang()).orElseThrow(() -> new AppException(ErrorCode.MATHANGTRONGHOADON_NOT_EXISTED));
 
         HoaDon hoaDon = hoaDonRepository.findById(request.getMaHoaDon()).orElseThrow(() -> new AppException(ErrorCode.MATHANGTRONGHOADON_NOT_EXISTED));
+        if(hoaDon.isTrangThai()) {
+            throw new AppException(ErrorCode.HOADON_PAID);
+        }
 
         MatHangTrongHoaDonId matHangTrongHoaDonId = new MatHangTrongHoaDonId(matHang, hoaDon);
-
         MatHangTrongHoaDon matHangTrongHoaDon = matHangTrongHoaDonRepository.findById(matHangTrongHoaDonId).orElseThrow(() -> new AppException(ErrorCode.MATHANGTRONGHOADON_NOT_EXISTED));
-
         matHangTrongHoaDon.setSoLuong(request.getSoLuong());
 
         return matHangTrongHoaDonMapper.toMatHangTrongHoaDonResponse(matHangTrongHoaDonRepository.save(matHangTrongHoaDon));
@@ -51,11 +49,12 @@ public class MatHangTrongHoaDonService {
         MatHang matHang = matHangRepository.findById(maHang).orElseThrow(() -> new AppException(ErrorCode.MATHANGTRONGHOADON_NOT_EXISTED));
 
         HoaDon hoaDon = hoaDonRepository.findById(maHoaDon).orElseThrow(() -> new AppException(ErrorCode.MATHANGTRONGHOADON_NOT_EXISTED));
+        if(hoaDon.isTrangThai()) {
+            throw new AppException(ErrorCode.HOADON_PAID);
+        }
 
         MatHangTrongHoaDonId matHangTrongHoaDonId = new MatHangTrongHoaDonId(matHang, hoaDon);
-
         MatHangTrongHoaDon matHangTrongHoaDon = matHangTrongHoaDonRepository.findById(matHangTrongHoaDonId).orElseThrow(() -> new AppException(ErrorCode.MATHANGTRONGHOADON_NOT_EXISTED));
-
         matHangTrongHoaDonRepository.delete(matHangTrongHoaDon);
 
         return "Deleted successfully";
@@ -87,7 +86,7 @@ public class MatHangTrongHoaDonService {
 
         if(matHangTrongHoaDonRepository.existsById(matHangTrongHoaDonId)) {
             MatHangTrongHoaDon matHangTrongHoaDon = matHangTrongHoaDonRepository.findById(matHangTrongHoaDonId)
-                    .orElseThrow(() -> new AppException(ErrorCode.MATHANGTRONGHOADON_NOTEXISTED));
+                    .orElseThrow(() -> new AppException(ErrorCode.MATHANGTRONGHOADON_NOT_EXISTED));
 
             matHangTrongHoaDon.setSoLuong(matHangTrongHoaDon.getSoLuong() + matHangTrongHoaDonCreateRequest.getSoLuong());
 
