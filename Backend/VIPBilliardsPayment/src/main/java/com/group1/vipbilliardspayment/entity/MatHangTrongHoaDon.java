@@ -35,5 +35,5 @@ public class MatHangTrongHoaDon {
     HoaDon hoaDon;
     
     @Column(name = "SoLuong")
-    int soLuong;
+    Integer soLuong;
 }
