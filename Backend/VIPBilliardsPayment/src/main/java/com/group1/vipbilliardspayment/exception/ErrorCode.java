@@ -37,15 +37,18 @@ public enum ErrorCode {
 	TENDANGNHAP_ALREADY_EXISTS(56, "Username already exists"),
 	SOCCCD_ALREADY_EXISTS(57, "SoCCCD already exists"),
 	UNKNOWN_ERROR(99, "An unknown error occurred"),
-    BANBIDA_NOTEXIST(777, "Ban bida not exist"),
+    BANBIDA_NOTEXIST(777, "Ban bida is not existed"),
     BANBIDA_NOT_AVAILABLE(482, "Ban bida is not available"),
-    HOADON_NOT_EXIST(888, "Hoa don not exist"),
+    HOADON_NOT_EXIST(888, "Hoa don is not existed"),
     CAPDOHOIVIEN_NOTFOUND(14, "Cap do hoi vien is not found"),
     HOIVIEN_NOT_EXISTED(13, "Hoi vien is not existed"),
-    HOADON_CANNOTTPAY(18, "Hoa don can not pay"),
+    HOADON_CANNOTTPAY(18, "Hoa don can not be paid"),
     MATHANGTRONGHOADON_NOT_EXISTED(15, "Mat hang trong hoa don is not existed"),
     HOADON_PAID(17, "Hoa Don is paid"),
-    MATHANGTRONGHOADON_EXISTED(16, "Mat hang trong hoa don is existed")
+    MATHANGTRONGHOADON_EXISTED(16, "Mat hang trong hoa don is existed"),
+    CHUQUAN_TENDANGNHAP_NOT_EXISTED(20, "Ten dang nhap of chu quan is not existed"),
+    MATKHAU_WRONG(22, "Mat khau is wrong"),
+    THUNGAN_TENDANGNHAP_NOT_EXISTED(24, "Ten dang nhap of thu ngan is not existed")
 
     ;
 

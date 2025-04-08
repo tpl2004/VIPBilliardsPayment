@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.group1.vipbilliardspayment.dto.request.ThuNganCreateRequest;
@@ -68,7 +70,9 @@ public class ThuNganService {
 			tn.setSoDienThoai(thungan_.getSoDienThoai());
 			tn.setSoCCCD(thungan_.getSoCCCD());
 			tn.setTenDangNhap(thungan_.getTenDangNhap());
-			tn.setMatKhau(thungan_.getMatKhau());
+
+			PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+			tn.setMatKhau(passwordEncoder.encode(thungan_.getMatKhau()));
 			
 			tn = thuNgan.save(tn);
 			
