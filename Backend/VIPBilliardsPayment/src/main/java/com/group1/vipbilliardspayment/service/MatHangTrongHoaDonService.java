@@ -76,21 +76,26 @@ public class MatHangTrongHoaDonService {
     }
 
     public MatHangTrongHoaDonResponse createMatHangTrongHoaDon(MatHangTrongHoaDonCreateRequest matHangTrongHoaDonCreateRequest) {
-        MatHang matHang = matHangRepository.findById(matHangTrongHoaDonCreateRequest.getMaHang())
-                .orElseThrow(() -> new AppException(ErrorCode.MATHANG_NOTEXIST));
-
         HoaDon hoaDon = hoaDonRepository.findById(matHangTrongHoaDonCreateRequest.getMaHoaDon())
                 .orElseThrow(() -> new AppException(ErrorCode.HOADON_NOT_EXIST));
+
+        if(hoaDon.isTrangThai()) {
+            throw new AppException(ErrorCode.HOADON_PAID);
+        }
+
+        MatHang matHang = matHangRepository.findById(matHangTrongHoaDonCreateRequest.getMaHang())
+                .orElseThrow(() -> new AppException(ErrorCode.MATHANG_NOTEXIST));
 
         MatHangTrongHoaDonId matHangTrongHoaDonId = new MatHangTrongHoaDonId(matHang, hoaDon);
 
         if(matHangTrongHoaDonRepository.existsById(matHangTrongHoaDonId)) {
-            MatHangTrongHoaDon matHangTrongHoaDon = matHangTrongHoaDonRepository.findById(matHangTrongHoaDonId)
-                    .orElseThrow(() -> new AppException(ErrorCode.MATHANGTRONGHOADON_NOT_EXISTED));
-
-            matHangTrongHoaDon.setSoLuong(matHangTrongHoaDon.getSoLuong() + matHangTrongHoaDonCreateRequest.getSoLuong());
-
-            return matHangTrongHoaDonMapper.toMatHangTrongHoaDonResponse(matHangTrongHoaDonRepository.save(matHangTrongHoaDon));
+//            MatHangTrongHoaDon matHangTrongHoaDon = matHangTrongHoaDonRepository.findById(matHangTrongHoaDonId)
+//                    .orElseThrow(() -> new AppException(ErrorCode.MATHANGTRONGHOADON_NOT_EXISTED));
+//
+//            matHangTrongHoaDon.setSoLuong(matHangTrongHoaDon.getSoLuong() + matHangTrongHoaDonCreateRequest.getSoLuong());
+//
+//            return matHangTrongHoaDonMapper.toMatHangTrongHoaDonResponse(matHangTrongHoaDonRepository.save(matHangTrongHoaDon));
+            throw new AppException(ErrorCode.MATHANGTRONGHOADON_EXISTED);
         }
         else {
             MatHangTrongHoaDon matHangTrongHoaDon = MatHangTrongHoaDon.builder()
