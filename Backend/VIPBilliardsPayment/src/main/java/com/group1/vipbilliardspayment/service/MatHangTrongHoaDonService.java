@@ -31,12 +31,12 @@ public class MatHangTrongHoaDonService {
     MatHangTrongHoaDonMapper matHangTrongHoaDonMapper;
 
     public MatHangTrongHoaDonResponse updateMatHangTrongHoaDon(MatHangTrongHoaDonUpdateRequest request) {
-        MatHang matHang = matHangRepository.findById(request.getMaHang()).orElseThrow(() -> new AppException(ErrorCode.MATHANGTRONGHOADON_NOT_EXISTED));
-
         HoaDon hoaDon = hoaDonRepository.findById(request.getMaHoaDon()).orElseThrow(() -> new AppException(ErrorCode.MATHANGTRONGHOADON_NOT_EXISTED));
         if(hoaDon.isTrangThai()) {
             throw new AppException(ErrorCode.HOADON_PAID);
         }
+
+        MatHang matHang = matHangRepository.findById(request.getMaHang()).orElseThrow(() -> new AppException(ErrorCode.MATHANGTRONGHOADON_NOT_EXISTED));
 
         MatHangTrongHoaDonId matHangTrongHoaDonId = new MatHangTrongHoaDonId(matHang, hoaDon);
         MatHangTrongHoaDon matHangTrongHoaDon = matHangTrongHoaDonRepository.findById(matHangTrongHoaDonId).orElseThrow(() -> new AppException(ErrorCode.MATHANGTRONGHOADON_NOT_EXISTED));
@@ -46,12 +46,12 @@ public class MatHangTrongHoaDonService {
     }
 
     public String deleteMatHangTrongHoaDon(Integer maHang, Integer maHoaDon) {
-        MatHang matHang = matHangRepository.findById(maHang).orElseThrow(() -> new AppException(ErrorCode.MATHANGTRONGHOADON_NOT_EXISTED));
-
         HoaDon hoaDon = hoaDonRepository.findById(maHoaDon).orElseThrow(() -> new AppException(ErrorCode.MATHANGTRONGHOADON_NOT_EXISTED));
         if(hoaDon.isTrangThai()) {
             throw new AppException(ErrorCode.HOADON_PAID);
         }
+
+        MatHang matHang = matHangRepository.findById(maHang).orElseThrow(() -> new AppException(ErrorCode.MATHANGTRONGHOADON_NOT_EXISTED));
 
         MatHangTrongHoaDonId matHangTrongHoaDonId = new MatHangTrongHoaDonId(matHang, hoaDon);
         MatHangTrongHoaDon matHangTrongHoaDon = matHangTrongHoaDonRepository.findById(matHangTrongHoaDonId).orElseThrow(() -> new AppException(ErrorCode.MATHANGTRONGHOADON_NOT_EXISTED));
