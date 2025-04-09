@@ -35,6 +35,7 @@ public class HoiVienService {
                     .soCCCD(i.getSoCCCD())
                     .ngayDangKy(i.getNgayDangKy())
                     .tenCapDo(i.getCapDo().getTenCapDo())
+                    .soGioChoi(i.getSoGioChoi())
                     .build();
             danhSachHoiVienResponse.add(hoiVienResponse);
         }

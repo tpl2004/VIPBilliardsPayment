@@ -11,6 +11,8 @@ import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.crypto.spec.SecretKeySpec;
 
@@ -29,11 +31,10 @@ public class SecurityConfig {
     public String[] ADMIN_GET_ENPOINTS = { 
         "banbida/getallbanbida",
         "thungan/getallthungan",
-        "hoadon", "hoadon/findbydate",
+        "hoadon/findbydate",
         "mathang",
         "loaiban",
         "capdohoivien",
-        "hoivien" 
     };
 
     public String[] ADMIN_POST_ENPOINTS = { 
@@ -54,11 +55,19 @@ public class SecurityConfig {
     };
 
     // thu ngan enpoints
-    public String[] USER_GET_ENPOINTS = { "banbida/getallbanbida", "hoadon", "hoivien" };
+    public String[] USER_GET_ENPOINTS = { 
+        "banbida/getallbanbidachuaxoa",
+    };
 
-    public String[] USER_POST_ENPOINTS = { "hoadon", "hoivien" };
+    public String[] USER_POST_ENPOINTS = { 
+        "hoadon", 
+        "hoivien" 
+    };
 
-    public String[] USER_PUT_ENPOINTS = { "hoadon", "hoadon/thanhtoan", "hoivien" };
+    public String[] USER_PUT_ENPOINTS = {
+        "hoadon", "hoadon/thanhtoan", 
+        "hoivien" 
+    };
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -75,6 +84,8 @@ public class SecurityConfig {
         http.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())));
 
         http.csrf(AbstractHttpConfigurer::disable);
+        
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
 
         return http.build();
     }
@@ -86,5 +97,16 @@ public class SecurityConfig {
                 .withSecretKey(secretKeySpec)
                 .macAlgorithm(MacAlgorithm.HS512)
                 .build();
+    }
+    
+    public UrlBasedCorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.addAllowedOrigin("*");
+        corsConfiguration.addAllowedHeader("*");
+        corsConfiguration.addAllowedMethod("*");
+        
+        UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
+        urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
+        return urlBasedCorsConfigurationSource;
     }
 }
