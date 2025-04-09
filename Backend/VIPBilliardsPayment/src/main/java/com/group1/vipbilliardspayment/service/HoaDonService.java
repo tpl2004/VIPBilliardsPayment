@@ -148,7 +148,7 @@ public class HoaDonService {
         List<ThongKeDoanhThuTheoNgayResponse> thongKeDoanhThuTheoNgayResponseList = new ArrayList<>();
 
         for(Object[] i : thongKeDoanhThuTheoNgay) {
-            thongKeDoanhThuTheoNgayResponseList.add(new ThongKeDoanhThuTheoNgayResponse((Date) i[1], (Double) i[2]));
+            thongKeDoanhThuTheoNgayResponseList.add(new ThongKeDoanhThuTheoNgayResponse((Date) i[0], (Double) i[1]));
         }
 
         return thongKeDoanhThuTheoNgayResponseList;
