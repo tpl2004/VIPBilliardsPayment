@@ -88,7 +88,7 @@ public class HoaDonService {
     }
 
     public List<HoaDonResponse> findHoaDonByDate(Date createdDate) {
-        List<HoaDon> hoaDonList = hoaDonRepository.findByThoiDiemVao(createdDate);
+        List<HoaDon> hoaDonList = hoaDonRepository.findByDate(createdDate);
 
         List<HoaDonResponse> hoaDonResponseList = new ArrayList<>();
 
