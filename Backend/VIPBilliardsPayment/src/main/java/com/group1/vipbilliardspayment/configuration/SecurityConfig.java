@@ -20,34 +20,38 @@ public class SecurityConfig {
     @Value("${jwt.signerKey}")
     String signerKey;
 
-    public String[] PUBLIC_POST_ENPOINTS = { "authentication/chuquantoken", "authentication/thungantoken",
-            "authentication/introspect" };
+    public String[] PUBLIC_POST_ENPOINTS = { 
+        "authentication/chuquantoken", "authentication/thungantoken",
+        "authentication/introspect" 
+    };
 
     // chu quan enpoints
     public String[] ADMIN_GET_ENPOINTS = { 
-            "banbida/getallbanbida",
-            "thungan/getallthungan",
-            "hoadon", "hoadon/findbydate",
-            "mathang",
-            "loaiban",
-            "capdohoivien",
-            "hoivien" 
+        "banbida/getallbanbida",
+        "thungan/getallthungan",
+        "hoadon", "hoadon/findbydate",
+        "mathang",
+        "loaiban",
+        "capdohoivien",
+        "hoivien" 
     };
 
-    public String[] ADMIN_POST_ENPOINTS = { "banbida/thembanbida",
-            "thungan/timthungan", "thungan/getthunganbytendangnhap", "thungan/themthungan",
-            "thungan/updatethungan",
-            "mathang",
-            "loaiban",
-            "capdohoivien",
-             "hoadon/thongke",
-        };
+    public String[] ADMIN_POST_ENPOINTS = { 
+        "banbida/thembanbida",
+        "thungan/timthungan", "thungan/getthunganbytendangnhap", "thungan/themthungan",
+        "mathang",
+        "loaiban",
+        "capdohoivien",
+        "hoadon/thongke",
+    };
 
-    public String[] ADMIN_PUT_ENPOINTS = { "banbida/xoabanbida",
-            "thungan/updatethungan",
-            "mathang",
-            "loaiban",
-            "capdohoivien" };
+    public String[] ADMIN_PUT_ENPOINTS = { 
+        "banbida/xoabanbida",
+        "thungan/updatethungan",
+        "mathang",
+        "loaiban",
+        "capdohoivien" 
+    };
 
     // thu ngan enpoints
     public String[] USER_GET_ENPOINTS = { "banbida/getallbanbida", "hoadon", "hoivien" };

@@ -41,7 +41,7 @@ public class ThuNganController {
 	@PostMapping("/timthungan")
 	ApiResponse<List<ThuNganResponse>> FindThuNganByHoTen(@RequestBody Map<String, Object> hoTen) {
 		return ApiResponse.<List<ThuNganResponse>>builder()
-				.result(thuNganService.FindThuNganByHoTen(hoTen.get("HoTen").toString())).build();
+				.result(thuNganService.FindThuNganByHoTen(hoTen.get("hoTen").toString())).build();
 	}
 
 	@PostMapping("/getthunganbytendangnhap")
