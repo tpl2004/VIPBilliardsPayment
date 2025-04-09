@@ -21,7 +21,7 @@ import java.text.ParseException;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/authentication")
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthenticationController {
     AuthenticationService authenticationService;
 
@@ -40,7 +40,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/introspect")
-    ApiResponse<IntrospectResponse> authenticate(@RequestBody @Valid IntrospectRequest request) throws ParseException, JOSEException {
+    public ApiResponse<IntrospectResponse> authenticate(@RequestBody @Valid IntrospectRequest request) throws ParseException, JOSEException {
         return ApiResponse.<IntrospectResponse>builder()
                 .result(authenticationService.introspect(request))
                 .build();

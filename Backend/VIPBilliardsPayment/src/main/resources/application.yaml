@@ -15,3 +15,6 @@ spring:
       hibernate:
         physical_naming_strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
+
+jwt:
+  signerKey: "4/nd4aouu5+SOFdC87WsxyAtIj9dxEWfvJL/Tl3e4WTN29aLOlnTbSHUZ3boSZKu"
