@@ -19,7 +19,8 @@ import java.util.Optional;
 public interface HoaDonRepository extends JpaRepository<HoaDon, Integer> {
     public boolean existsByMaHoaDon(Integer maHoaDon);
 
-    public List<HoaDon> findByThoiDiemVao(Date createdDate);
+    @Query("SELECT e FROM HoaDon e WHERE CAST(e.thoiDiemVao as DATE) = :createdDate")
+    public List<HoaDon> findByDate(@Param("createdDate") Date createdDate);
 
     public List<HoaDon> findByBanBida(BanBida banBida);
 

@@ -34,7 +34,7 @@ BEGIN
 				SELECT		CAST(h.ThoiDiemVao AS DATE) AS [Ngày],
 							ISNULL(SUM(h.TongTien), 0) AS DoanhThu
 				FROM		HoaDon AS h
-				WHERE		CAST(h.ThoiDiemVao AS DATE) BETWEEN @NgayBatDau AND @NgayKetThuc
+				WHERE		CAST(h.ThoiDiemVao AS DATE)0 BETWEEN @NgayBatDau AND @NgayKetThuc
 				GROUP BY	CAST(h.ThoiDiemVao AS DATE)
 				) as t2 ON t1.Ngày = t2.Ngày
 END
