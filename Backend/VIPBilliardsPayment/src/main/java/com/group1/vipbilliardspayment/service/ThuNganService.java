@@ -86,6 +86,7 @@ public class ThuNganService {
 	
 	public ThuNganResponse UpdateThuNgan(Integer maThuNgan, ThuNganUpdateRequest thungan_)
 	{
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
 		Optional<ThuNgan> tn = thuNgan.findById(maThuNgan);
 		if(!tn.isPresent())
 		{
@@ -99,7 +100,7 @@ public class ThuNganService {
 			thungan.setEmail(thungan_.getEmail());
 			thungan.setSoCCCD(thungan_.getSoCCCD());
 			thungan.setSoDienThoai(thungan_.getSoDienThoai());
-			thungan.setMatKhau(thungan_.getMatKhau());
+			thungan.setMatKhau(passwordEncoder.encode(thungan_.getMatKhau()));
 			
 			thungan = thuNgan.save(thungan);
 			return thuNganMapper.toThuNganReponse(thungan);	

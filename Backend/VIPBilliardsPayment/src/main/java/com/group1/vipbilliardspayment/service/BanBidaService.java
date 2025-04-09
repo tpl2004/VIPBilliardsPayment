@@ -67,7 +67,7 @@ public class BanBidaService {
 		if (ban.isPresent()) {
 			try {
 				BanBida banbida_ = ban.get();
-				banbida_.setTrangThai(0);
+				banbida_.setTrangThai(2);
 				banbida_ = banBidaRepository.save(banbida_);
 				return banBidaMapper.toBanBidaResponse(banbida_);
 			} catch (Exception e) {
