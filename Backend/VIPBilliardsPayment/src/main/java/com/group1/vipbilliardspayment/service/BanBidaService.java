@@ -38,7 +38,7 @@ public class BanBidaService {
 
 	public List<BanBidaResponse> getAllBanBidaChuaXoa() {
 		List<BanBida> lstBanBida = banBidaRepository.findAll();
-		return lstBanBida.stream().filter(ban_ -> ban_.getTrangThai() != -1).map(banBidaMapper::toBanBidaResponse)
+		return lstBanBida.stream().filter(ban_ -> ban_.getTrangThai() != 2).map(banBidaMapper::toBanBidaResponse)
 				.collect(Collectors.toList());
 	}
 
