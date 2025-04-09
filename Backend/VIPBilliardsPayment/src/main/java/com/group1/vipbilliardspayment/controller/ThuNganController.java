@@ -56,7 +56,7 @@ public class ThuNganController {
 			.build();
 	}
 	
-	@PostMapping("/updatethungan/{maThuNgan}")
+	@PutMapping("/updatethungan/{maThuNgan}")
 	ApiResponse<ThuNganResponse> UpdateThuNgan(@PathVariable Integer maThuNgan, @RequestBody @Valid ThuNganUpdateRequest request)
 	{
 		return ApiResponse.<ThuNganResponse>builder()

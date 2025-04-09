@@ -12,6 +12,12 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @Table(name = "ChuQuan")
 public class ChuQuan extends NguoiDung{
+    private static String role = "ADMIN";
+
+    public static String getRole() {
+        return role;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MaChuQuan")

@@ -15,6 +15,12 @@ import java.util.List;
 @Builder
 @Table(name = "ThuNgan")
 public class ThuNgan extends NguoiDung{
+    private static String role = "USER";
+
+    public static String getRole() {
+        return role;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MaThuNgan")

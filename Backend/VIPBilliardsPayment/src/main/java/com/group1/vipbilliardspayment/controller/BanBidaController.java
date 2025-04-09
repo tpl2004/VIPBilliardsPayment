@@ -2,12 +2,7 @@ package com.group1.vipbilliardspayment.controller;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.group1.vipbilliardspayment.dto.request.BanBidaCreateRequest;
 import com.group1.vipbilliardspayment.dto.response.ApiResponse;
@@ -46,7 +41,7 @@ public class BanBidaController {
 			.build();
 	}
 
-	@PostMapping("/xoabanbida/{soBan}")
+	@PutMapping("/xoabanbida/{soBan}")
 	ApiResponse<BanBidaResponse> xoaBanBida(@PathVariable(name = "soBan") Integer soBan) {
 		return ApiResponse.<BanBidaResponse>builder()
 			.result(banBidaService.xoaBanBida(soBan))

@@ -4,7 +4,9 @@ import com.group1.vipbilliardspayment.dto.request.AuthenticationRequest;
 import com.group1.vipbilliardspayment.dto.request.IntrospectRequest;
 import com.group1.vipbilliardspayment.dto.response.AuthenticationResponse;
 import com.group1.vipbilliardspayment.dto.response.IntrospectResponse;
+import com.group1.vipbilliardspayment.entity.ChuQuan;
 import com.group1.vipbilliardspayment.entity.NguoiDung;
+import com.group1.vipbilliardspayment.entity.ThuNgan;
 import com.group1.vipbilliardspayment.exception.AppException;
 import com.group1.vipbilliardspayment.exception.ErrorCode;
 import com.group1.vipbilliardspayment.repository.ChuQuanRepository;
@@ -72,12 +74,16 @@ public class AuthenticationService {
     public String generateToken(NguoiDung nguoiDung) {
         JWSHeader jwsHeader = new JWSHeader(JWSAlgorithm.HS512);
 
+        String role;
+        if(nguoiDung instanceof ChuQuan) role = ChuQuan.getRole();
+        else role = ThuNgan.getRole();
+
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
                 .subject(nguoiDung.getTenDangNhap())
                 .issuer("vipbilliards.com")
                 .issueTime(new Date())
                 .expirationTime(new Date(Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()))
-                // add them roles sau
+                .claim("scope", role)
                 .build();
 
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());
