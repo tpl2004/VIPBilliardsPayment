@@ -70,7 +70,7 @@ public class HoaDonController {
                 .build();
     }
 
-    @GetMapping("/thongke")
+    @PostMapping("/thongke")
     public ApiResponse<List<ThongKeDoanhThuTheoNgayResponse>> thongKeDoanhThuTheoNgay(@RequestBody @Valid ThongKeDoanhThuTheoNgayRequest thongKeDoanhThuTheoNgayRequest) {
         return ApiResponse.<List<ThongKeDoanhThuTheoNgayResponse>>builder()
                 .result(hoaDonService.thongKeDoanhThuTheoNgay(thongKeDoanhThuTheoNgayRequest))

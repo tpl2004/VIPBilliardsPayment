@@ -20,48 +20,53 @@ public class SecurityConfig {
     @Value("${jwt.signerKey}")
     String signerKey;
 
-    public String[] PUBLIC_POST_ENPOINTS = {"authentication/chuquantoken", "authentication/thungantoken", "authentication/introspect"};
+    public String[] PUBLIC_POST_ENPOINTS = { "authentication/chuquantoken", "authentication/thungantoken",
+            "authentication/introspect" };
 
-    //chu quan enpoints
-    public String[] ADMIN_GET_ENPOINTS = {"banbida/getallbanbida",
+    // chu quan enpoints
+    public String[] ADMIN_GET_ENPOINTS = { 
+            "banbida/getallbanbida",
             "thungan/getallthungan",
-            "hoadon", "hoadon/thongke", "hoadon/findbydate",
+            "hoadon", "hoadon/findbydate",
             "mathang",
             "loaiban",
             "capdohoivien",
-            "hoivien"};
+            "hoivien" 
+    };
 
-    public String[] ADMIN_POST_ENPOINTS = {"banbida/thembanbida",
-            "thungan/timthungan", "thungan/getthunganbytendangnhap", "thungan/themthungan", "thungan/updatethungan",
-            "mathang",
-            "loaiban",
-            "capdohoivien"};
-
-    public String[] ADMIN_PUT_ENPOINTS = {"banbida/xoabanbida",
+    public String[] ADMIN_POST_ENPOINTS = { "banbida/thembanbida",
+            "thungan/timthungan", "thungan/getthunganbytendangnhap", "thungan/themthungan",
             "thungan/updatethungan",
             "mathang",
             "loaiban",
-            "capdohoivien"};
+            "capdohoivien",
+             "hoadon/thongke",
+        };
 
+    public String[] ADMIN_PUT_ENPOINTS = { "banbida/xoabanbida",
+            "thungan/updatethungan",
+            "mathang",
+            "loaiban",
+            "capdohoivien" };
 
-    //thu ngan enpoints
-    public String[] USER_GET_ENPOINTS = {"banbida/getallbanbida", "hoadon", "hoivien"};
+    // thu ngan enpoints
+    public String[] USER_GET_ENPOINTS = { "banbida/getallbanbida", "hoadon", "hoivien" };
 
-    public String[] USER_POST_ENPOINTS = {"hoadon", "hoivien"};
+    public String[] USER_POST_ENPOINTS = { "hoadon", "hoivien" };
 
-    public String[] USER_PUT_ENPOINTS = {"hoadon", "hoadon/thanhtoan", "hoivien"};
+    public String[] USER_PUT_ENPOINTS = { "hoadon", "hoadon/thanhtoan", "hoivien" };
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(request ->
-                request.requestMatchers(HttpMethod.POST, PUBLIC_POST_ENPOINTS).permitAll()
-                        .requestMatchers(HttpMethod.GET, ADMIN_GET_ENPOINTS).hasAuthority("SCOPE_ADMIN")
-                        .requestMatchers(HttpMethod.POST, ADMIN_POST_ENPOINTS).hasAuthority("SCOPE_ADMIN")
-                        .requestMatchers(HttpMethod.PUT, ADMIN_PUT_ENPOINTS).hasAuthority("SCOPE_ADMIN")
-                        .requestMatchers(HttpMethod.GET, USER_GET_ENPOINTS).hasAuthority("SCOPE_USER")
-                        .requestMatchers(HttpMethod.POST, USER_POST_ENPOINTS).hasAuthority("SCOPE_USER")
-                        .requestMatchers(HttpMethod.PUT, USER_PUT_ENPOINTS).hasAuthority("SCOPE_USER")
-                        .anyRequest().authenticated());
+        http.authorizeHttpRequests(request -> 
+            request.requestMatchers(HttpMethod.POST, PUBLIC_POST_ENPOINTS).permitAll()
+                .requestMatchers(HttpMethod.GET, ADMIN_GET_ENPOINTS).hasAuthority("SCOPE_ADMIN")
+                .requestMatchers(HttpMethod.POST, ADMIN_POST_ENPOINTS).hasAuthority("SCOPE_ADMIN")
+                .requestMatchers(HttpMethod.PUT, ADMIN_PUT_ENPOINTS).hasAuthority("SCOPE_ADMIN")
+                .requestMatchers(HttpMethod.GET, USER_GET_ENPOINTS).hasAuthority("SCOPE_USER")
+                .requestMatchers(HttpMethod.POST, USER_POST_ENPOINTS).hasAuthority("SCOPE_USER")
+                .requestMatchers(HttpMethod.PUT, USER_PUT_ENPOINTS).hasAuthority("SCOPE_USER")
+                .anyRequest().authenticated());
 
         http.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())));
 

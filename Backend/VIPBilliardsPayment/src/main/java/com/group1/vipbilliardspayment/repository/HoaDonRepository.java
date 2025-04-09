@@ -23,6 +23,9 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Integer> {
 
     public List<HoaDon> findByBanBida(BanBida banBida);
 
-    @Query(value = "proc_ThongKeDoanhThuTheoNgay(:NgayBatDau, :NgayKetThuc", nativeQuery = true)
+    @Query(
+        value = "exec proc_ThongKeDoanhThuTheoNgay @NgayBatDau = :NgayBatDau, @NgayKetThuc = :NgayKetThuc",
+        nativeQuery = true
+    )
     public List<Object[]> thongKeDoanhThuTheoNgay(@Param("NgayBatDau") Date ngayBatDau, @Param("NgayKetThuc") Date ngayKetThuc);
 }
