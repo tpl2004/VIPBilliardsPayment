@@ -72,7 +72,10 @@ body {
     font-size: 0.8rem;
     margin-top: 26px;
     text-decoration: none;
-    align-self:flex-end;
+}
+
+.login-form > .chu-quan-login:hover {
+    color: white;
 }
 
 @media screen and (width <= 1024px) {
