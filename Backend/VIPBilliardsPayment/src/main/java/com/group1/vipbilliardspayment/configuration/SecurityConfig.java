@@ -61,12 +61,18 @@ public class SecurityConfig {
 
     public String[] USER_POST_ENPOINTS = { 
         "hoadon", 
-        "hoivien" 
+        "hoivien",
+        "mathangtronghoadon",
     };
 
     public String[] USER_PUT_ENPOINTS = {
         "hoadon", "hoadon/thanhtoan", 
-        "hoivien" 
+        "hoivien",
+        "mathangtronghoadon"
+    };
+    
+    public String[] USER_DELETE_ENPOINTS = {
+        "mathangtronghoadon",
     };
 
     @Bean
@@ -79,6 +85,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, USER_GET_ENPOINTS).hasAuthority("SCOPE_USER")
                 .requestMatchers(HttpMethod.POST, USER_POST_ENPOINTS).hasAuthority("SCOPE_USER")
                 .requestMatchers(HttpMethod.PUT, USER_PUT_ENPOINTS).hasAuthority("SCOPE_USER")
+                .requestMatchers(HttpMethod.DELETE, USER_DELETE_ENPOINTS).hasAuthority("SCOPE_USER")
                 .anyRequest().authenticated());
 
         http.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())));
