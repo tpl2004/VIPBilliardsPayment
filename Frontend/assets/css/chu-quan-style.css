@@ -1,0 +1,93 @@
+body {
+    position: relative;
+    background-image: url(../images/dang-nhap-chu-quan-background.jpg);
+    background-size: cover;
+    height: 100vh;
+}
+
+.login-form {
+    box-sizing: border-box;
+    width: 350px;
+    height: 400px;
+    border-radius: 10px;
+    position: absolute;
+    top: 20vh;
+    right: 20%;
+    padding: 20px 15px;
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.5);
+}
+
+.login-form > .title {
+    color: var(--color-one);
+}
+
+.login-form > .request {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.login-form label {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--color-one);
+}
+
+.login-form input {
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px solid gainsboro;
+    border-radius: 5px;
+    outline: none; 
+}
+
+.login-form input:focus {
+    box-shadow: 0 0 10px 3px #15929b56;
+}
+
+.login-form .submit {
+    padding: 5px;
+    border: 2px solid var(--color-one);
+    border-radius: 5px;
+    margin-top: 20px;
+    background-color: var(--color-one);
+    color: white;
+    font-weight: 500;
+}
+
+.login-form .submit:hover {
+    background-color: white;
+    border-color: var(--color-one);
+    color: var(--color-one);
+}
+
+.login-form .submit:active {
+    box-shadow: 0 0 10px 3px #15929b56;
+}
+
+.login-form > .convert {
+    color: var(--color-one);
+    margin-top: 26px;
+    font-size: 0.8rem;
+    text-decoration: none;
+}
+
+.login-form > .convert:hover {
+    color: white;
+}
+
+@media screen and (width <= 1024px) {
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-form {
+        position: static;
+    }
+}
