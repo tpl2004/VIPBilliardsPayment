@@ -1,22 +1,22 @@
 body {
-    height: 100vh;
     position: relative;
-    background-image: url(../images/billiards-dangnhap.jpg);
+    background-image: url(../images/dang-nhap-chu-quan-background.jpg);
     background-size: cover;
+    height: 100vh;
 }
 
 .login-form {
-    background-color: rgba(0, 0, 0, 0.4);
     box-sizing: border-box;
-    height: 400px;
     width: 350px;
+    height: 400px;
+    border-radius: 10px;
     position: absolute;
     top: 20vh;
     right: 20%;
+    padding: 20px 15px;
     display: flex;
     flex-direction: column;
-    padding: 20px 15px;
-    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(10px);
     box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.5);
 }
@@ -25,56 +25,58 @@ body {
     color: var(--color-one);
 }
 
-.login-form >.request {
+.login-form > .request {
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
 }
 
-.login-form > .request > .input {
-    margin-top: 5px;
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid gainsboro;
-    outline: none;
-}
-
-.login-form > .request > .label {
+.login-form label {
     font-size: 0.8rem;
     font-weight: bold;
     color: var(--color-one);
 }
 
-.login-form > .submit {
+.login-form input {
+    margin-top: 5px;
     padding: 5px;
-    margin-top: 20px;
-    border: solid 2px var(--color-one);
+    border: 1px solid gainsboro;
     border-radius: 5px;
-    color: white;
+    outline: none; 
+}
+
+.login-form input:focus {
+    box-shadow: 0 0 10px 3px #15929b56;
+}
+
+.login-form .submit {
+    padding: 5px;
+    border: 2px solid var(--color-one);
+    border-radius: 5px;
+    margin-top: 20px;
     background-color: var(--color-one);
+    color: white;
+    font-weight: 500;
 }
 
-.login-form > .submit:hover {
+.login-form .submit:hover {
     background-color: white;
+    border-color: var(--color-one);
     color: var(--color-one);
 }
 
-.login-form > .request > .input:focus {
+.login-form .submit:active {
     box-shadow: 0 0 10px 3px #15929b56;
 }
 
-.login-form > .submit:active {
-    box-shadow: 0 0 10px 3px #15929b56;
-}
-
-.login-form > .chu-quan-login {
+.login-form > .convert {
     color: var(--color-one);
-    font-size: 0.8rem;
     margin-top: 26px;
+    font-size: 0.8rem;
     text-decoration: none;
 }
 
-.login-form > .chu-quan-login:hover {
+.login-form > .convert:hover {
     color: white;
 }
 
@@ -87,6 +89,5 @@ body {
 
     .login-form {
         position: static;
-
     }
 }
