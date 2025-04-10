@@ -72,7 +72,7 @@ public class HoiVienService {
     public HoiVienResponse updateHoiVien(Integer maHoiVien ,HoiVienUpdateRequest request) {
         HoiVien hoiVien = hoiVienRepository.findById(maHoiVien).orElseThrow(() -> new AppException(ErrorCode.HOIVIEN_NOT_EXISTED));
 
-        if(hoiVienRepository.existsBySoCCCD(request.getSoCCCD())) {
+        if(!hoiVien.getSoCCCD().equals(request.getSoCCCD()) &&  hoiVienRepository.existsBySoCCCD(request.getSoCCCD())) {
             throw new AppException(ErrorCode.SOCCCD_EXISTED);
         }
 

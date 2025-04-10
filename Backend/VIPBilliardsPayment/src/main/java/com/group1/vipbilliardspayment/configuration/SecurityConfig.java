@@ -39,7 +39,7 @@ public class SecurityConfig {
 
     public String[] ADMIN_POST_ENPOINTS = { 
         "banbida/thembanbida",
-        "thungan/timthungan", "thungan/getthunganbytendangnhap", "thungan/themthungan",
+        "thungan/timthungan", "thungan/themthungan",
         "mathang",
         "loaiban",
         "capdohoivien",

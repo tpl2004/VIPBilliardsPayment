@@ -57,7 +57,7 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse thuNganAuthentication(AuthenticationRequest request) {
-        var thuNgan = thuNganRepository.findByTenDangNhap(request.getTenDangNhap()).orElseThrow(() -> new AppException(ErrorCode.CHUQUAN_TENDANGNHAP_NOT_EXISTED));
+        var thuNgan = thuNganRepository.findByTenDangNhap(request.getTenDangNhap()).orElseThrow(() -> new AppException(ErrorCode.THUNGAN_TENDANGNHAP_NOT_EXISTED));
 
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         boolean valid = passwordEncoder.matches(request.getMatKhau(), thuNgan.getMatKhau());
