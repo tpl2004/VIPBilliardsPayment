@@ -72,7 +72,7 @@ public class SecurityConfig {
     };
     
     public String[] USER_DELETE_ENPOINTS = {
-        "mathangtronghoadon",
+        "mathangtronghoadon/*/*",
     };
 
     @Bean
