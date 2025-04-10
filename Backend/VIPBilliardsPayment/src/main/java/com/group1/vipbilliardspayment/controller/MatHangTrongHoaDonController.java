@@ -41,8 +41,8 @@ public class MatHangTrongHoaDonController {
                 .build();
     }
 
-    @DeleteMapping
-    public ApiResponse<String> deleteMatHangTrongHoaDon(@RequestBody Integer maHang, @RequestBody Integer maHoaDon) {
+    @DeleteMapping("/{mahoadon}/{mahang}")
+    public ApiResponse<String> deleteMatHangTrongHoaDon(@PathVariable(value = "mahoadon") Integer maHang, @PathVariable(value = "mahang") Integer maHoaDon) {
         return ApiResponse.<String>builder()
                 .result(matHangTrongHoaDonService.deleteMatHangTrongHoaDon(maHang, maHoaDon))
                 .build();
