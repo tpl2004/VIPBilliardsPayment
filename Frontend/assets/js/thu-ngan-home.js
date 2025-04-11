@@ -3,11 +3,13 @@ import * as api from './api-service.js'
 
 const TOKEN = localStorage.getItem(localStorageUserTokenKey);
 
+var logoutBtn = document.querySelector('button[class = "logout"]');
+
 function main() {
 
     checkSignedIn()
     .then(response => {
-
+        handleEvents();
     })
     .catch(ms => {
         window.location = 'index.html';
@@ -43,6 +45,19 @@ function checkSignedIn() {
                     reject("not signed in");
                 }
             })
+        }
+    })
+}
+
+// handle events
+function handleEvents() {
+
+    logoutBtn.addEventListener('click', e => {
+        var isLogOut = confirm("Bạn muốn đăng xuất?");
+        console.log(isLogOut);
+        if(isLogOut) {
+            localStorage.removeItem(localStorageUserTokenKey);
+            window.location.reload();
         }
     })
 }

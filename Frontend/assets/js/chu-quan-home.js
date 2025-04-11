@@ -7,7 +7,7 @@ function main() {
 
     checkSignedIn()
     .then(response => {
-
+        handleEvents();
     })
     .catch(ms => {
         window.location = 'chu-quan-login.html';
@@ -49,4 +49,9 @@ function checkSignedIn() {
             })
         }
     })
+}
+
+// handle events
+function handleEvents() {
+
 }

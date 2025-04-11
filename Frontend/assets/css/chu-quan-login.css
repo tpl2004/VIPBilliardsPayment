@@ -63,6 +63,7 @@ body {
     background-color: white;
     border-color: var(--color-one);
     color: var(--color-one);
+    cursor: pointer;
 }
 
 .login-form .submit:active {
