@@ -1,22 +1,22 @@
 body {
     display: flex;
+    box-sizing: border-box;
 }
 
 .main-taskbar {
-    /* background-color: var(--color-two); */
+    background-color: #eaebef;
     width: 300px;
     display: flex;
     flex-direction: column;
-    border-right: 1px solid var(--color-one);
-    background-color: rgb(0, 0, 0, 0.05);
 }
 
 .logo {
-    background-color: blue;
+    background-color: var(--color-one);
     height: 72px;
 }   
 
 .logo img {
+    margin-left: 4px;
     width: 70px;
     height: 70px;
 }
@@ -24,71 +24,150 @@ body {
 .main-taskbar > .info {
     display: flex;
     flex-direction: column;
+    padding: 14px 10px;
     
 }
 
 .main-taskbar > .info > div:first-child {
-    display: flex;
-    padding-top: 14px;
-    font-size: 18px;
-    font-weight: 400;
-    
-}
-
-.main-taskbar > .info > div:first-child > p {
-    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .main-taskbar > .info > div > label {
     font-size: 18px;
     font-weight: 500;
+    color: var(--text-color);
+}
+
+.main-taskbar > .info > div > p {
+    font-size: 17px;
+    font-weight: 400;
+    padding: 6px 0 6px 8px;
+    margin: 0;
 }
 
 .taskbar-function {
-    background-color: var(--color-one);
+    padding: 4px 0 0 0;
+    background-color: #fff;
 }
 
 .taskbar-function div {
-    padding: 20px 5px;
+    padding: 20px 8px;
     font-size: 20px;
-    font-weight: 600px;
+    font-weight: 500;
+    color: var(--text-color);
+    background-color: #eaebef;
+    border-radius: 2px;
+    border-bottom: 1px solid rgb(0, 0, 0, 0.2);
 }
 
-
-.taskbar-function div:nth-child(n+2){
-    border-top: 1px solid black;
+.taskbar-function div:hover {
+    background-color: var(--color-one);
+    color: #fff;
+    border-color: var(--color-one);
+    cursor: pointer;
 }
+
 .extension {
-    background-color: aquamarine;
+    background-color: #fff;
     display: flex;
     width: calc(100% - 300px);
     flex-direction: column;
 }
 .top-taskbar {
-    background-color: gray;
-    display: flex;
-    background-color: var(--color-two);
+    background-color: var(--color-one);
+    height: 72px;
 }
 .top-taskbar > .xem-danh-sach-ban-bida {
     display: flex;
-    padding: 25px;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    /* display: none; */
 }
 .mo-ban, .cap-nhat-hoa-don, .thanh-toan-hoa-don {
-    margin: 0px 50px 0px 100px;
-    font-weight: 700;
+    padding: 0 10px;
+    font-weight: 600;
     font-size: 18px;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
 }
+
+.mo-ban:hover, .cap-nhat-hoa-don:hover, .thanh-toan-hoa-don:hover {
+    background-color: #fff;
+    color: var(--text-color);
+    border: 1px solid var(--color-one);
+    box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.2);
+}
+
 .top-taskbar > .xem-danh-sach-hoi-vien {
     display: flex;
-    padding: 25px;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    display: none;
 }
 .them-hoi-vien, .cap-nhat-hoi-vien {
-    margin: 0px 50px 0px 100px;
-    font-weight: 700;
+    padding: 0 10px;
+    font-weight: 600;
     font-size: 18px;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.them-hoi-vien:hover
+, .cap-nhat-hoi-vien:hover {
+    background-color: #fff;
+    color: var(--text-color);
+    border: 1px solid var(--color-one);
+    box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.2);
 }
 
 
 .content {
-    background-color: gainsboro;
+    /* background-color: gainsboro; */
+    height: 100vh;
 }
+
+table {
+    width: 100%;
+    padding: 14px 10px;
+    /* background-color: rgb(172, 162, 162); */
+}
+
+table th {
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+table .hang-nd:hover {
+    background-color: #ccc;
+    cursor: pointer;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+table td,
+table th {
+    padding: 14px 10px;
+    color: #8c94a7;
+    text-align: center;
+    font-size: 18px;
+    border: 1px solid #999;
+}
+
+
