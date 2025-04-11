@@ -119,7 +119,7 @@ public class HoaDonService {
 
         hoaDon.setThoiDiemRa(new Date());
 
-        double soGioChoi = (hoaDon.getThoiDiemRa().getTime() - hoaDon.getThoiDiemVao().getTime()) / (double) 1200000;
+        double soGioChoi = (hoaDon.getThoiDiemRa().getTime() - hoaDon.getThoiDiemVao().getTime()) / (double) 3600000;
 
         List<MatHangTrongHoaDonResponse> matHangTrongHoaDonResponseList = matHangTrongHoaDonService.getMatHangTrongHoaDon(hoaDon.getMaHoaDon());
 
