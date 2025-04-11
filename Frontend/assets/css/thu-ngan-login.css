@@ -57,6 +57,7 @@ body {
 .login-form > .submit:hover {
     background-color: white;
     color: var(--color-one);
+    cursor: pointer;
 }
 
 .login-form > .request > .input:focus {
