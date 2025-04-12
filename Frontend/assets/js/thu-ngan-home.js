@@ -3,6 +3,11 @@ import * as api from './api-service.js'
 
 const TOKEN = localStorage.getItem(localStorageUserTokenKey);
 
+var myInfo = {
+    maThuNgan: 1
+}
+var selectedTableNumber = null;
+
 var logoutBtn = document.querySelector('button[class = "logout"]');
 var bodyBanBidaListBox = document.querySelector('.extension .content .ban-bida-list .body-ban-bida-list');
 var showBidaTableListBtn = document.getElementById('show-bida-table-list');
@@ -12,7 +17,10 @@ var functionTaskbars = [showBidaTableListBtn, showBillListBtn, showMemberList];
 var xemDanhSachBanBidaExtendFuncsBox = document.querySelector('.xem-danh-sach-ban-bida');
 var xemDanhSachHoiVienExtendFuncsBox = document.querySelector('.xem-danh-sach-hoi-vien');
 var extendFunctionGroups = [xemDanhSachBanBidaExtendFuncsBox, xemDanhSachHoiVienExtendFuncsBox];
-console.log(extendFunctionGroups)
+var banBidaListBox = document.querySelector('.content .ban-bida-list');
+var contentBoxchilds = document.querySelector('.content').children;
+var functionTaskbarBox = document.querySelector('.function-taskbar');
+var moBanBtn = document.getElementById('mo-ban');
 
 function main() {
 
@@ -20,6 +28,7 @@ function main() {
     .then(response => {
         activeMainFuntion('show-bida-table-list');
         enableExtendFuncGroup('xem-danh-sach-ban-bida');
+        enableContent('ban-bida-list');
         getAllBanBidaChuaXoa()
         .then(response => response.json())
         .then(response => {
@@ -83,10 +92,10 @@ function renderBanBidas(banBidas) {
     var html = banBidas.map((banBida, index) => {
         return `
             <div class="ban-bida">
-                <p>${banBida.soBan}</p>
-                <p>${banBida.trangThai}</p>
-                <p>${banBida.tenLoaiBan}</p>
-                <p>${banBida.donGia}</p>
+                <p name="so-ban">${banBida.soBan}</p>
+                <p name="trang-thai">${(!banBida.trangThai)? 'Khả dụng' : (banBida.trangThai == 1? 'Đang bận' : 'Đã xóa')}</p>
+                <p name="ten-loai-ban">${banBida.tenLoaiBan}</p>
+                <p name="don-gia">${banBida.donGia}</p>
             </div>
         `
     })
@@ -109,17 +118,49 @@ function activeMainFuntion(funcId) {
 // enable a extend function group
 function enableExtendFuncGroup(GroupFuncClass = null) {
     if(GroupFuncClass) {
-        var GroupFunc = document.querySelector('.'+GroupFuncClass);
+        var GroupFunc = document.querySelector('.' + GroupFuncClass);
         if(GroupFunc.classList.contains('disable')) {
             GroupFunc.classList.remove('disable');
         }
     }
     extendFunctionGroups.forEach(extendFuncGroup => {
-        if(extendFuncGroup.className != GroupFuncClass && !extendFuncGroup.classList.contains('disable')) {
+        if(!extendFuncGroup.classList.contains(GroupFuncClass) && !extendFuncGroup.classList.contains('disable')) {
             extendFuncGroup.classList.add('disable');
         }
         // if(extendFuncGroup.className != GroupFuncClass) console.log(extendFuncGroup);
     })
+}
+
+// enable a content
+function enableContent(contentClass) {
+    var content = document.querySelector('.' + contentClass);
+    if(content.classList.contains('disable')) {
+        content.classList.remove('disable');
+    }
+    for(var i = 0; i < contentBoxchilds.length; i++) {
+        if(!contentBoxchilds[i].classList.contains(contentClass)
+            && !contentBoxchilds[i].classList.contains('disable')) {
+            contentBoxchilds[i].classList.add('disable');
+        }
+    }
+}
+
+// tao hoa don
+function createBill() {
+    var options = {
+        method: 'POST',
+
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+        },
+
+        body: JSON.stringify({
+            "soBan": selectedTableNumber,
+            "maThuNgan": myInfo.maThuNgan
+        }),
+    }
+    return fetch(api.hoaDonApi, options)
 }
 
 // handle events
@@ -134,18 +175,64 @@ function handleEvents() {
         }
     })
     
+    functionTaskbarBox.addEventListener('click', e=> {
+        selectedTableNumber = null;
+        console.log(selectedTableNumber);
+    })
+    
     showBidaTableListBtn.addEventListener('click', e => {
         activeMainFuntion(showBidaTableListBtn.id);
-        enableExtendFuncGroup('xem-danh-sach-ban-bida')
+        enableExtendFuncGroup('xem-danh-sach-ban-bida');
+        enableContent('ban-bida-list');
+        getAllBanBidaChuaXoa()
+        .then(response => response.json())
+        .then(response => {
+            renderBanBidas(response.result);
+        })
+
     })
     
     showBillListBtn.addEventListener('click', e => {
         activeMainFuntion(showBillListBtn.id);
         enableExtendFuncGroup(null);
+        enableContent('hoa-don-list');
     })
     
     showMemberList.addEventListener('click', e => {
         activeMainFuntion(showMemberList.id);
         enableExtendFuncGroup('xem-danh-sach-hoi-vien');
+        enableContent('hoi-vien-list');
+    })
+    
+    banBidaListBox.addEventListener('click', e => {
+        var banBida = e.target.closest('.ban-bida');
+        
+        // xu ly khi clich vao mot ban bida
+        if(banBida) {
+            var banDangActive = banBidaListBox.querySelector('.body-ban-bida-list .active');
+            if(banDangActive) banDangActive.classList.remove('active');
+            
+            banBida.classList.add('active');
+            selectedTableNumber = Number.parseInt(banBida.children[0].innerText);
+        }
+    })
+    
+    moBanBtn.addEventListener('click', e=> {
+        if(!confirm("Mở bàn?")) return;
+        createBill()
+        .then(response => response.json())
+        .then(response => {
+            if(response.code == 1000) {
+                console.log(response.result);
+                alert('Đã mở bàn');
+                showBidaTableListBtn.click();
+            } else {
+                return Promise.reject('Mở bàn thất bại');
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            alert('Mở bàn thất bại');
+        })
     })
 }
