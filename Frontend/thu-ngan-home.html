@@ -30,17 +30,17 @@
         </div>
         
         <div class="function-taskbar">
-            <div>
+            <div id="show-bida-table-list">
                 <i class="bi bi-8-circle-fill"></i>
                 <p>Xem danh sách bàn bida</p>
             </div>
-            <div>
+            <div id="show-bill-list">
                 <i class="bi bi-receipt"></i>
                 <p>Xem danh sách bàn hóa đơn</p>
             </div>
-            <div>
+            <div id="show-member-list">
                 <i class="bi bi-person-fill"></i>
-                <p>Xem danh sách bàn hội viên</p>
+                <p>Xem danh sách hội viên</p>
             </div>
         </div>
     </div>
@@ -48,18 +48,150 @@
     <div class="extension">
         <div class="top-taskbar">
             <div class="xem-danh-sach-ban-bida">
-                <div class="mo-ban">Mở bàn</div>
-                <div class="cap-nhat-hoa-don">Cập nhật hóa đơn</div>
-                <div class="thanh-toan-hoa-don">Thanh toán hóa đơn</div>            
+                <div id="mo-ban">Mở bàn</div>
+                <div id="cap-nhat-hoa-don">Cập nhật hóa đơn</div>
+                <div id="thanh-toan-hoa-don">Thanh toán hóa đơn</div>            
             </div>
 
-            <div style="display: none;" class="xem-danh-sach-hoi-vien">
-                <div class="them-hoi-vien">Thêm hội viên</div>
-                <div class="cap-nhat-hoi-vien">Cập nhật hội viên</div>
+            <div class="xem-danh-sach-hoi-vien disable">
+                <div id="them-hoi-vien">Thêm hội viên</div>
+                <div id="cap-nhat-hoi-vien">Cập nhật hội viên</div>
             </div>
         </div>
         
-        <div class="content"></div>
+        <div class="content">
+            <div class="ban-bida-list disable">
+                <div class="header-ban-bida-list">
+                    <p>Số bàn</p>
+                    <p>Trạng thái</p>
+                    <p>Loại bàn</p>
+                    <p>Đơn giá</p>
+                </div>
+
+                <div class="body-ban-bida-list">
+                    <!-- <div class="ban-bida">
+                        <p>1</p>
+                        <p>Khả dụng</p>
+                        <p>Cao cấp</p>
+                        <p>120000</p>
+                    </div> -->
+                </div>
+            </div>
+
+            <div class="bill">
+                <p class="header-bill">THÔNG TIN HÓA ĐƠN</p>
+                <table class="content-bill">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Mã hóa đơn:</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>Thời điểm vào:</td>
+                            <td>25/04/2025 07:05:00</td>
+                        </tr>
+                        <tr>
+                            <td>Thời điểm ra:</td>
+                            <td>25/04/2025 10:05:00</td>
+                        </tr>
+                        <tr>
+                            <td>Số giờ chơi:</td>
+                            <td>02:02:00</td>
+                        </tr>
+                        <tr>
+                            <td>Số bàn:</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>Loại bàn:</td>
+                            <td>Trung cấp</td>
+                        </tr>
+                        <tr>
+                            <td>Đơn giá:</td>
+                            <td>60000</td>
+                        </tr>
+                        <tr>
+                            <td>Tên thu ngân:</td>
+                            <td>Dương Thị Ngọc Huyền</td>
+                        </tr>
+                        <tr>
+                            <td>Tên hội viên:</td>
+                            <td>Trương Văn Tấn Lộc</td>
+                        </tr>
+                        <tr>
+                            <td>Cấp độ:</td>
+                            <td>Pro</td>
+                        </tr>
+                        <tr>
+                            <td>Ưu đãi:</td>
+                            <td>30%</td>
+                        </tr>
+                        <tr>
+                            <td>Tổng tiền:</td>
+                            <td>80000</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="bill-options">
+                    <button id="cancel" type="button">Hủy</button>
+                    <button id="pay" type="button">Thanh toán</button>
+                </div>
+                <!-- <div>
+                    <p>Mã hóa đơn:</p>
+                    <p>1</p>
+                </div>
+                <div>
+                    <p>Thời điểm vào:</p>
+                    <p>25/04/2025 07:05:00</p>
+                </div>
+                <div>
+                    <p>Thời điểm ra:</p>
+                    <p>25/04/2025 10:05:00</p>
+                </div>
+                <div>
+                    <p>Số giờ chơi:</p>
+                    <p>02:02:00</p>
+                </div>
+                <div>
+                    <p>Số bàn:</p>
+                    <p>3</p>
+                </div>
+                <div>
+                    <p>Loại bàn:</p>
+                    <p>Trung cấp</p>
+                </div>
+                <div>
+                    <p>Đơn giá:</p>
+                    <p>60000</p>
+                </div>
+                <div>
+                    <p>Tên thu ngân:</p>
+                    <p>Dương Thị Ngọc Huyền</p>
+                </div>
+                <div>
+                    <p>Tên hội viên:</p>
+                    <p>Trương Văn Tấn Lộc</p>
+                </div>
+                <div>
+                    <p>Cấp độ:</p>
+                    <p>Pro</p>
+                </div>
+                <div>
+                    <p>Ưu đãi:</p>
+                    <p>30%</p>
+                </div>
+                <div>
+                    <p>Tổng tiền:</p>
+                    <p>80000</p>
+                </div> -->
+            </div>
+        </div>
     </div>
     
     <script type="module" src="assets/js/thu-ngan-home.js"></script>

@@ -92,11 +92,12 @@ body {
     display: flex;
     flex-direction: column;
     width: calc(100% - 300px);
-    font-weight: bold;
 }
 
 .extension > .top-taskbar {
-    border-bottom: 1px solid gainsboro;
+    font-weight: bold;
+    color: white;
+    background-color: var(--color-one);
 }
 
 .extension > .top-taskbar > div {
@@ -113,6 +114,7 @@ body {
 .extension > .top-taskbar > div > div:hover {
     background-color: gainsboro;
     cursor: pointer;
+    color: var(--color-one);
 }
 
 .extension .xem-danh-sach-ban-bida > div {
@@ -121,4 +123,107 @@ body {
 
 .extension .xem-danh-sach-hoi-vien > div {
     width: calc(100% / 2);
+}
+
+.extension > .content {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.extension .header-ban-bida-list {
+    font-weight: bold;
+    display: flex;
+    border-bottom: 1px solid gainsboro;
+}
+
+.extension > .content > .ban-bida-list p {
+    width: calc(100% / 4);
+    text-align: center;
+}
+
+.extension .body-ban-bida-list > .ban-bida {
+    display: flex;
+    border-bottom: 1px solid gainsboro;
+    color: black;
+}
+
+.extension .body-ban-bida-list > .ban-bida:hover {
+    background-color: gainsboro;
+    cursor: pointer;
+}
+
+.active {
+    background-color: gainsboro;
+}
+
+.active-top-taskbar {
+    background-color: gainsboro;
+    color: var(--color-one);
+}
+
+/* .extension .content .bill {
+    color: black;
+    background-color: aquamarine;
+}
+
+.extension .bill > div {
+    display: flex;
+}
+
+.extension .bill > div > p:first-child {
+    font-weight: bold;
+    margin-left: 50px;
+    margin-right: 30px;
+} */
+
+.extension .bill {
+    color: black;
+    display: flex;
+    flex-direction: column;
+    width: 700px;
+    position: absolute;
+    left: calc(50% - 350px);
+    top: 20px;
+}
+
+.extension .bill .header-bill {
+    font-weight: bold;
+    text-align: center;
+    color: var(--color-one);
+}
+
+.extension .content-bill {
+    background-color: gainsboro;
+    margin-bottom: 16px;
+    border-radius: 5px;
+}
+
+.extension .content-bill > tbody > tr > td {
+    padding: 10px;
+
+}
+
+.extension .content-bill > tbody > tr > td:first-child {
+    font-weight: bold;
+}
+
+.extension .bill .bill-options {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.extension .bill .bill-options button {
+    width: 150px;
+    margin-left: 5px;
+    border: 1px solid var(--color-one);
+    background-color: var(--color-one);
+    border-radius: 5px;
+    color: white;
+}
+
+.extension .bill .bill-options button:hover {
+    background-color: white;
+    color: var(--color-one);
+    cursor: pointer;
 }
