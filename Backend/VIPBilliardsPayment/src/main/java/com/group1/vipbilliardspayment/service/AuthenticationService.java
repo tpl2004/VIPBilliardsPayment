@@ -4,11 +4,13 @@ import com.group1.vipbilliardspayment.dto.request.AuthenticationRequest;
 import com.group1.vipbilliardspayment.dto.request.IntrospectRequest;
 import com.group1.vipbilliardspayment.dto.response.AuthenticationResponse;
 import com.group1.vipbilliardspayment.dto.response.IntrospectResponse;
+import com.group1.vipbilliardspayment.dto.response.ThuNganResponse;
 import com.group1.vipbilliardspayment.entity.ChuQuan;
 import com.group1.vipbilliardspayment.entity.NguoiDung;
 import com.group1.vipbilliardspayment.entity.ThuNgan;
 import com.group1.vipbilliardspayment.exception.AppException;
 import com.group1.vipbilliardspayment.exception.ErrorCode;
+import com.group1.vipbilliardspayment.mapper.ThuNganMapper;
 import com.group1.vipbilliardspayment.repository.ChuQuanRepository;
 import com.group1.vipbilliardspayment.repository.ThuNganRepository;
 import com.nimbusds.jose.*;
@@ -21,6 +23,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -36,6 +40,7 @@ import java.util.Date;
 public class AuthenticationService {
     ChuQuanRepository chuQuanRepository;
     ThuNganRepository thuNganRepository;
+    ThuNganMapper thuNganMapper;
 
     @NonFinal
     @Value("${jwt.signerKey}")
@@ -114,4 +119,10 @@ public class AuthenticationService {
                 .build();
     }
 
+    public ThuNganResponse getThuNganProfile() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ThuNgan thuNgan = thuNganRepository.findByTenDangNhap(authentication.getName()).orElseThrow(() -> new AppException(ErrorCode.THUNGAN_NOT_FOUND));
+
+        return thuNganMapper.toThuNganReponse(thuNgan);
+    }
 }

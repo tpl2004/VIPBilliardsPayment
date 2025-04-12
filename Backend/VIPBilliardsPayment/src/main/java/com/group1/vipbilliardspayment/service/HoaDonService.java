@@ -153,4 +153,21 @@ public class HoaDonService {
 
         return thongKeDoanhThuTheoNgayResponseList;
     }
+
+    public HoaDonResponse findHoaDonChuaThanhToanTheoBan(Integer soBan) {
+        BanBida banBida = banBidaRepository.findById(soBan).orElseThrow(() -> new AppException(ErrorCode.BANBIDA_NOTEXIST));
+
+        if(banBida.getTrangThai() != 1) {
+            throw new AppException(ErrorCode.HOADONCHUATHANHTOAN_NOT_EXISTED);
+        }
+
+        List<HoaDon> danhSachHoaDon = banBida.getDanhSachHoaDon();
+        for(HoaDon i : danhSachHoaDon) {
+            if(!i.isTrangThai()) {
+                return hoaDonMapper.toHoaDonResponse(i);
+            }
+        }
+
+        throw new AppException(ErrorCode.HOADONCHUATHANHTOAN_NOT_EXISTED);
+    }
 }

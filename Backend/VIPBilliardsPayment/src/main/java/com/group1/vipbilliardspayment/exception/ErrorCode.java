@@ -48,7 +48,8 @@ public enum ErrorCode {
     MATHANGTRONGHOADON_EXISTED(16, "Mat hang trong hoa don is existed"),
     CHUQUAN_TENDANGNHAP_NOT_EXISTED(20, "Ten dang nhap of chu quan is not existed"),
     MATKHAU_WRONG(22, "Mat khau is wrong"),
-    THUNGAN_TENDANGNHAP_NOT_EXISTED(24, "Ten dang nhap of thu ngan is not existed")
+    THUNGAN_TENDANGNHAP_NOT_EXISTED(24, "Ten dang nhap of thu ngan is not existed"),
+    HOADONCHUATHANHTOAN_NOT_EXISTED(26, "Ban bida khong co hoa don chua thanh toan")
 
     ;
 

@@ -57,6 +57,7 @@ public class SecurityConfig {
     // thu ngan enpoints
     public String[] USER_GET_ENPOINTS = { 
         "banbida/getallbanbidachuaxoa",
+        "hoadon/*"
     };
 
     public String[] USER_POST_ENPOINTS = { 

@@ -76,4 +76,11 @@ public class HoaDonController {
                 .result(hoaDonService.thongKeDoanhThuTheoNgay(thongKeDoanhThuTheoNgayRequest))
                 .build();
     }
+
+    @GetMapping("/{soBan}")
+    public ApiResponse<HoaDonResponse> findHoaDonChuaThanhToanTheoBan(@PathVariable(value = "soBan") Integer soBan) {
+        return ApiResponse.<HoaDonResponse>builder()
+                .result(hoaDonService.findHoaDonChuaThanhToanTheoBan(soBan))
+                .build();
+    }
 }
