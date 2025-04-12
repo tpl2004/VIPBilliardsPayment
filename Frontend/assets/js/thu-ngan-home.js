@@ -3,11 +3,11 @@ import * as api from './api-service.js'
 
 const TOKEN = localStorage.getItem(localStorageUserTokenKey);
 
-var myInfo = {
-    maThuNgan: 1
-}
+var myInfo = null;
 var selectedTableNumber = null;
 
+var maThuNganBox = document.getElementById('ma-thu-ngan');
+var hoTenThuNganBox = document.getElementById('ho-ten-thu-ngan');
 var logoutBtn = document.querySelector('button[class = "logout"]');
 var bodyBanBidaListBox = document.querySelector('.extension .content .ban-bida-list .body-ban-bida-list');
 var showBidaTableListBtn = document.getElementById('show-bida-table-list');
@@ -26,13 +26,24 @@ function main() {
 
     checkSignedIn()
     .then(response => {
-        activeMainFuntion('show-bida-table-list');
-        enableExtendFuncGroup('xem-danh-sach-ban-bida');
-        enableContent('ban-bida-list');
-        getAllBanBidaChuaXoa()
+        getMyInfo()
         .then(response => response.json())
         .then(response => {
-            renderBanBidas(response.result);
+            if(response.code == 1000) {
+                myInfo = response.result;
+                console.log(myInfo);
+                renderMyInfo();
+            }
+        })
+        .then(() => {
+            activeMainFuntion('show-bida-table-list');
+            enableExtendFuncGroup('xem-danh-sach-ban-bida');
+            enableContent('ban-bida-list');
+            getAllBanBidaChuaXoa()
+            .then(response => response.json())
+            .then(response => {
+                renderBanBidas(response.result);
+            })
         })
         .then(handleEvents);
     })
@@ -74,6 +85,31 @@ function checkSignedIn() {
     })
 }
 
+// get my info
+function getMyInfo() {
+    var options = {
+        method: 'GET',
+
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+        },
+    }
+    return fetch(api.authApi + '/thungan/profile', options)
+}
+
+// render my info
+function renderMyInfo() {
+    maThuNganBox.innerHTML = `
+        <p>Mã thu ngân:</p>
+        <p>${myInfo.maThuNgan}</p>
+    `;
+    hoTenThuNganBox.innerHTML = `
+        <p>Họ tên thu ngân:</p>
+        <p>${myInfo.hoTen}</p>
+    `
+}
+
 // get all ban bida chua xoa
 function getAllBanBidaChuaXoa() {
     var options = {
@@ -91,7 +127,7 @@ function getAllBanBidaChuaXoa() {
 function renderBanBidas(banBidas) {
     var html = banBidas.map((banBida, index) => {
         return `
-            <div class="ban-bida">
+            <div class="ban-bida ${banBida.trangThai == 1? 'unavailable' : ''}">
                 <p name="so-ban">${banBida.soBan}</p>
                 <p name="trang-thai">${(!banBida.trangThai)? 'Khả dụng' : (banBida.trangThai == 1? 'Đang bận' : 'Đã xóa')}</p>
                 <p name="ten-loai-ban">${banBida.tenLoaiBan}</p>

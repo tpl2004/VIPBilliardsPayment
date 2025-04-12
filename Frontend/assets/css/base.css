@@ -15,3 +15,7 @@ body {
 .disable {
     display: none !important;
 }
+
+.unavailable {
+    background-color: #09d1c7 !important;
+}

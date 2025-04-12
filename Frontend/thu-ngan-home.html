@@ -16,12 +16,12 @@
         </div>
 
         <div class="info">
-            <div>
+            <div id="ma-thu-ngan">
                 <p>Mã thu ngân:</p>
                 <p>1</p>
             </div>
             
-            <div>
+            <div id="ho-ten-thu-ngan">
                 <p>Họ tên thu ngân:</p>
                 <p>Dương Thị Ngọc Huyền</p>
             </div>
@@ -36,7 +36,7 @@
             </div>
             <div id="show-bill-list">
                 <i class="bi bi-receipt"></i>
-                <p>Xem danh sách bàn hóa đơn</p>
+                <p>Xem danh sách hóa đơn</p>
             </div>
             <div id="show-member-list">
                 <i class="bi bi-person-fill"></i>
@@ -47,21 +47,21 @@
 
     <div class="extension">
         <div class="top-taskbar">
-            <div class="xem-danh-sach-ban-bida">
+            <div class="xem-danh-sach-ban-bida disable">
                 <div id="mo-ban">Mở bàn</div>
                 <div id="cap-nhat-hoa-don">Cập nhật hóa đơn</div>
                 <div id="thanh-toan-hoa-don">Thanh toán hóa đơn</div>            
             </div>
 
-            <div class="xem-danh-sach-hoi-vien disable">
+            <div class="xem-danh-sach-hoi-vien">
                 <div id="them-hoi-vien">Thêm hội viên</div>
                 <div id="cap-nhat-hoi-vien">Cập nhật hội viên</div>
             </div>
         </div>
         
         <div class="content">
-            <div class="ban-bida-list">
-                <div class="header-ban-bida-list">
+            <div class="ban-bida-list disable">
+                <div class="header-list">
                     <p>Số bàn</p>
                     <p>Trạng thái</p>
                     <p>Loại bàn</p>
@@ -78,7 +78,7 @@
                 </div>
             </div>
 
-            <div class="bill disable">
+            <div class="bill-payment disable">
                 <p class="header-bill">THÔNG TIN HÓA ĐƠN</p>
                 <table class="content-bill">
                     <thead>
@@ -117,6 +117,32 @@
                             <td>60000</td>
                         </tr>
                         <tr>
+                            <td class="mat-hang">Mặt hàng:</td>
+                            <td>
+                                <table class="danh-sach-hang">
+                                    <thead>
+                                        <tr>
+                                            <th>Tên mặt hàng</th>
+                                            <th>Đơn giá</th>
+                                            <th>Số lượng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Coca</td>
+                                            <td>20000</td>
+                                            <td>3</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Pepsi</td>
+                                            <td>20000</td>
+                                            <td>4</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
                             <td>Tên thu ngân:</td>
                             <td>Dương Thị Ngọc Huyền</td>
                         </tr>
@@ -142,66 +168,263 @@
                     <button id="cancel" type="button">Hủy</button>
                     <button id="pay" type="button">Thanh toán</button>
                 </div>
-                <!-- <div>
-                    <p>Mã hóa đơn:</p>
-                    <p>1</p>
-                </div>
-                <div>
-                    <p>Thời điểm vào:</p>
-                    <p>25/04/2025 07:05:00</p>
-                </div>
-                <div>
-                    <p>Thời điểm ra:</p>
-                    <p>25/04/2025 10:05:00</p>
-                </div>
-                <div>
-                    <p>Số giờ chơi:</p>
-                    <p>02:02:00</p>
-                </div>
-                <div>
-                    <p>Số bàn:</p>
-                    <p>3</p>
-                </div>
-                <div>
-                    <p>Loại bàn:</p>
-                    <p>Trung cấp</p>
-                </div>
-                <div>
-                    <p>Đơn giá:</p>
-                    <p>60000</p>
-                </div>
-                <div>
-                    <p>Tên thu ngân:</p>
-                    <p>Dương Thị Ngọc Huyền</p>
-                </div>
-                <div>
-                    <p>Tên hội viên:</p>
-                    <p>Trương Văn Tấn Lộc</p>
-                </div>
-                <div>
-                    <p>Cấp độ:</p>
-                    <p>Pro</p>
-                </div>
-                <div>
-                    <p>Ưu đãi:</p>
-                    <p>30%</p>
-                </div>
-                <div>
-                    <p>Tổng tiền:</p>
-                    <p>80000</p>
-                </div> -->
             </div>
-                
-            <div class="hoa-don-list">
-                
-            </div>
-                
-            <div class="hoi-vien-list">
 
+            <div class="update-hoa-don disable">
+                <div class="bill-info">
+                    <p>THÔNG TIN HÓA ĐƠN</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Mã hóa đơn:</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>Thời điểm vào:</td>
+                                <td>25/04/2025 07:05:00</td>
+                            </tr>
+                            <tr>
+                                <td>Thời điểm ra:</td>
+                                <td>25/04/2025 10:05:00</td>
+                            </tr>
+                            <tr>
+                                <td>Số giờ chơi:</td>
+                                <td>02:02:00</td>
+                            </tr>
+                            <tr>
+                                <td>Số bàn:</td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <td>Loại bàn:</td>
+                                <td>Trung cấp</td>
+                            </tr>
+                            <tr>
+                                <td>Đơn giá:</td>
+                                <td>60000</td>
+                            </tr>
+                            <tr>
+                                <td>Mặt hàng:</td>
+                                <td>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Tên mặt hàng</th>
+                                                <th>Đơn giá</th>
+                                                <th>Số lượng</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Coca</td>
+                                                <td>20000</td>
+                                                <td>3</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Pepsi</td>
+                                                <td>20000</td>
+                                                <td>4</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tên thu ngân:</td>
+                                <td>Dương Thị Ngọc Huyền</td>
+                            </tr>
+                            <tr>
+                                <td>Tên hội viên:</td>
+                                <td>Trương Văn Tấn Lộc</td>
+                            </tr>
+                            <tr>
+                                <td>Cấp độ:</td>
+                                <td>Pro</td>
+                            </tr>
+                            <tr>
+                                <td>Ưu đãi:</td>
+                                <td>30%</td>
+                            </tr>
+                            <tr>
+                                <td>Tổng tiền:</td>
+                                <td>80000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="update-bill-box">
+                    <div class="hoi-vien-option">
+                        <div>
+                            <label for="hoi-vien-update">Chọn hội viên:</label>
+                            <input min="1" type="number" id="hoi-vien-update" name="hoi-vien-update" placeholder="Mã hội viên">
+                        </div>
+                        <button id="hoi-vien-update-button" type="button">Xác nhận</button>
+                    </div>
+
+                    <div class="mat-hang-option">
+                        <div>
+                            <label for="mat-hang-update-list">Chọn mặt hàng:</label>
+                            
+                            <select name="mat-hang-update-list" id="mat-hang-update-list">
+                                <option value="1">
+                                    <p>1</p>
+                                    <p>Coca</p>
+                                </option>
+                                <option value="2">
+                                    <p>2</p>
+                                    <p>Pepsi</p>
+                                </option>option>
+                                <option value="3">
+                                    <p>3</p>
+                                    <p>Lavie</p>
+                                </option>
+                                <option value="4">
+                                    <p>4</p>
+                                    <p>Redbull</p>
+                                </option>
+                                <option value="5">
+                                    <p>5</p>
+                                    <p>Mì gói</p>
+                                </option>
+                                <option value="6">
+                                    <p>6</p>
+                                    <p>Trái cây</p>
+                                </option>
+                                <option value="7">
+                                    <p>7</p>
+                                    <p>Mực khô</p>
+                                </option>
+                                <option value="8">
+                                    <p>8</p>
+                                    <p>Đào</p>
+                                </option>
+                            </select>
+
+                            <input min="1" type="number" placeholder="Số lượng">
+                        </div>
+
+                        <div>
+                            <button id="them-mat-hang" type="button">Thêm</button>
+                            <button id="sua-mat-hang" type="button">Sửa</button>
+                            <button id="xoa-mat-hang" type="button">Xóa</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hoa-don-list disable">
+                <div class="header-list">
+                    <p>Mã hóa đơn</p>
+                    <p>Thời điểm vào</p>
+                    <p>Số giờ chơi</p>
+                    <p>Số bàn</p>
+                    <p>Đơn giá</p>
+                    <p>Tổng tiền</p>
+                </div>
+
+                <div class="body-bill-list">
+                    <div class="bill">
+                        <p>1</p>
+                        <p>2025-01-01 07:25:00</p>
+                        <p>2</p>
+                        <p>3</p>
+                        <p>60000</p>
+                        <p>120000</p>
+                    </div>
+                </div>
+            </div>
+                
+            <div class="hoi-vien-list disable">
+                <div class="header-list">
+                    <p>Mã hội viên</p>
+                    <p>Họ tên</p>
+                    <p>Số điện thoại</p>
+                    <p>Số giờ chơi</p>
+                    <p>Ngày đăng ký</p>
+                    <p>Cấp độ</p>
+                </div>
+
+                <div class="body-hoi-vien-list">
+                    <div class="hoi-vien">
+                        <p>1</p>
+                        <p>Trương Văn Tấn Lộc</p>
+                        <p>01245667322</p>
+                        <p>1000</p>
+                        <p>12/01/2025 19:05:11</p>
+                        <p>Pro</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="add-update-hoi-vien hoi-vien-1 disable">
+                <p>NHẬP THÔNG TIN HỘI VIÊN</p>
+
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><label for="ho-ten-hoi-vien-create">Họ tên:</label></td>
+                            <td><input id="ho-ten-hoi-vien-create" type="text" name="ho-ten-hoi-vien-create" placeholder="Họ tên"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="email-hoi-vien-create">Email:</label></td>
+                            <td><input id="email-hoi-vien-create" type="text" name="email-hoi-vien-create" placeholder="Email"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="so-dien-thoai-hoi-vien-create">Số điện thoại:</label></td>
+                            <td><input id="so-dien-thoai-hoi-vien-create" type="text" name="so-dien-thoai-hoi-vien-create" placeholder="Số điện thoại"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="so-cccd-hoi-vien-create">Số CCCD:</label></td>
+                            <td><input type="text" name="so-cccd-hoi-vien-create" id="so-cccd-hoi-vien-create" placeholder="Số CCCD"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div>
+                    <button id="them-hoi-vien" type="button">Thêm</button>
+                    <button id="them-hoi-vien-cancel">Hủy</button>
+                </div>
+            </div>
+
+            <div class="add-update-hoi-vien hoi-vien-2">
+                <p>NHẬP THÔNG TIN CẦN CHỈNH SỬA CHO HỘI VIÊN</p>
+
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><label for="ho-ten-hoi-vien-update">Họ tên:</label></td>
+                            <td><input id="ho-ten-hoi-vien-update" type="text" name="ho-ten-hoi-vien-update" placeholder="Họ tên" value="Trương Văn Tấn Lộc"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="email-hoi-vien-update">Email:</label></td>
+                            <td><input id="email-hoi-vien-update" type="text" name="email-hoi-vien-update" placeholder="Email" value="locdz24@gmail.com"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="so-dien-thoai-hoi-vien-update">Số điện thoại:</label></td>
+                            <td><input id="so-dien-thoai-hoi-vien-update" type="text" name="so-dien-thoai-hoi-vien-update" placeholder="Số điện thoại" value="0914153562"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="so-cccd-hoi-vien-update">Số CCCD:</label></td>
+                            <td><input type="text" name="so-cccd-hoi-vien-update" id="so-cccd-hoi-vien-update" placeholder="Số CCCD" value="018593857262"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div>
+                    <button id="cap-nhat-hoi-vien" type="button">Xác nhận</button>
+                    <button id="cap-nhat-hoi-vien-cancel">Hủy</button>
+                </div>
             </div>
         </div>
     </div>
     
-    <script type="module" src="assets/js/thu-ngan-home.js"></script>
+    <!-- <script type="module" src="assets/js/thu-ngan-home.js"></script> -->
 </body>
 </html>
