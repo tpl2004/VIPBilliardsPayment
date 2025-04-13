@@ -25,7 +25,7 @@ var functionTaskbarBox = document.querySelector('.function-taskbar');
 var moBanBtn = document.getElementById('mo-ban');
 var capNhatHoaDonBtn = document.getElementById('cap-nhat-hoa-don');
 var thanhToanHoaDonBtn = document.getElementById('thanh-toan-hoa-don');
-console.log(thanhToanHoaDonBtn)
+var themHoiVienDiv = document.querySelector('div[id="them-hoi-vien"]');
 
 function main() {
 
@@ -460,6 +460,24 @@ function renderBillPayment(hoaDon, dsMatHangTrongHoaDon) {
                     `
     })
     matHangListBox.innerHTML = html.join('');
+}
+
+// add hoi vien
+function addHoiVien(hoTen, email, soDienThoai, soCCCD) {
+    var options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+        },
+        body: JSON.stringify({
+            "hoTen": hoTen,
+            "email": email,
+            "soDienThoai": soDienThoai,
+            "soCCCD": soCCCD
+        }),
+    }
+    return fetch(api.hoiVienApi, options);
 }
 
 // handle events
@@ -979,5 +997,31 @@ function handleEvents() {
     
     document.getElementById('cancel').addEventListener('click', e => {
         enableContent('ban-bida-list');
+    })
+    
+    themHoiVienDiv.addEventListener('click', e => {
+        enableContent('hoi-vien-1');
+    })
+    
+    document.querySelector('button[id="them-hoi-vien"]').addEventListener('click', e => {
+        if(!confirm('Xác nhận thêm?')) return;
+        var hoTenInput = document.getElementById('ho-ten-hoi-vien-create');
+        var emailInput = document.getElementById('email-hoi-vien-create');
+        var soDienThoaiInput = document.getElementById('so-dien-thoai-hoi-vien-create');
+        var soCCCDInput = document.getElementById('so-cccd-hoi-vien-create');
+        addHoiVien(hoTenInput.value, emailInput.value, soDienThoaiInput.value, soCCCDInput.value)
+        .then(response => response.json())
+        .then(response => {
+            if(response.code == 1000) {
+                alert('Đã thêm hội viên');
+                showMemberList.click();
+            } else {
+                alert(response.message);
+            }
+        })
+    })
+    
+    document.getElementById('them-hoi-vien-cancel').addEventListener('click', e => {
+        enableContent('hoi-vien-list');
     })
 }
