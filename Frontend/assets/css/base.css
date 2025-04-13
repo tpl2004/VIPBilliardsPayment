@@ -19,3 +19,19 @@ body {
 .unavailable {
     background-color: #09d1c7 !important;
 }
+
+/* .button {
+    border: 1px solid var(--color-one);
+    background-color: var(--color-one);
+    color: white;
+    border-radius: 5px;
+}
+
+.button:hover {
+    border: 1px solid var(--color-one);
+    background-color: white;
+    color: var(--color-one);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+} */

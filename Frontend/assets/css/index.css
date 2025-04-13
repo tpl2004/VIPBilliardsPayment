@@ -58,6 +58,7 @@ body {
     background-color: white;
     color: var(--color-one);
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .login-form > .request > .input:focus {
@@ -77,6 +78,7 @@ body {
 
 .login-form > .chu-quan-login:hover {
     color: white;
+    transition: 0.3s;
 }
 
 @media screen and (width <= 1024px) {
