@@ -310,6 +310,44 @@ function deleteMatHangTrongHoaDon(maHang, maHoaDon) {
     return fetch(api.matHangTrongHoaDonApi + '/' + maHoaDon + '/' + maHang, options);
 }
 
+// format date
+function formatDate(dateString) {
+    var date = new Date(dateString);
+    return date.toLocaleString('vi-VN', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+    });
+}
+
+// get all hoaDon
+function getAllHoaDon() {
+    var options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+        },
+    }
+    return fetch(api.hoaDonApi, options);
+}
+
+// get all hoi vien
+function getAllHoiVien() {
+    var options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+        },
+    }
+    return fetch(api.hoiVienApi, options);
+}
+
 // handle events
 function handleEvents() {
 
@@ -343,12 +381,56 @@ function handleEvents() {
         activeMainFuntion(showBillListBtn.id);
         enableExtendFuncGroup(null);
         enableContent('hoa-don-list');
+        var billBox = document.querySelector('.content .hoa-don-list .body-bill-list');
+        console.log(billBox);
+        getAllHoaDon()
+        .then(response => response.json())
+        .then(response => {
+            if(response.code == 1000) {
+                var dsHoaDon = response.result;
+                var html = dsHoaDon.map(hoadon => {
+                    return `
+                        <div class="bill">
+                            <p>${hoadon.maHoaDon}</p>
+                            <p>${formatDate(hoadon.thoiDiemVao)}</p>
+                            <p>${hoadon.soGioChoi? hoadon.soGioChoi : 'N/A'}</p>
+                            <p>${hoadon.soBan}</p>
+                            <p>${hoadon.donGia}</p>
+                            <p>${hoadon.tongTien? hoadon.tongTien : 'N/A'}</p>
+                        </div>
+                    `
+                })
+                billBox.innerHTML = html.join('');
+            }
+        })
     })
     
     showMemberList.addEventListener('click', e => {
         activeMainFuntion(showMemberList.id);
         enableExtendFuncGroup('xem-danh-sach-hoi-vien');
         enableContent('hoi-vien-list');
+        var hoiVienBox = document.querySelector('.content .hoi-vien-list .body-hoi-vien-list');
+        console.log(hoiVienBox)
+        getAllHoiVien()
+        .then(response => response.json())
+        .then(response => {
+            if(response.code == 1000) {
+                var dsHoiVien = response.result;
+                var html = dsHoiVien.map(hoiVien => {
+                    return `
+                        <div class="hoi-vien">
+                            <p>${hoiVien.maHoiVien}</p>
+                            <p>${hoiVien.hoTen}</p>
+                            <p>${hoiVien.soDienThoai}</p>
+                            <p>${hoiVien.soGioChoi}</p>
+                            <p>${formatDate(hoiVien.ngayDangKy)}</p>
+                            <p>${hoiVien.tenCapDo}</p>
+                        </div>
+                    `
+                })
+                hoiVienBox.innerHTML = html.join('');
+            }
+        })
     })
     
     banBidaListBox.addEventListener('click', e => {
@@ -534,15 +616,15 @@ function handleEvents() {
                                 </tr>
                                 <tr>
                                     <td>Thời điểm vào:</td>
-                                    <td>${hoadon.thoiDiemVao}</td>
+                                    <td>${formatDate(hoadon.thoiDiemVao)}</td>
                                 </tr>
                                 <tr>
                                     <td>Thời điểm ra:</td>
-                                    <td>${hoadon.thoiDiemRa}</td>
+                                    <td>${hoadon.thoiDiemRa? hoadon.thoiDiemRa : 'N/A'}</td>
                                 </tr>
                                 <tr>
                                     <td>Số giờ chơi:</td>
-                                    <td>${hoadon.soGioChoi}</td>
+                                    <td>${hoadon.soGioChoi? hoadon.soGioChoi : 'N/A'}</td>
                                 </tr>
                                 <tr>
                                     <td>Số bàn:</td>
@@ -588,19 +670,19 @@ function handleEvents() {
                                 </tr>
                                 <tr>
                                     <td>Tên hội viên:</td>
-                                    <td>${hoadon.tenHoiVien}</td>
+                                    <td>${hoadon.tenHoiVien? hoadon.tenHoiVien : 'N/A'}</td>
                                 </tr>
                                 <tr>
                                     <td>Cấp độ:</td>
-                                    <td>${hoadon.tenCapDo}</td>
+                                    <td>${hoadon.tenCapDo? hoadon.tenCapDo : 'N/A'}</td>
                                 </tr>
                                 <tr>
                                     <td>Ưu đãi:</td>
-                                    <td>${hoadon.uuDai}</td>
+                                    <td>${hoadon.uuDai? hoadon.uuDai : 'N/A'}</td>
                                 </tr>
                                 <tr>
                                     <td>Tổng tiền:</td>
-                                    <td>${hoadon.tongTien}</td>
+                                    <td>${hoadon.tongTien? hoadon.tongTien : 'N/A'}</td>
                                 </tr>
                             </tbody>
                         </table>
