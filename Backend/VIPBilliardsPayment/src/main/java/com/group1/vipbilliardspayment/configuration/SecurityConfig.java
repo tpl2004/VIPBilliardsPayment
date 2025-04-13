@@ -32,7 +32,7 @@ public class SecurityConfig {
         "banbida/getallbanbida",
         "thungan/getallthungan",
         "hoadon/findbydate",
-        "mathang",
+        // "mathang",
         "loaiban",
         "capdohoivien",
     };
