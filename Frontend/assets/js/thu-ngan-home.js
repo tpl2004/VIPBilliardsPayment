@@ -5,6 +5,7 @@ const TOKEN = localStorage.getItem(localStorageUserTokenKey);
 
 var myInfo = null;
 var selectedTableNumber = null;
+var selectedHoiVienId = null;
 
 var maThuNganBox = document.getElementById('ma-thu-ngan');
 var hoTenThuNganBox = document.getElementById('ho-ten-thu-ngan');
@@ -24,7 +25,10 @@ var contentBoxchilds = document.querySelector('.content').children;
 var functionTaskbarBox = document.querySelector('.function-taskbar');
 var moBanBtn = document.getElementById('mo-ban');
 var capNhatHoaDonBtn = document.getElementById('cap-nhat-hoa-don');
-console.log(capNhatHoaDonBtn);
+var thanhToanHoaDonBtn = document.getElementById('thanh-toan-hoa-don');
+var themHoiVienDiv = document.querySelector('div[id="them-hoi-vien"]');
+var capNhatHoiVienDiv = document.querySelector('div[id="cap-nhat-hoi-vien"]');
+var hoiVienBox = document.querySelector('.content .hoi-vien-list .body-hoi-vien-list');
 
 function main() {
 
@@ -348,6 +352,155 @@ function getAllHoiVien() {
     return fetch(api.hoiVienApi, options);
 }
 
+// thanh toan hoa don
+function thanhToanHoaDon() {
+    var options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+        },
+    }
+    return fetch(api.hoaDonApi + '/thanhtoan/' + selectedTableNumber, options);
+}
+
+// render bill payment
+function renderBillPayment(hoaDon, dsMatHangTrongHoaDon) {
+
+    var contentBillBox = document.querySelector('.content .bill-payment .content-bill');
+    contentBillBox.innerHTML = `
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Mã hóa đơn:</td>
+                <td>${hoaDon.maHoaDon}</td>
+            </tr>
+            <tr>
+                <td>Thời điểm vào:</td>
+                <td>${formatDate(hoaDon.thoiDiemVao)}</td>
+            </tr>
+            <tr>
+                <td>Thời điểm ra:</td>
+                <td>${hoaDon.thoiDiemRa ? hoaDon.thoiDiemRa : 'N/A'}</td>
+            </tr>
+            <tr>
+                <td>Số giờ chơi:</td>
+                <td>${hoaDon.soGioChoi ? hoaDon.soGioChoi : 'N/A'}</td>
+            </tr>
+            <tr>
+                <td>Số bàn:</td>
+                <td>${hoaDon.soBan}</td>
+            </tr>
+            <tr>
+                <td>Loại bàn:</td>
+                <td>${hoaDon.tenLoaiBan}</td>
+            </tr>
+            <tr>
+                <td>Đơn giá:</td>
+                <td>${hoaDon.donGia}</td>
+            </tr>
+            <tr>
+                <td class="mat-hang">Mặt hàng:</td>
+                <td>
+                    <table class="danh-sach-hang">
+                        <thead>
+                            <tr>
+                                <th>Tên mặt hàng</th>
+                                <th>Đơn giá</th>
+                                <th>Số lượng</th>
+                            </tr>
+                        </thead>
+                        <tbody name="mat-hang-list">
+                            <tr>
+                                <td>Coca</td>
+                                <td>20000</td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <td>Pepsi</td>
+                                <td>20000</td>
+                                <td>4</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>Tên thu ngân:</td>
+                <td>${hoaDon.tenThuNgan}</td>
+            </tr>
+            <tr>
+                <td>Tên hội viên:</td>
+                <td>${hoaDon.tenHoiVien ? hoaDon.tenHoiVien : 'N/A'}</td>
+            </tr>
+            <tr>
+                <td>Cấp độ:</td>
+                <td>${hoaDon.tenCapDo ? hoaDon.tenCapDo : 'N/A'}</td>
+            </tr>
+            <tr>
+                <td>Ưu đãi:</td>
+                <td>${hoaDon.uuDai ? hoaDon.uuDai : 'N/A'}</td>
+            </tr>
+            <tr>
+                <td>Tổng tiền:</td>
+                <td>${hoaDon.tongTien ? hoaDon.tongTien : 'N/A'}</td>
+            </tr>
+        </tbody>
+    `
+    var matHangListBox = contentBillBox.querySelector('tbody[name="mat-hang-list"]');
+    var html = dsMatHangTrongHoaDon.map(matHang => {
+        return `
+                        <tr>
+                            <td>${matHang.tenHang}</td>
+                            <td>${matHang.donGia}</td>
+                            <td>${matHang.soLuong}</td>
+                        </tr>
+                    `
+    })
+    matHangListBox.innerHTML = html.join('');
+}
+
+// add hoi vien
+function addHoiVien(hoTen, email, soDienThoai, soCCCD) {
+    var options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+        },
+        body: JSON.stringify({
+            "hoTen": hoTen,
+            "email": email,
+            "soDienThoai": soDienThoai,
+            "soCCCD": soCCCD
+        }),
+    }
+    return fetch(api.hoiVienApi, options);
+}
+
+// update hoi vien
+function updateHoiVien(hoTen, email, soDienThoai, soCCCD) {
+    var options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+        },
+        body: JSON.stringify({
+            "hoTen": hoTen,
+            "email": email,
+            "soDienThoai": soDienThoai,
+            "soCCCD": soCCCD
+        }),
+    }
+    return fetch(api.hoiVienApi + '/' + selectedHoiVienId, options);
+}
+
 // handle events
 function handleEvents() {
 
@@ -362,7 +515,7 @@ function handleEvents() {
     
     functionTaskbarBox.addEventListener('click', e=> {
         selectedTableNumber = null;
-        console.log(selectedTableNumber);
+        selectedHoiVienId = null;
     })
     
     showBidaTableListBtn.addEventListener('click', e => {
@@ -418,7 +571,7 @@ function handleEvents() {
                 var dsHoiVien = response.result;
                 var html = dsHoiVien.map(hoiVien => {
                     return `
-                        <div class="hoi-vien">
+                        <div id="${hoiVien.maHoiVien}" class="hoi-vien">
                             <p>${hoiVien.maHoiVien}</p>
                             <p>${hoiVien.hoTen}</p>
                             <p>${hoiVien.soDienThoai}</p>
@@ -474,7 +627,6 @@ function handleEvents() {
             alert('Vui lòng chọn bàn!');
             return;
         }
-        enableContent('update-hoa-don');
         var updateHoaDonBox = document.querySelector('.content .update-hoa-don');
         var billInfo = updateHoaDonBox.querySelector('.bill-info')
         layHoaDonChuaThanhToanCuaBan()
@@ -482,6 +634,7 @@ function handleEvents() {
         .then(response => {
             if(response.code == 1000) {
                 var hoadon = response.result;
+                enableContent('update-hoa-don');
                 return hoadon;
                     
             }
@@ -705,6 +858,254 @@ function handleEvents() {
                     alert(response.massage);
                 }
             })
+        })
+    })
+    
+    thanhToanHoaDonBtn.addEventListener('click', e => {
+        if(selectedTableNumber == null) {
+            alert('Vui lòng chọn bàn!');
+            return;
+        }
+
+        layHoaDonChuaThanhToanCuaBan()
+        .then(response => response.json())
+        .then(response => {
+            if(response.code == 1000) {
+                enableContent('bill-payment');
+                return response.result
+            } else {
+                alert(response.message);
+                return Promise.reject(response.message);
+            }
+        })
+        .then(hoaDon => {
+            layDSMatHangTrongMotHoaDon(hoaDon.maHoaDon)
+            .then(response => response.json())
+            .then(response => {
+                if(response.code == 1000) {
+                    return response.result;
+                } else {
+                    return Promise.reject(response.message);
+                }
+            })
+            .then(dsMatHangTrongHoaDon => {
+                var contentBillBox = document.querySelector('.content .bill-payment .content-bill');
+                // contentBillBox.innerHTML = `
+                //     <thead>
+                //         <tr>
+                //             <th></th>
+                //             <th></th>
+                //         </tr>
+                //     </thead>
+                //     <tbody>
+                //         <tr>
+                //             <td>Mã hóa đơn:</td>
+                //             <td>${hoaDon.maHoaDon}</td>
+                //         </tr>
+                //         <tr>
+                //             <td>Thời điểm vào:</td>
+                //             <td>${formatDate(hoaDon.thoiDiemVao)}</td>
+                //         </tr>
+                //         <tr>
+                //             <td>Thời điểm ra:</td>
+                //             <td>${hoaDon.thoiDiemRa? hoaDon.thoiDiemRa : 'N/A'}</td>
+                //         </tr>
+                //         <tr>
+                //             <td>Số giờ chơi:</td>
+                //             <td>${hoaDon.soGioChoi? hoaDon.soGioChoi : 'N/A'}</td>
+                //         </tr>
+                //         <tr>
+                //             <td>Số bàn:</td>
+                //             <td>${hoaDon.soBan}</td>
+                //         </tr>
+                //         <tr>
+                //             <td>Loại bàn:</td>
+                //             <td>${hoaDon.tenLoaiBan}</td>
+                //         </tr>
+                //         <tr>
+                //             <td>Đơn giá:</td>
+                //             <td>${hoaDon.donGia}</td>
+                //         </tr>
+                //         <tr>
+                //             <td class="mat-hang">Mặt hàng:</td>
+                //             <td>
+                //                 <table class="danh-sach-hang">
+                //                     <thead>
+                //                         <tr>
+                //                             <th>Tên mặt hàng</th>
+                //                             <th>Đơn giá</th>
+                //                             <th>Số lượng</th>
+                //                         </tr>
+                //                     </thead>
+                //                     <tbody name="mat-hang-list">
+                //                         <tr>
+                //                             <td>Coca</td>
+                //                             <td>20000</td>
+                //                             <td>3</td>
+                //                         </tr>
+                //                         <tr>
+                //                             <td>Pepsi</td>
+                //                             <td>20000</td>
+                //                             <td>4</td>
+                //                         </tr>
+                //                     </tbody>
+                //                 </table>
+                //             </td>
+                //         </tr>
+                //         <tr>
+                //             <td>Tên thu ngân:</td>
+                //             <td>${hoaDon.tenThuNgan}</td>
+                //         </tr>
+                //         <tr>
+                //             <td>Tên hội viên:</td>
+                //             <td>${hoaDon.tenHoiVien? hoaDon.tenHoiVien : 'N/A'}</td>
+                //         </tr>
+                //         <tr>
+                //             <td>Cấp độ:</td>
+                //             <td>${hoaDon.tenCapDo? hoaDon.tenCapDo : 'N/A'}</td>
+                //         </tr>
+                //         <tr>
+                //             <td>Ưu đãi:</td>
+                //             <td>${hoaDon.uuDai? hoaDon.uuDai : 'N/A'}</td>
+                //         </tr>
+                //         <tr>
+                //             <td>Tổng tiền:</td>
+                //             <td>${hoaDon.tongTien? hoaDon.tongTien : 'N/A'}</td>
+                //         </tr>
+                //     </tbody>
+                // `
+                // var matHangListBox = contentBillBox.querySelector('tbody[name="mat-hang-list"]');
+                // var html = dsMatHangTrongHoaDon.map(matHang => {
+                //     return `
+                //         <tr>
+                //             <td>${matHang.tenHang}</td>
+                //             <td>${matHang.donGia}</td>
+                //             <td>${matHang.soLuong}</td>
+                //         </tr>
+                //     `
+                // })
+                // matHangListBox.innerHTML = html.join('');
+                renderBillPayment(hoaDon, dsMatHangTrongHoaDon);
+            })
+        })
+    })
+    
+    document.getElementById('pay').addEventListener('click', e => {
+        if(!confirm('Xác nhận thanh toán')) return;
+
+        thanhToanHoaDon()
+        .then(response => response.json())
+        .then(response => {
+            if(response.code == 1000) {
+                alert('Đã đóng bàn');
+                var hoaDonDaThanhToan = response.result;
+                    return hoaDonDaThanhToan;
+            } else {
+                return Promise.reject(response.message);
+            }
+        })
+        .then(hoaDonDaThanhToan => {
+            layDSMatHangTrongMotHoaDon(hoaDonDaThanhToan.maHoaDon)
+            .then(response => response.json())
+            .then(response => {
+                if(response.code == 1000) {
+                    var dsMatHangTrongHoaDon = response.result;
+                    renderBillPayment(hoaDonDaThanhToan, dsMatHangTrongHoaDon);
+                }
+            })
+        })
+    })
+    
+    document.getElementById('cancel').addEventListener('click', e => {
+        enableContent('ban-bida-list');
+    })
+    
+    themHoiVienDiv.addEventListener('click', e => {
+        enableContent('hoi-vien-1');
+    })
+    
+    document.querySelector('button[id="them-hoi-vien"]').addEventListener('click', e => {
+        if(!confirm('Xác nhận thêm?')) return;
+        var hoTenInput = document.getElementById('ho-ten-hoi-vien-create');
+        var emailInput = document.getElementById('email-hoi-vien-create');
+        var soDienThoaiInput = document.getElementById('so-dien-thoai-hoi-vien-create');
+        var soCCCDInput = document.getElementById('so-cccd-hoi-vien-create');
+        addHoiVien(hoTenInput.value, emailInput.value, soDienThoaiInput.value, soCCCDInput.value)
+        .then(response => response.json())
+        .then(response => {
+            if(response.code == 1000) {
+                alert('Đã thêm hội viên');
+                showMemberList.click();
+            } else {
+                alert(response.message);
+            }
+        })
+    })
+    
+    document.getElementById('them-hoi-vien-cancel').addEventListener('click', e => {
+        enableContent('hoi-vien-list');
+    })
+    
+    hoiVienBox.addEventListener('click', e => {
+        var selectedHoiVien = e.target.closest('.hoi-vien');
+        selectedHoiVienId = selectedHoiVien.getAttribute('id');
+        console.log(selectedHoiVienId)
+        var oldActive = hoiVienBox.querySelector('.hoi-vien.active');
+        if(oldActive) oldActive.classList.remove('active');
+        selectedHoiVien.classList.add('active');
+    })
+
+    capNhatHoiVienDiv.addEventListener('click', e => {
+        if(selectedHoiVienId == null) {
+            alert('Vui lòng chọn hội viên!');
+            return;
+        }
+
+        enableContent('hoi-vien-2');
+        var hoTenInput = document.getElementById('ho-ten-hoi-vien-update');
+        var emailInput = document.getElementById('email-hoi-vien-update');
+        var soDienThoaiInput = document.getElementById('so-dien-thoai-hoi-vien-update');
+        var soCCCDInput = document.getElementById('so-cccd-hoi-vien-update');
+        getAllHoiVien()
+        .then(response => response.json())
+        .then(response => {
+            if(response.code == 1000) {
+                return response.result;
+            }
+            else {
+                return Promise.reject(response.message);
+            }
+        })
+        .then(dsHoiVien => {
+            var hoiVienDaChon = dsHoiVien.find(hoiVien => {
+                return hoiVien.maHoiVien == selectedHoiVienId;
+            })
+            hoTenInput.value = hoiVienDaChon.hoTen;
+            emailInput.value = hoiVienDaChon.email;
+            soDienThoaiInput.value = hoiVienDaChon.soDienThoai;
+            soCCCDInput.value = hoiVienDaChon.soCCCD;
+        })
+    })
+    
+    document.querySelector('button[id="cap-nhat-hoi-vien-cancel"]').addEventListener('click', e => {
+        enableContent('hoi-vien-list')
+    })
+    
+    document.querySelector('button[id="cap-nhat-hoi-vien"]').addEventListener('click', e => {
+        var hoTenInput = document.getElementById('ho-ten-hoi-vien-update');
+        var emailInput = document.getElementById('email-hoi-vien-update');
+        var soDienThoaiInput = document.getElementById('so-dien-thoai-hoi-vien-update');
+        var soCCCDInput = document.getElementById('so-cccd-hoi-vien-update');
+        updateHoiVien(hoTenInput.value, emailInput.value, soDienThoaiInput.value, soCCCDInput.value)
+        .then(response => response.json())
+        .then(response => {
+            if(response.code == 1000) {
+                alert('Đã cập nhật!');
+                showMemberList.click();
+            }
+            else {
+                alert(response.message);
+            }
         })
     })
 }
