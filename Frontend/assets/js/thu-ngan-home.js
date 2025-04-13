@@ -5,6 +5,7 @@ const TOKEN = localStorage.getItem(localStorageUserTokenKey);
 
 var myInfo = null;
 var selectedTableNumber = null;
+var selectedHoiVienId = null;
 
 var maThuNganBox = document.getElementById('ma-thu-ngan');
 var hoTenThuNganBox = document.getElementById('ho-ten-thu-ngan');
@@ -26,6 +27,8 @@ var moBanBtn = document.getElementById('mo-ban');
 var capNhatHoaDonBtn = document.getElementById('cap-nhat-hoa-don');
 var thanhToanHoaDonBtn = document.getElementById('thanh-toan-hoa-don');
 var themHoiVienDiv = document.querySelector('div[id="them-hoi-vien"]');
+var capNhatHoiVienDiv = document.querySelector('div[id="cap-nhat-hoi-vien"]');
+var hoiVienBox = document.querySelector('.content .hoi-vien-list .body-hoi-vien-list');
 
 function main() {
 
@@ -480,6 +483,24 @@ function addHoiVien(hoTen, email, soDienThoai, soCCCD) {
     return fetch(api.hoiVienApi, options);
 }
 
+// update hoi vien
+function updateHoiVien(hoTen, email, soDienThoai, soCCCD) {
+    var options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+        },
+        body: JSON.stringify({
+            "hoTen": hoTen,
+            "email": email,
+            "soDienThoai": soDienThoai,
+            "soCCCD": soCCCD
+        }),
+    }
+    return fetch(api.hoiVienApi + '/' + selectedHoiVienId, options);
+}
+
 // handle events
 function handleEvents() {
 
@@ -494,7 +515,7 @@ function handleEvents() {
     
     functionTaskbarBox.addEventListener('click', e=> {
         selectedTableNumber = null;
-        console.log(selectedTableNumber);
+        selectedHoiVienId = null;
     })
     
     showBidaTableListBtn.addEventListener('click', e => {
@@ -550,7 +571,7 @@ function handleEvents() {
                 var dsHoiVien = response.result;
                 var html = dsHoiVien.map(hoiVien => {
                     return `
-                        <div class="hoi-vien">
+                        <div id="${hoiVien.maHoiVien}" class="hoi-vien">
                             <p>${hoiVien.maHoiVien}</p>
                             <p>${hoiVien.hoTen}</p>
                             <p>${hoiVien.soDienThoai}</p>
@@ -1023,5 +1044,68 @@ function handleEvents() {
     
     document.getElementById('them-hoi-vien-cancel').addEventListener('click', e => {
         enableContent('hoi-vien-list');
+    })
+    
+    hoiVienBox.addEventListener('click', e => {
+        var selectedHoiVien = e.target.closest('.hoi-vien');
+        selectedHoiVienId = selectedHoiVien.getAttribute('id');
+        console.log(selectedHoiVienId)
+        var oldActive = hoiVienBox.querySelector('.hoi-vien.active');
+        if(oldActive) oldActive.classList.remove('active');
+        selectedHoiVien.classList.add('active');
+    })
+
+    capNhatHoiVienDiv.addEventListener('click', e => {
+        if(selectedHoiVienId == null) {
+            alert('Vui lòng chọn hội viên!');
+            return;
+        }
+
+        enableContent('hoi-vien-2');
+        var hoTenInput = document.getElementById('ho-ten-hoi-vien-update');
+        var emailInput = document.getElementById('email-hoi-vien-update');
+        var soDienThoaiInput = document.getElementById('so-dien-thoai-hoi-vien-update');
+        var soCCCDInput = document.getElementById('so-cccd-hoi-vien-update');
+        getAllHoiVien()
+        .then(response => response.json())
+        .then(response => {
+            if(response.code == 1000) {
+                return response.result;
+            }
+            else {
+                return Promise.reject(response.message);
+            }
+        })
+        .then(dsHoiVien => {
+            var hoiVienDaChon = dsHoiVien.find(hoiVien => {
+                return hoiVien.maHoiVien == selectedHoiVienId;
+            })
+            hoTenInput.value = hoiVienDaChon.hoTen;
+            emailInput.value = hoiVienDaChon.email;
+            soDienThoaiInput.value = hoiVienDaChon.soDienThoai;
+            soCCCDInput.value = hoiVienDaChon.soCCCD;
+        })
+    })
+    
+    document.querySelector('button[id="cap-nhat-hoi-vien-cancel"]').addEventListener('click', e => {
+        enableContent('hoi-vien-list')
+    })
+    
+    document.querySelector('button[id="cap-nhat-hoi-vien"]').addEventListener('click', e => {
+        var hoTenInput = document.getElementById('ho-ten-hoi-vien-update');
+        var emailInput = document.getElementById('email-hoi-vien-update');
+        var soDienThoaiInput = document.getElementById('so-dien-thoai-hoi-vien-update');
+        var soCCCDInput = document.getElementById('so-cccd-hoi-vien-update');
+        updateHoiVien(hoTenInput.value, emailInput.value, soDienThoaiInput.value, soCCCDInput.value)
+        .then(response => response.json())
+        .then(response => {
+            if(response.code == 1000) {
+                alert('Đã cập nhật!');
+                showMemberList.click();
+            }
+            else {
+                alert(response.message);
+            }
+        })
     })
 }
