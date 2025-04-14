@@ -12,8 +12,15 @@ function main() {
     .then(result => {
         window.location = 'thu-ngan-home.html';
     })
-    .catch(ms => {
-        console.log(ms);
+    .catch(message => {
+        createToastMessage({
+            text: message,
+            showConfirmButton: false,
+            position: "top-end",
+            icon: "info",
+            timer: 1500,
+            showCloseButton: true,
+        })
         handleEvents();
     })
 }
@@ -86,7 +93,15 @@ function handleEvents() {
                 window.location = 'thu-ngan-home.html';
             }
             else {
-                alert(response.message);
+                // alert(response.message);
+                createToastMessage({
+                    text: response.message,
+                    showConfirmButton: false,
+                    position: "top-end",
+                    icon: "warning",
+                    timer: 2000,
+                    showCloseButton: true,
+                })        
             }
         })
     })
