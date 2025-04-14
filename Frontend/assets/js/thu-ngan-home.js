@@ -41,6 +41,16 @@ function main() {
                 myInfo = response.result;
                 console.log(myInfo);
                 renderMyInfo();
+                createToastMessage({
+                    title: 'Chào!',
+                    text: myInfo.hoTen,
+                    showConfirmButton: false,
+                    position: "top-end",
+                    icon: "info",
+                    timer: 2000,
+                    showCloseButton: true,
+                    timerProgressBar: true
+                })
             }
         })
         .then(() => {
@@ -601,7 +611,8 @@ function handleEvents() {
     
     moBanBtn.addEventListener('click', e=> {
         if(selectedTableNumber == null) {
-            alert('Vui lòng chọn bàn!');
+            // alert('Vui lòng chọn bàn!');
+            createAlert('Vui lòng chọn bàn', 'bạn chưa chọn bàn');
             return;
         } 
         if(!confirm("Mở bàn?")) return;
@@ -613,18 +624,20 @@ function handleEvents() {
                 alert('Đã mở bàn');
                 showBidaTableListBtn.click();
             } else {
+                createAlert('Mở bàn thất bại', response.message, 'error');
                 return Promise.reject('Mở bàn thất bại');
             }
         })
         .catch(err => {
             console.log(err);
-            alert('Mở bàn thất bại');
+            // alert('Mở bàn thất bại');
         })
     })
     
     capNhatHoaDonBtn.addEventListener('click', e => {
         if(selectedTableNumber == null) {
-            alert('Vui lòng chọn bàn!');
+            // alert('Vui lòng chọn bàn!');
+            createAlert('Vui lòng chọn bàn', 'bạn chưa chọn bàn');
             return;
         }
         var updateHoaDonBox = document.querySelector('.content .update-hoa-don');
@@ -639,7 +652,8 @@ function handleEvents() {
                     
             }
             else {
-                alert(response.message);
+                // alert(response.message);
+                createAlert('', response.message);
                 return Promise.reject(response.massage);
             }
         })
@@ -680,11 +694,20 @@ function handleEvents() {
                     .then(response => response.json())
                     .then(response => {
                         if(response.code == 1000) {
-                            alert('Đã thêm thanh công!');
+                            // alert('Đã thêm thanh công!');
+                            createToastMessage({
+                                text: 'Thêm thành công',
+                                showConfirmButton: false,
+                                position: "top-end",
+                                icon: "success",
+                                timer: 5000,
+                                showCloseButton: true,
+                            })    
                             capNhatHoaDonBtn.click();
                         }
                         else {
-                            alert('Thêm thất bại!');
+                            // alert('Thêm thất bại!');
+                            createAlert('Thêm thất bại', response.message);
                         }
                     })
                 }
@@ -701,11 +724,20 @@ function handleEvents() {
                     .then(response => response.json())
                     .then(response => {
                         if(response.code == 1000) {
-                            alert('Đã cập nhật thanh công!');
+                            // alert('Đã cập nhật thanh công!');
+                            createToastMessage({
+                                text: 'Cập nhật thành công',
+                                showConfirmButton: false,
+                                position: "top-end",
+                                icon: "success",
+                                timer: 5000,
+                                showCloseButton: true,
+                            })
                             capNhatHoaDonBtn.click();
                         }
                         else {
-                            alert('Cập nhật thất bại thất bại!');
+                            // alert('Cập nhật thất bại thất bại!');
+                            createAlert('Cập nhật thất bại', response.message);
                         }
                     })
                 }
@@ -719,11 +751,20 @@ function handleEvents() {
                     .then(response => response.json())
                     .then(response => {
                         if(response.code == 1000) {
-                            alert('Đã xóa thành công!');
+                            // alert('Đã xóa thành công!');
+                            createToastMessage({
+                                text: 'Xóa thành công',
+                                showConfirmButton: false,
+                                position: "top-end",
+                                icon: "success",
+                                timer: 5000,
+                                showCloseButton: true,
+                            })
                             capNhatHoaDonBtn.click();
                         }
                         else {
-                            alert('Xóa thất bại!');
+                            // alert('Xóa thất bại!');
+                            createAlert('Xóa thất bại', response.message);
                         }
                     })
                 }
@@ -738,12 +779,21 @@ function handleEvents() {
                 .then(response => response.json())
                 .then(response => {
                     if(response.code == 1000) {
-                        alert('Cập nhật thành công!');
+                        // alert('Cập nhật thành công!');
+                        createToastMessage({
+                            text: 'Cập nhật thành công',
+                            showConfirmButton: false,
+                            position: "top-end",
+                            icon: "success",
+                            timer: 5000,
+                            showCloseButton: true,
+                        })
                         console.log(response.result);
                         capNhatHoaDonBtn.click();
                     }
                     else {
-                        alert('Cập nhật không thành công!');
+                        // alert('Cập nhật không thành công!');
+                        createAlert('Cập nhật không thành công!');
                     }
                 })
             }
@@ -863,7 +913,8 @@ function handleEvents() {
     
     thanhToanHoaDonBtn.addEventListener('click', e => {
         if(selectedTableNumber == null) {
-            alert('Vui lòng chọn bàn!');
+            // alert('Vui lòng chọn bàn!');
+            createAlert('Vui lòng chọn bàn', 'bạn chưa chọn bàn');
             return;
         }
 
@@ -874,7 +925,8 @@ function handleEvents() {
                 enableContent('bill-payment');
                 return response.result
             } else {
-                alert(response.message);
+                // alert(response.message);
+                createAlert('', response.message);
                 return Promise.reject(response.message);
             }
         })
@@ -997,7 +1049,14 @@ function handleEvents() {
         .then(response => response.json())
         .then(response => {
             if(response.code == 1000) {
-                alert('Đã đóng bàn');
+                createToastMessage({
+                    text: 'Đã đóng bàn',
+                    showConfirmButton: false,
+                    position: "top-end",
+                    icon: "success",
+                    timer: 5000,
+                    showCloseButton: true,
+                });
                 var hoaDonDaThanhToan = response.result;
                     return hoaDonDaThanhToan;
             } else {
@@ -1034,10 +1093,19 @@ function handleEvents() {
         .then(response => response.json())
         .then(response => {
             if(response.code == 1000) {
-                alert('Đã thêm hội viên');
+                // alert('Đã thêm hội viên');
+                createAlert('Đã thêm hội viên:', response.result.hoTen, 'success')
                 showMemberList.click();
             } else {
-                alert(response.message);
+                // alert(response.message);
+                createToastMessage({
+                    text: response.message,
+                    showConfirmButton: false,
+                    position: "top-end",
+                    icon: "warning",
+                    timer: 5000,
+                    showCloseButton: true,
+                })
             }
         })
     })
@@ -1057,7 +1125,8 @@ function handleEvents() {
 
     capNhatHoiVienDiv.addEventListener('click', e => {
         if(selectedHoiVienId == null) {
-            alert('Vui lòng chọn hội viên!');
+            // alert('Vui lòng chọn hội viên!');
+            createAlert('Vui lòng chọn hội viên', 'bạn chưa chọn hội viên');
             return;
         }
 
@@ -1100,11 +1169,28 @@ function handleEvents() {
         .then(response => response.json())
         .then(response => {
             if(response.code == 1000) {
-                alert('Đã cập nhật!');
+                // alert('Đã cập nhật!');
+                createToastMessage({
+                    text: 'Đã cập nhật',
+                    showConfirmButton: false,
+                    position: "top-end",
+                    icon: "success",
+                    timer: 5000,
+                    showCloseButton: true,
+                })
                 showMemberList.click();
             }
             else {
-                alert(response.message);
+                // alert(response.message);
+                createToastMessage({
+                    title: 'Cập nhật thất bại',
+                    text: response.message,
+                    showConfirmButton: false,
+                    position: "top-end",
+                    icon: "error",
+                    timer: 5000,
+                    showCloseButton: true,
+                })
             }
         })
     })
