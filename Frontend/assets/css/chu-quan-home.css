@@ -1,3 +1,35 @@
 .main-taskbar {
     width: 320px;
 }
+
+.extension {
+    width: calc(100% - 320px);
+}
+
+.extension .xem-danh-sach-ban-bida > div {
+    width: calc(100% / 2);
+}
+
+.extension .xem-danh-sach-thu-ngan > div {
+    width: calc(100% / 3);
+}
+
+.extension .xem-danh-sach-hoa-don > div {
+    width: calc(100% / 2);
+}
+
+.extension .xem-danh-sach-mat-hang > div {
+    width: calc(100% / 2);
+}
+
+.extension .xem-danh-sach-loai-ban > div {
+    width: calc(100% / 2);
+}
+
+.extension .xem-danh-sach-cap-do-hoi-vien > div {
+    width: calc(100% / 2);
+}
+
+.extension .xem-danh-sach-hoi-vien > div {
+    width: 100%;
+}
