@@ -3,13 +3,14 @@
 :root {
     --color-one: #15919b;
     --color-two: #09d1c7;
-    --text-color: #213a58;
 
     --font: "Montserrat", sans-serif;
 }
 
 body {
-    font-family: var(--font)
+    font-family: var(--font);
+    display: flex;
+    color: var(--color-one);
 }
 
 .disable {
@@ -20,7 +21,7 @@ body {
     background-color: #09d1c7 !important;
 }
 
-/* .button {
+.button {
     border: 1px solid var(--color-one);
     background-color: var(--color-one);
     color: white;
@@ -34,4 +35,54 @@ body {
     border-radius: 5px;
     cursor: pointer;
     transition: 0.3s;
-} */
+}
+
+.main-taskbar {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid gainsboro;
+}
+
+.main-taskbar .logo {
+    background-color: var(--color-one);
+    height: 50px;
+    display: flex;
+    align-items: center;
+    min-height: 50px;
+}
+
+.main-taskbar .logo img {
+    width: 100%;
+}
+
+.main-taskbar > .info {
+    display: flex;
+    flex-direction: column;
+    padding: 30px 10px;
+    border-bottom: 1px solid gainsboro;
+    margin-bottom: 30px;
+}
+
+.main-taskbar > .function-taskbar {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+}
+
+.main-taskbar > .function-taskbar > div {
+    padding: 15px;
+    margin-bottom: 10px;
+    display: flex;
+}
+
+.main-taskbar > .function-taskbar p {
+    margin: 0px;
+    margin-left: 10px;
+}
+
+.main-taskbar > .function-taskbar > div:hover {
+    background-color: gainsboro;
+    cursor: pointer;
+    transition: 0.3s;
+}

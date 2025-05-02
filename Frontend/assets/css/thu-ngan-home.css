@@ -1,35 +1,3 @@
-body {
-    display: flex;
-    color: var(--color-one);
-}
-
-.main-taskbar {
-    width: 300px;
-    display: flex;
-    flex-direction: column;
-    border-right: 1px solid gainsboro;
-}
-
-.main-taskbar .logo {
-    background-color: var(--color-one);
-    height: 50px;
-    display: flex;
-    align-items: center;
-    min-height: 50px;
-}
-
-.main-taskbar .logo img {
-    width: 100%;
-}
-
-.main-taskbar > .info {
-    display: flex;
-    flex-direction: column;
-    padding: 30px 10px;
-    border-bottom: 1px solid gainsboro;
-    margin-bottom: 30px;
-}
-
 .main-taskbar > .info > div:first-child {
     display: flex;
     margin-bottom: 20px;
@@ -52,7 +20,6 @@ body {
 
 .main-taskbar .logout {
     background-color: var(--color-one);
-    border: none;
     border-radius: 5px;
     color: white;
     border: 1px solid var(--color-one);
@@ -63,29 +30,6 @@ body {
     background-color: white;
     border: 1px solid var(--color-one);
     color: var(--color-one);
-    transition: 0.3s;
-}
-
-.main-taskbar > .function-taskbar {
-    display: flex;
-    flex-direction: column;
-    font-weight: bold;
-}
-
-.main-taskbar > .function-taskbar > div {
-    padding: 15px;
-    margin-bottom: 10px;
-    display: flex;
-}
-
-.main-taskbar > .function-taskbar p {
-    margin: 0px;
-    margin-left: 10px;
-}
-
-.main-taskbar > .function-taskbar > div:hover {
-    background-color: gainsboro;
-    cursor: pointer;
     transition: 0.3s;
 }
 

@@ -13,8 +13,15 @@ function main() {
     .then(response => {
         window.location = 'chu-quan-home.html';
     })
-    .catch(ms => {
-        console.log(ms);
+    .catch(message => {
+        // console.log(ms);
+        createToastMessage({
+            text: message,
+            position: "top-end",
+            showConfirmButton: false,
+            icon: "info",
+            timer: 2000
+        })
         handleEvents();
     })
 }
@@ -88,7 +95,14 @@ function handleEvents() {
                 localStorage.setItem(localStorageAdminTokenKey, response.result.token);
                 window.location = 'chu-quan-home.html';
             } else {
-                alert(response.message);
+                // alert(response.message);
+                createToastMessage({
+                    text: response.message,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    icon: "warning",
+                    timer: 5000
+                })
             }
         })
     })
