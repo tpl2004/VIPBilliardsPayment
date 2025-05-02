@@ -34,12 +34,10 @@
 }
 
 .extension {
-    display: flex;
-    flex-direction: column;
     width: calc(100% - 300px);
 }
 
-.extension > .top-taskbar {
+/* .extension > .top-taskbar {
     font-weight: bold;
     color: white;
     background-color: var(--color-one);
@@ -61,7 +59,7 @@
     cursor: pointer;
     color: var(--color-one);
     transition: 0.3s;
-}
+} */
 
 .extension .xem-danh-sach-ban-bida > div {
     width: calc(100% / 3);
@@ -100,11 +98,6 @@
     color: var(--color-one);
     cursor: pointer;
     transition: 0.3s;
-}
-
-.active {
-    background-color: gainsboro !important;
-    color: var(--color-one) !important;
 }
 
 .active-top-taskbar {
