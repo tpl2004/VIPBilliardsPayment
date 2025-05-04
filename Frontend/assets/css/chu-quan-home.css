@@ -1,11 +1,3 @@
-.main-taskbar {
-    width: 320px;
-}
-
-.extension {
-    width: calc(100% - 320px);
-}
-
 .extension .xem-danh-sach-ban-bida > div {
     width: calc(100% / 2);
 }

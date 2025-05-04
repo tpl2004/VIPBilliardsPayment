@@ -33,10 +33,6 @@
     transition: 0.3s;
 }
 
-.extension {
-    width: calc(100% - 300px);
-}
-
 /* .extension > .top-taskbar {
     font-weight: bold;
     color: white;
@@ -69,7 +65,7 @@
     width: calc(100% / 2);
 }
 
-.extension > .content {
+/* .extension > .content {
     display: flex;
     flex-direction: column;
     position: relative;
@@ -86,7 +82,7 @@
 .extension > .content > .ban-bida-list p {
     width: calc(100% / 4);
     text-align: center;
-}
+} */
 
 .extension .body-ban-bida-list > .ban-bida {
     display: flex;
