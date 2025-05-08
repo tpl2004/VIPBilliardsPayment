@@ -36,6 +36,12 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    overflow: auto;
+    box-sizing: border-box;
+    height: calc(100% - 50px);
+    align-items: start;
+    border-bottom: 1px solid gainsboro;
+    margin-bottom: 20px;
 }
 
 
@@ -45,8 +51,15 @@
     border-radius: 8px;
     display: flex;
     flex-direction: column;
-    width: calc((100% - 40px) / 3);
+    width: calc(50% - 10px);
     margin-bottom: 20px;
+}
+
+.extension .content .them-ban-bida .loai-ban:hover {
+    background-color: var(--color-one);
+    cursor: pointer;
+    transition: 0.3s;
+    color: white;
 }
 
 .extension .content .them-ban-bida .loai-ban .ban-image > img {
@@ -54,4 +67,36 @@
     width: 100%;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
+}
+
+.extension .content .them-ban-bida .loai-ban .thong-tin-loai-ban {
+    display: flex;
+    flex-direction: column;
+}
+
+.extension .content .them-ban-bida .loai-ban .thong-tin-loai-ban div {
+    display: flex;
+    padding-left: 20px;
+
+}
+
+.extension .content .them-ban-bida .loai-ban .thong-tin-loai-ban div p:first-child {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.extension .content .them-ban-bida .loai-ban .thong-tin-loai-ban div:first-child p {
+    margin-bottom: 0px;
+}
+
+.extension .content .them-ban-bida .xac-nhan-them-ban {
+    height: 30px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.extension .content .them-ban-bida .xac-nhan-them-ban button {
+    margin-left: 5px;
+    box-sizing: border-box;
+    width: 150px;
 }

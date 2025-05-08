@@ -30,6 +30,7 @@ body {
     box-shadow: 0px 5px 10px  rgba(0, 0, 0, 0.5);
     position: relative;
     z-index: 9999;
+    transition: 0.3s;
 }
 
 .button {
@@ -43,6 +44,22 @@ body {
     border: 1px solid var(--color-one);
     background-color: white;
     color: var(--color-one);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.cancle {
+    border: 1px solid rgba(231, 79, 79, 0.8);
+    background-color: rgba(231, 79, 79, 0.8);
+    color: white;
+    border-radius: 5px;
+}
+
+.cancle:hover {
+    border: 1px solid rgba(231, 79, 79, 0.8);
+    background-color: white;
+    color: rgba(231, 79, 79, 0.8);
     border-radius: 5px;
     cursor: pointer;
     transition: 0.3s;

@@ -67,6 +67,9 @@ public class BanBidaService {
 		if (ban.isPresent()) {
 			try {
 				BanBida banbida_ = ban.get();
+				if(banbida_.getTrangThai() == 1 || banbida_.getTrangThai() == 2) {
+					throw new AppException(ErrorCode.DELETE_FAILD);
+				}
 				banbida_.setTrangThai(2);
 				banbida_ = banBidaRepository.save(banbida_);
 				return banBidaMapper.toBanBidaResponse(banbida_);

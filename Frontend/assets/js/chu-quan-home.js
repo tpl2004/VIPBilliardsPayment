@@ -331,11 +331,11 @@ function handleEvents() {
         console.log(selectedLoaiBanId);
     })
     
-    cont_themBanBidaBox.querySelector('.xac-nhan-loai-ban button[name="huy"').onclick = e => {
+    cont_themBanBidaBox.querySelector('.xac-nhan-them-ban button[name="huy"').onclick = e => {
         func_showBidaTableListBtn.click();
     }
     
-    cont_themBanBidaBox.querySelector('.xac-nhan-loai-ban button[name="xac-nhan"]').onclick = e => {
+    cont_themBanBidaBox.querySelector('.xac-nhan-them-ban button[name="xac-nhan"]').onclick = e => {
         if(selectedLoaiBanId == null) {
             createAlert('Vui lòng chọn loại bàn', 'Bạn chưa chọn loại bàn', 'warning');
             return;
