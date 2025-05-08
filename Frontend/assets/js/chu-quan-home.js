@@ -149,7 +149,7 @@ function handleEvents() {
         .then(response => response.json())
         .then(response => {
             if(response.code != 1000) {
-                
+                console.log(response.message);
                 return;
             }
             var banBidaList = response.result;

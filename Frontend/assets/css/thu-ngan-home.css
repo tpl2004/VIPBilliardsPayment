@@ -96,19 +96,18 @@
     transition: 0.3s;
 }
 
-.active-top-taskbar {
+/* .active-top-taskbar {
     background-color: gainsboro;
     color: var(--color-one);
-}
+} */
 
 .extension .bill-payment {
     color: black;
     display: flex;
     flex-direction: column;
-    width: 700px;
-    margin-left: calc(50% - 350px);
-    margin-top: 20px;
-    margin-bottom: 36px;
+    box-sizing: border-box;
+    background-size: cover;
+    padding: 20px 15%;
 }
 
 .extension .bill-payment .header-bill {
@@ -117,10 +116,12 @@
     color: var(--color-one);
 }
 
-.extension .content-bill {
-    background-color: gainsboro;
+.extension .bill-payment .overflow-content-bill {
+    background-color: rgba(220, 220, 220, 0.850);
     margin-bottom: 16px;
     border-radius: 5px;
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.5);
+    overflow: auto;
 }
 
 .extension .content-bill > tbody > tr > td {
@@ -130,6 +131,7 @@
 
 .extension .content-bill > tbody > tr > td:first-child {
     font-weight: bold;
+    margin-right: 150px;
 }
 
 .extension .bill-payment .bill-options {

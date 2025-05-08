@@ -123,6 +123,11 @@ body {
     border-radius: 8px;
 }
 
+.active-top-taskbar {
+    background-color: gainsboro;
+    color: var(--color-one);
+}
+
 .extension > .top-taskbar > div {
     display: flex;
     height: 50px;
