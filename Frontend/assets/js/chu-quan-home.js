@@ -3,6 +3,8 @@ import * as api from './api-service.js';
 
 const TOKEN = localStorage.getItem(localStorageAdminTokenKey);
 
+var selectedTableNumber = null;
+
 var logOutBtn = document.querySelector('#log-out');
 var functionTaskbar = document.querySelector('.function-taskbar');
 var func_showBidaTableListBtn = document.querySelector('#show-bida-table-list');
@@ -14,7 +16,8 @@ var func_showLevelListBtn = document.querySelector('#show-level-list');
 var func_showMemberListBtn = document.querySelector('#show-member-list');
 var topTaskbar = document.querySelector('.extension .top-taskbar');
 var content = document.querySelector('.extension .content');
-console.log(content)
+var banBidaListBox = document.querySelector('.content .ban-bida-list .body-ban-bida-list');
+var top_themBanBtn = document.querySelector('#them-ban');
 
 function main() {
 
@@ -117,12 +120,12 @@ function getAllBanBida() {
 }
 
 function renderBanBidaList(banBidaList) {
-    var banBidaListBox = document.querySelector('.content .ban-bida-list .body-ban-bida-list');
     var html = banBidaList.map((banBida) => {
+        var trangThai = banBida.trangThai;
         return `
-            <div class="ban-bida">
+            <div id="${banBida.soBan}" class="ban-bida ${trangThai == 1? 'unavailable' : (trangThai == 2? 'deleted' : '')}">
                 <p>${banBida.soBan}</p>
-                <p>${banBida.trangThai}</p>
+                <p>${trangThai == 0? 'Khả dụng' : (trangThai == 1? 'Đang bận' : 'Đã xóa')}</p>
                 <p>${banBida.tenLoaiBan}</p>
                 <p>${banBida.donGia}</p>
             </div>
@@ -140,6 +143,11 @@ function handleEvents() {
             window.location.reload();
         }
     }
+    
+    functionTaskbar.addEventListener('click', e => {
+        selectedTableNumber = null;
+        console.log(selectedTableNumber);
+    })
     
     func_showBidaTableListBtn.addEventListener('click', e => {
         activeMainFunction('show-bida-table-list');
@@ -185,5 +193,20 @@ function handleEvents() {
     func_showMemberListBtn.addEventListener('click', e => {
         activeMainFunction('show-member-list');
         enableExtensionFuncGroup('xem-danh-sach-hoi-vien');
+    })
+    
+    banBidaListBox.addEventListener('click', e => {
+        var activedTable = banBidaListBox.querySelector('.ban-bida.active');
+        if(activedTable) {
+            activedTable.classList.remove('active');
+        }
+        var selectedTable = e.target.closest('.ban-bida');
+        selectedTable.classList.add('active');
+        selectedTableNumber = selectedTable.getAttribute('id');
+        console.log(selectedTableNumber);
+    })
+    
+    top_themBanBtn.addEventListener('click', e => {
+        enableContent('them-ban-bida');
     })
 }
