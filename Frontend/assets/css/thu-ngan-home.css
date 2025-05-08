@@ -84,7 +84,7 @@
     text-align: center;
 } */
 
-.extension .body-ban-bida-list > .ban-bida {
+/* .extension .body-ban-bida-list > .ban-bida {
     display: flex;
     border-bottom: 1px solid gainsboro;
 }
@@ -94,7 +94,7 @@
     color: var(--color-one);
     cursor: pointer;
     transition: 0.3s;
-}
+} */
 
 /* .active-top-taskbar {
     background-color: gainsboro;
