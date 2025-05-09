@@ -261,7 +261,7 @@ function handleEvents() {
     
     func_showMemberListBtn.addEventListener('click', e => {
         activeMainFunction('show-member-list');
-        enableExtensionFuncGroup('xem-danh-sach-hoi-vien');
+        enableExtensionFuncGroup('');
     })
     
     banBidaListBox.addEventListener('click', e => {
