@@ -184,6 +184,7 @@ body {
     border: 1px solid gainsboro;
     border-radius: 8px;
     height: calc(100% - 58px);
+    overflow: auto;
 }
 
 .extension > .content > div {

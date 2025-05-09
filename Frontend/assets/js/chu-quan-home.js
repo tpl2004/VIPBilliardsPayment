@@ -32,6 +32,7 @@ var top_capNhatLoaiBanBtn = document.querySelector('#cap-nhat-loai-ban');
 var top_themCapDoHoiVienBtn = document.querySelector('#them-cap-do');
 var top_capNhatCapDoHoiVienBtn = document.querySelector('#cap-nhat-cap-do');
 var cont_themBanBidaBox = document.querySelector('.content .them-ban-bida');
+var cont_thuNganListBox = document.querySelector('.content .danh-sach-thu-ngan .body-thu-ngan-list');
 
 function main() {
 
@@ -212,6 +213,58 @@ function createBanBida() {
     return fetch(api.banBidaApi + '/thembanbida', options);
 }
 
+function getAllThuNgan() {
+    var options = {
+        method: 'GET',
+
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+        },
+    }
+    return fetch(api.thuNganApi + '/getallthungan', options);
+}
+
+function renderThuNganList(thuNganList, thuNganListBox) {
+    var html = thuNganList.map(thuNgan => {
+        return `
+            <div class="thu-ngan">
+                <p>${thuNgan.maThuNgan}</p>
+                <p>${thuNgan.hoTen}</p>
+                <p>${thuNgan.email}</p>
+                <p>${thuNgan.soDienThoai}</p>
+                <p>${thuNgan.soCCCD}</p>
+            </div>
+        `
+    })
+    
+    thuNganListBox.innerHTML = html.join('');
+}
+
+function createThuNgan(hoTen, ngaySinh, gioiTinhNu, email, soDienThoai, soCCCD, tenDangNhap, matKhau) {
+    var options = {
+        method: 'POST',
+        
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+        },
+
+        body: JSON.stringify({
+            "hoTen": hoTen,
+            "ngaySinh": ngaySinh,
+            "gioiTinhNu": gioiTinhNu,
+            "email": email,
+            "soDienThoai": soDienThoai,
+            "soCCCD": soCCCD,
+            "tenDangNhap": tenDangNhap,
+            "matKhau": matKhau
+        }),
+    }
+    
+    return fetch(api.thuNganApi + '/themthungan', options);
+}
+
 // handle events
 function handleEvents() {
 
@@ -248,6 +301,20 @@ function handleEvents() {
         activeMainFunction('show-bida-cashier-list')
         enableExtensionFuncGroup('xem-danh-sach-thu-ngan');
         enableContent('danh-sach-thu-ngan');
+        getAllThuNgan()
+        .then(response => response.json())
+        .then(response => {
+            if(response.code != 1000) {
+                console.log(response.message);
+                return;
+            }
+            // thanh cong
+            var thuNganList = response.result;
+            renderThuNganList(thuNganList, cont_thuNganListBox);
+        })
+        .catch(err => {
+            console.log(err);
+        })
     })
     
     func_showBillListBtn.addEventListener('click', e => {

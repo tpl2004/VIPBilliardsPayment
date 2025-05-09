@@ -100,3 +100,88 @@
     box-sizing: border-box;
     width: 150px;
 }
+
+.extension > .content > .danh-sach-thu-ngan p {
+    width: calc(100% / 5);
+    text-align: center;
+}
+
+.extension > .content > .danh-sach-thu-ngan > .body-thu-ngan-list {
+    box-sizing: border-box;
+    height: calc(100% - 50px);
+    overflow: auto;
+}
+
+.extension .body-thu-ngan-list > .thu-ngan {
+    display: flex;
+    border-bottom: 1px solid gainsboro;
+}
+
+.extension .body-thu-ngan-list > .thu-ngan:hover {
+    background-color: gainsboro !important;
+    color: var(--color-one);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.extension .content .them-thu-ngan .xac-nhan-them-thu-ngan button {
+    margin-left: 5px;
+    box-sizing: border-box;
+    width: 150px;
+}
+
+.extension .content .them-thu-ngan {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 700px;
+    height: 500px;
+    background-color: gainsboro;
+    border-radius: 8px;
+    position: absolute;
+    left: calc(50% - 350px);
+    top: 70px;
+    padding: 10px;
+    justify-content: space-between;
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.5);
+}
+
+.extension .content .them-thu-ngan .header-them-thu-ngan {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--color-one);
+    margin: 0;
+    text-align: center;
+}
+
+.extension .content .them-thu-ngan .thong-tin-them {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    height: calc(100% - 120px);
+    justify-content: space-between;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.extension .content .them-thu-ngan .thong-tin-them div {
+    display: flex;
+}
+
+.extension .content .them-thu-ngan .thong-tin-them div label {
+    box-sizing: border-box;
+    width: 170px;
+    font-weight: bold;
+    
+}
+
+.extension .content .them-thu-ngan .thong-tin-them div input {
+    box-sizing: border-box;
+    width: 410px;
+}
+
+.extension .content .them-thu-ngan .xac-nhan-them-thu-ngan {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0px 50px;
+}
