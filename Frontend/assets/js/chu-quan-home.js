@@ -33,6 +33,7 @@ var top_themCapDoHoiVienBtn = document.querySelector('#them-cap-do');
 var top_capNhatCapDoHoiVienBtn = document.querySelector('#cap-nhat-cap-do');
 var cont_themBanBidaBox = document.querySelector('.content .them-ban-bida');
 var cont_thuNganListBox = document.querySelector('.content .danh-sach-thu-ngan .body-thu-ngan-list');
+var cont_themThuNganBox = document.querySelector('.content .them-thu-ngan');
 
 function main() {
 
@@ -485,4 +486,36 @@ function handleEvents() {
     top_capNhatCapDoHoiVienBtn.addEventListener('click', e => {
         enableContent('cap-nhat-cap-do');
     })
+    
+    cont_themThuNganBox.querySelector('.xac-nhan-them-thu-ngan button[name="huy"]').onclick = e => {
+        func_showBidaCashierListBtn.click();
+    }
+    
+    cont_themThuNganBox.querySelector('.xac-nhan-them-thu-ngan button[name="xac-nhan"]').onclick = e => {
+        var thongTinThemBox = cont_themThuNganBox.querySelector('.thong-tin-them');
+        var hoTen = thongTinThemBox.querySelector('input[name="ho-ten-thu-ngan"]').value;
+        var ngaySinh = thongTinThemBox.querySelector('input[name="ngay-sinh-thu-ngan"]').value;
+        var goiTinh = thongTinThemBox.querySelector('select[name="gioi-tinh-thu-ngan"]');
+        goiTinh = goiTinh.options[goiTinh.selectedIndex]; // lay ra the option dang duoc chon
+        goiTinh = goiTinh.value;
+        var gioiTinhNu = goiTinh? true : false;
+        var email = thongTinThemBox.querySelector('input[name="email-thu-ngan"]').value;
+        var soDienThoai = thongTinThemBox.querySelector('input[name="sdt-thu-ngan"]').value;
+        var soCCCD = thongTinThemBox.querySelector('input[name="so-cccd"]').value;
+        var tenDangNhap = thongTinThemBox.querySelector('input[name="ten-dang-nhap-thu-ngan"]').value;
+        var matKhau = thongTinThemBox.querySelector('input[name="mat-khau-thu-ngan"]').value;
+        createThuNgan(hoTen, ngaySinh, gioiTinhNu, email, soDienThoai, soCCCD, tenDangNhap, matKhau)
+        .then(response => response.json())
+        .then(response => {
+            if(response.code != 1000) {
+                alert('Tạo Thất bại');
+                return;
+            }
+            // tao thanh cong
+            alert('Tạo thành công');
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
 }
