@@ -20,8 +20,18 @@ var content = document.querySelector('.extension .content');
 var banBidaListBox = document.querySelector('.content .ban-bida-list .body-ban-bida-list');
 var top_themBanBtn = document.querySelector('#them-ban');
 var top_xoaBanBtn = document.querySelector('#xoa-ban');
+var top_themThuNganBtn = document.querySelector('#them-thu-ngan');
+var top_timKiemThuNganBtn = document.querySelector('#tim-kiem-thu-ngan');
+var top_capNhatThongTinThuNganBtn = document.querySelector('#cap-nhat-thong-tin-thu-ngan');
+var top_timKiemHoaDonBtn = document.querySelector('#tim-kiem-hoa-don');
+var top_xemThongKeDoanhThuBtn = document.querySelector('#xem-thong-ke-doanh-thu');
+var top_themMatHangBtn = document.querySelector('#them-mat-hang');
+var top_capNhatMatHangBtn = document.querySelector('#cap-nhat-mat-han');
+var top_themLoaiBanBtn = document.querySelector('#them-loai-ban');
+var top_capNhatLoaiBanBtn = document.querySelector('#cap-nhat-loai-ban');
+var top_themCapDoHoiVienBtn = document.querySelector('#them-cap-do');
+var top_capNhatCapDoHoiVienBtn = document.querySelector('#cap-nhat-cap-do');
 var cont_themBanBidaBox = document.querySelector('.content .them-ban-bida');
-console.log(cont_themBanBidaBox);
 
 function main() {
 
@@ -237,31 +247,37 @@ function handleEvents() {
     func_showBidaCashierListBtn.addEventListener('click', e => {
         activeMainFunction('show-bida-cashier-list')
         enableExtensionFuncGroup('xem-danh-sach-thu-ngan');
+        enableContent('danh-sach-thu-ngan');
     })
     
     func_showBillListBtn.addEventListener('click', e => {
         activeMainFunction('show-bill-list');
         enableExtensionFuncGroup('xem-danh-sach-hoa-don');
+        enableContent('xem-danh-sach-hoa-don');
     })
     
     func_showGoodsListBtn.addEventListener('click', e => {
         activeMainFunction('show-goods-list');
         enableExtensionFuncGroup('xem-danh-sach-mat-hang');
+        enableContent('xem-danh-sach-mat-hang');
     })
     
     func_showTableTypeListBtn.addEventListener('click', e => {
         activeMainFunction('show-table-type-list');
         enableExtensionFuncGroup('xem-danh-sach-loai-ban');
+        enableContent('xem-danh-sach-loai-ban');
     })
     
     func_showLevelListBtn.addEventListener('click', e => {
         activeMainFunction('show-level-list');
         enableExtensionFuncGroup('xem-danh-sach-cap-do-hoi-vien');
+        enableContent('xem-danh-sach-cap-do-hoi-vien');
     })
     
     func_showMemberListBtn.addEventListener('click', e => {
         activeMainFunction('show-member-list');
         enableExtensionFuncGroup('');
+        enableContent('xem-danh-sach-hoi-vien');
     })
     
     banBidaListBox.addEventListener('click', e => {
@@ -358,4 +374,48 @@ function handleEvents() {
             console.log(err);
         })
     }
+    
+    top_themThuNganBtn.addEventListener('click', e => {
+        enableContent('them-thu-ngan');
+    })
+    
+    top_timKiemThuNganBtn.addEventListener('click', e => {
+        enableContent('tim-kiem-thu-ngan');
+    })
+    
+    top_capNhatThongTinThuNganBtn.addEventListener('click', e => {
+        enableContent('cap-nhat-thu-ngan');
+    })
+    
+    top_timKiemHoaDonBtn.addEventListener('click', e => {
+        enableContent('tim-kiem-hoa-don');
+    })
+    
+    top_xemThongKeDoanhThuBtn.addEventListener('click', e => {
+        enableContent('xem-thong-ke-doanh-thu');
+    })
+    
+    top_themMatHangBtn.addEventListener('click', e => {
+        enableContent('them-mat-hang');
+    })
+    
+    top_capNhatMatHangBtn.addEventListener('click', e => {
+        enableContent('cap-nhat-mat-hang');
+    })
+    
+    top_themLoaiBanBtn.addEventListener('click', e => {
+        enableContent('them-loai-ban');
+    })
+    
+    top_capNhatLoaiBanBtn.addEventListener('click', e => {
+        enableContent('cap-nhat-loai-ban');
+    })
+    
+    top_themCapDoHoiVienBtn.addEventListener('click', e => {
+        enableContent('them-cap-do');
+    })
+    
+    top_capNhatCapDoHoiVienBtn.addEventListener('click', e => {
+        enableContent('cap-nhat-cap-do');
+    })
 }
