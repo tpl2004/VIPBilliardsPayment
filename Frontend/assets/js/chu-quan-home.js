@@ -310,6 +310,36 @@ function updateThuNgan(hoTen, ngaySinh, gioiTinhNu, email, soDienThoai, soCCCD, 
     return fetch(api.thuNganApi + '/updatethungan/' + selectedThuNganId, options);
 }
 
+function getAllHoaDon() {
+    var options = {
+        method: 'GET',
+        
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+        },
+    }
+
+    return fetch(api.hoaDonApi, options);
+}
+
+function renderHoaDonList(hoaDonList, hoaDonListBox) {
+    var html = hoaDonList.map(hoaDon => {
+        return `
+            <div class="bill">
+                <p>${hoaDon.maHoaDon}</p>
+                <p>${hoaDon.thoiDiemVao}</p>
+                <p>${hoaDon.soGioChoi}</p>
+                <p>${hoaDon.soBan}</p>
+                <p>${hoaDon.donGia}</p>
+                <p>${hoaDon.tongTien}</p>
+            </div>
+        `
+    })
+    
+    hoaDonListBox.innerHTML = html.join('');
+}
+
 // handle events
 function handleEvents() {
     
@@ -386,6 +416,20 @@ function handleEvents() {
         activeMainFunction('show-bill-list');
         enableExtensionFuncGroup('xem-danh-sach-hoa-don');
         enableContent('hoa-don-list');
+        getAllHoaDon()
+        .then(response => response.json())
+        .then(response => {
+            if(response.code != 1000) {
+                return;
+            }
+            // thanh cong
+            var DSHoaDon = response.result;
+            var hoaDonListBox = document.querySelector('.content .hoa-don-list .body-bill-list');
+            renderHoaDonList(DSHoaDon, hoaDonListBox);
+        })
+        .catch(err => {
+            console.log(err);
+        })
     })
     
     func_showGoodsListBtn.addEventListener('click', e => {
@@ -656,7 +700,7 @@ function handleEvents() {
         var hoTen = updateThuNganForm.hoTenInput.value;
         var ngaysinh = updateThuNganForm.ngaySinhInput.value;
         var goiTinh = updateThuNganForm.gioiTinhSelect.options[updateThuNganForm.gioiTinhSelect.selectedIndex]; // lay the option da chon
-        var gioiTinhNu = goiTinh.value? true : false;
+        var gioiTinhNu = (goiTinh.value == "1")? true : false;
         var email = updateThuNganForm.emailInput.value;
         var soDienThoai = updateThuNganForm.soDienThoaiInput.value;
         var soCCCD = updateThuNganForm.soCCCDInput.value;
@@ -665,12 +709,20 @@ function handleEvents() {
         .then(response => response.json())
         .then(response => {
             if(response.code != 1000) {
-                alert(response.message);
+                // alert(response.message);
+                createToastMessage({
+                    text: response.message,
+                    icon: 'error',
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 5000
+                })
 
                 return;
             }
             // cap nhat thanh cong
-            alert('Cập nhật thành công');
+            // alert('Cập nhật thành công');
+            createAlert('Cập nhật thành công', `Đã cập nhật thu ngân ${selectedThuNganId}`, 'success');
             func_showBidaCashierListBtn.click();
         })
         .catch(err => {
