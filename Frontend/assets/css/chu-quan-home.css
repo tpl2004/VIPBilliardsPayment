@@ -124,19 +124,18 @@
     transition: 0.3s;
 }
 
-.extension .content .them-thu-ngan .xac-nhan-them-thu-ngan button {
+.extension .content .thong-tin-thu-ngan .xac-nhan-them-thu-ngan button {
     margin-left: 5px;
     box-sizing: border-box;
     width: 150px;
 }
 
-.extension .content .them-thu-ngan {
+.extension .content .thong-tin-thu-ngan {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
     width: 700px;
     height: 500px;
-    background-color: gainsboro;
     border-radius: 8px;
     position: absolute;
     left: calc(50% - 350px);
@@ -144,9 +143,10 @@
     padding: 10px;
     justify-content: space-between;
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.5);
+    background-color: rgba(220, 220, 220, 0.850);
 }
 
-.extension .content .them-thu-ngan .header-them-thu-ngan {
+.extension .content .thong-tin-thu-ngan .header-them-thu-ngan {
     font-size: 20px;
     font-weight: bold;
     color: var(--color-one);
@@ -154,7 +154,7 @@
     text-align: center;
 }
 
-.extension .content .them-thu-ngan .thong-tin-them {
+.extension .content .thong-tin-thu-ngan .thong-tin-them {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -164,24 +164,85 @@
     padding-right: 50px;
 }
 
-.extension .content .them-thu-ngan .thong-tin-them div {
+.extension .content .thong-tin-thu-ngan .thong-tin-them div {
     display: flex;
 }
 
-.extension .content .them-thu-ngan .thong-tin-them div label {
+.extension .content .thong-tin-thu-ngan .thong-tin-them div label {
     box-sizing: border-box;
     width: 170px;
     font-weight: bold;
     
 }
 
-.extension .content .them-thu-ngan .thong-tin-them div input {
+.extension .content .thong-tin-thu-ngan .thong-tin-them div input {
     box-sizing: border-box;
     width: 410px;
 }
 
-.extension .content .them-thu-ngan .xac-nhan-them-thu-ngan {
+.extension .content .thong-tin-thu-ngan .xac-nhan-them-thu-ngan {
     display: flex;
     justify-content: flex-end;
     padding: 0px 50px;
+}
+
+.extension .content .tim-kiem {
+    display: flex;
+    flex-direction: column;
+}
+
+.extension .content .tim-kiem .search-box {
+    display: flex;
+    box-sizing: border-box;
+    height: 50px;
+    padding: 8px;
+    padding-right: 20px;
+    justify-content: flex-end;
+    border-bottom: 1px solid gainsboro;
+    background-color: gainsboro;
+}
+
+.extension .content .tim-kiem .search-box > input {
+    box-sizing: border-box;
+    width: 360px;
+    border-radius: 50px;
+    border: 1px solid white;
+    outline: none;
+    padding:0 10px;
+    color: gray;
+}
+
+.extension .content .tim-kiem .search-box > input:focus {
+    box-shadow: 0 0 10px 3px #15929b56;
+    transition: 0.3s;
+}
+
+.extension .content .tim-kiem .search-box > button {
+    box-sizing: border-box;
+    width: 60px;
+    border-radius: 50px;
+    margin-left: 5px;
+}
+
+.extension .content .tim-kiem > div:last-child {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    height: calc(100% - 50px);
+}
+
+.extension .content .tim-kiem > div:last-child p {
+    box-sizing: border-box;
+    width: calc(100% / 6);
+    text-align: center;
+}
+
+.extension > .content > .tim-kiem .body-thu-ngan-list {
+    box-sizing: border-box;
+    height: calc(100% - 50px);
+    overflow: auto;
+}
+
+.extension .content .tim-kiem-thu-ngan > div:last-child p {
+    width: calc(100% / 5);
 }

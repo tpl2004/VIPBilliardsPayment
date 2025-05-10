@@ -299,7 +299,7 @@
 }
 
 /* bill list css */
-.extension > .content > .hoa-don-list > .body-bill-list {
+/* .extension > .content > .hoa-don-list > .body-bill-list {
     display: flex;
     flex-direction: column;
 }
@@ -319,7 +319,7 @@
 .extension > .content > .hoa-don-list p {
     width: calc(100% / 6);
     text-align: center;
-}
+} */
 
 /* hoi vien list css */
 .extension .content .hoi-vien-list p{

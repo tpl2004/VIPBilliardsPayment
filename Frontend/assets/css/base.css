@@ -223,3 +223,25 @@ body {
     cursor: pointer;
     transition: 0.3s;
 }
+
+.extension > .content > .hoa-don-list > .body-bill-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.extension > .content > .hoa-don-list > .body-bill-list > .bill {
+    display: flex;
+    border-bottom: 1px solid gainsboro;
+}
+
+.extension > .content > .hoa-don-list > .body-bill-list > .bill:hover {
+    background-color: gainsboro !important;
+    color: var(--color-one);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.extension > .content > .hoa-don-list p {
+    width: calc(100% / 6);
+    text-align: center;
+}

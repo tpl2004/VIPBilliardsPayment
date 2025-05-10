@@ -321,7 +321,7 @@ function handleEvents() {
     func_showBillListBtn.addEventListener('click', e => {
         activeMainFunction('show-bill-list');
         enableExtensionFuncGroup('xem-danh-sach-hoa-don');
-        enableContent('xem-danh-sach-hoa-don');
+        enableContent('hoa-don-list');
     })
     
     func_showGoodsListBtn.addEventListener('click', e => {
@@ -508,11 +508,27 @@ function handleEvents() {
         .then(response => response.json())
         .then(response => {
             if(response.code != 1000) {
-                alert('Tạo Thất bại');
+                // alert('Tạo Thất bại');
+                createToastMessage({
+                    text: response.message,
+                    icon: 'error',
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 5000
+                })
                 return;
             }
             // tao thanh cong
-            alert('Tạo thành công');
+            // alert('Tạo thành công');
+            var newThuNgan = response.result;
+            createToastMessage({
+                text: 'Đã tạo thu ngân ' + newThuNgan.hoTen,
+                icon: 'success',
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 5000
+            })
+            func_showBidaCashierListBtn.click();
         })
         .catch(err => {
             console.log(err);

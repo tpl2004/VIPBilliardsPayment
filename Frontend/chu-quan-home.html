@@ -155,7 +155,7 @@
                 </div>
             </div>
 
-            <div class="them-thu-ngan">
+            <div class="them-thu-ngan thong-tin-thu-ngan">
                 <p class="header-them-thu-ngan">NHẬP THÔNG TIN THU NGÂN</p>
 
                 <div class="thong-tin-them">
@@ -209,15 +209,136 @@
                 </div>
             </div>
 
-            <div class="tim-kiem-thu-ngan"></div>
+            <div class="tim-kiem-thu-ngan tim-kiem">
+                <div class="search-box">
+                    <input type="text" name="search-thu-ngan" placeholder="Nhập họ tên thu ngân muốn tìm kiếm...">
+                    <button class="button" name="search-button"><i class="bi bi-search"></i></button>
+                    <button class="cancle" name="search-cancle"><i class="bi bi-x-lg"></i></button>
+                </div>
+                <div>
+                    <div class="header-list">
+                        <p>Mã thu ngân</p>
+                        <p>Họ tên</p>
+                        <p>Email</p>
+                        <p>Số điện thoại</p>
+                        <p>Số CCCD</p>
+                    </div>
+    
+                    <div class="body-thu-ngan-list">
+                        <div class="thu-ngan">
+                            <p>1</p>
+                            <p>Phạm Ngọc Mộng Fuck</p>
+                            <p>fuckcuoc@gmail.com</p>
+                            <p>0123456789</p>
+                            <p>12345678910</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
-            <div class="cap-nhat-thu-ngan"></div>
+            <div class="cap-nhat-thu-ngan thong-tin-thu-ngan">
+                <p class="header-them-thu-ngan">NHẬP THÔNG TIN THU NGÂN</p>
 
-            <div class="xem-danh-sach-hoa-don"></div>
+                <div class="thong-tin-them">
+                    <div>
+                        <label for="ho-ten-thu-ngan">Họ tên thu ngân:</label>
+                        <input type="text" id="ho-ten-thu-ngan" name="ho-ten-thu-ngan">
+                    </div>
 
-            <div class="tim-kiem-hoa-don"></div>
+                    <div>
+                        <label for="ngay-sinh">Ngày sinh:</label>
+                        <input type="date" id="ngay-sinh-thu-ngan" name="ngay-sinh-thu-ngan">
+                    </div>
 
-            <div class="xem-thong-ke-doanh-thu"></div>
+                    <div>
+                        <label for="gioi-tinh-thu-ngan">Giới tính:</label>
+                        <select name="gioi-tinh-thu-ngan" id="gioi-tinh-thu-ngan">
+                            <option value="1">Nữ</option>
+                            <option value="0">Nam</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="email-thu-ngan">Email:</label>
+                        <input type="text" name="email-thu-ngan" id="email-thu-ngan">
+                    </div>
+
+                    <div>
+                        <label for="sdt-thu-ngan">Số điện thoại:</label>
+                        <input type="text" id="sdt-thu-ngan" name="sdt-thu-ngan">
+                    </div>
+
+                    <div>
+                        <label for="so-cccd">Số CCCD:</label>
+                        <input type="text" name="so-cccd" id="so-cccd">
+                    </div>
+
+                    <div>
+                        <label for="mat-khau-thu-ngan">Mật khẩu:</label>
+                        <input type="password" id="mat-khau-thu-ngan" name="mat-khau-thu-ngan">
+                    </div>
+                </div>
+
+                <div class="xac-nhan-them-thu-ngan">
+                    <button class="button" name="xac-nhan-cap-nhat">Xác nhận</button>
+                    <button class="cancle" name="huy-cap-nhat">Hủy</button>
+                </div>
+            </div>
+
+            <div class="hoa-don-list">
+                <div class="header-list">
+                    <p>Mã hóa đơn</p>
+                    <p>Thời điểm vào</p>
+                    <p>Số giờ chơi</p>
+                    <p>Số bàn</p>
+                    <p>Đơn giá</p>
+                    <p>Tổng tiền</p>
+                </div>
+
+                <div class="body-bill-list">
+                    <!-- <div class="bill">
+                        <p>1</p>
+                        <p>2025-01-01 07:25:00</p>
+                        <p>2</p>
+                        <p>3</p>
+                        <p>60000</p>
+                        <p>120000</p>
+                    </div> -->
+                </div>
+            </div>
+
+            <div class="tim-kiem-hoa-don tim-kiem">
+                <div class="search-box">
+                    <input type="date" name="search-hoa-don">
+                    <button class="button" name="search-button"><i class="bi bi-search"></i></button>
+                    <button class="cancle" name="search-cancle"><i class="bi bi-x-lg"></i></button>
+                </div>
+                <div>
+                    <div class="header-list">
+                        <p>Mã hóa đơn</p>
+                        <p>Thời điểm vào</p>
+                        <p>Số giờ chơi</p>
+                        <p>Số bàn</p>
+                        <p>Đơn giá</p>
+                        <p>Tổng tiền</p>
+                    </div>
+    
+                    <div class="body-thu-ngan-list">
+                        <div class="thu-ngan">
+                            <p>1</p>
+                            <p>2025-01-01 07:25:00</p>
+                            <p>2</p>
+                            <p>3</p>
+                            <p>60000</p>
+                            <p>120000</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="xem-thong-ke-doanh-thu">
+                <canvas id="myChart"></canvas>
+            </div>
 
             <div class="xem-danh-sach-mat-hang"></div>
 
