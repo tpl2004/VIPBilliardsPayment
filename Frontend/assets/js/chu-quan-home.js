@@ -5,6 +5,7 @@ const TOKEN = localStorage.getItem(localStorageAdminTokenKey);
 
 var selectedTableNumber = null;
 var selectedLoaiBanId = null;
+var selectedThuNganId = null;
 
 var logOutBtn = document.querySelector('#log-out');
 var functionTaskbar = document.querySelector('.function-taskbar');
@@ -34,6 +35,8 @@ var top_capNhatCapDoHoiVienBtn = document.querySelector('#cap-nhat-cap-do');
 var cont_themBanBidaBox = document.querySelector('.content .them-ban-bida');
 var cont_thuNganListBox = document.querySelector('.content .danh-sach-thu-ngan .body-thu-ngan-list');
 var cont_themThuNganBox = document.querySelector('.content .them-thu-ngan');
+var cont_timKiemThuNganBox = document.querySelector('.content .tim-kiem-thu-ngan');
+var cont_capNhatThuNganBox = document.querySelector('.content .cap-nhat-thu-ngan');
 
 function main() {
 
@@ -229,7 +232,7 @@ function getAllThuNgan() {
 function renderThuNganList(thuNganList, thuNganListBox) {
     var html = thuNganList.map(thuNgan => {
         return `
-            <div class="thu-ngan">
+            <div maThuNgan="${thuNgan.maThuNgan}" class="thu-ngan">
                 <p>${thuNgan.maThuNgan}</p>
                 <p>${thuNgan.hoTen}</p>
                 <p>${thuNgan.email}</p>
@@ -266,8 +269,59 @@ function createThuNgan(hoTen, ngaySinh, gioiTinhNu, email, soDienThoai, soCCCD, 
     return fetch(api.thuNganApi + '/themthungan', options);
 }
 
+// tim kiem tuong doi theo ho ten
+function findThuNganTheoHoTen(hoTen) {
+    var options = {
+        method: 'POST',
+        
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+        },
+
+        body: JSON.stringify({
+            "hoTen": hoTen
+        }),
+    }
+
+    return fetch(api.thuNganApi + '/timthungan', options);
+}
+
+function updateThuNgan(hoTen, ngaySinh, gioiTinhNu, email, soDienThoai, soCCCD, matKhau) {
+    var options = {
+        method: 'PUT',
+        
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+        },
+
+        body: JSON.stringify({
+            "hoTen": hoTen,
+            "ngaySinh": ngaySinh,
+            "gioiTinhNu": gioiTinhNu,
+            "email": email,
+            "soDienThoai": soDienThoai,
+            "soCCCD": soCCCD,
+            "matKhau": matKhau
+        }),
+    }
+
+    return fetch(api.thuNganApi + '/updatethungan/' + selectedThuNganId, options);
+}
+
 // handle events
 function handleEvents() {
+    
+    var updateThuNganForm = {
+        hoTenInput: cont_capNhatThuNganBox.querySelector('.thong-tin-them input[name="ho-ten-thu-ngan"]'),
+        ngaySinhInput: cont_capNhatThuNganBox.querySelector('.thong-tin-them input[name="ngay-sinh-thu-ngan"]'),
+        gioiTinhSelect: cont_capNhatThuNganBox.querySelector('.thong-tin-them select[name="gioi-tinh-thu-ngan"]'),
+        emailInput: cont_capNhatThuNganBox.querySelector('.thong-tin-them input[name="email-thu-ngan"]'),
+        soDienThoaiInput: cont_capNhatThuNganBox.querySelector('.thong-tin-them input[name="sdt-thu-ngan"]'),
+        soCCCDInput: cont_capNhatThuNganBox.querySelector('.thong-tin-them input[name="so-cccd"]'),
+        matKhauInput: cont_capNhatThuNganBox.querySelector('.thong-tin-them input[name="mat-khau-thu-ngan"]'),
+    }
 
     logOutBtn.onclick = function(e) {
         if(confirm("Đăng xuất?")) {
@@ -279,6 +333,7 @@ function handleEvents() {
     functionTaskbar.addEventListener('click', e => {
         selectedTableNumber = null;
         selectedLoaiBanId = null;
+        selectedThuNganId = null;
         console.log(selectedTableNumber);
     })
     
@@ -316,6 +371,15 @@ function handleEvents() {
         .catch(err => {
             console.log(err);
         })
+    })
+    
+    cont_thuNganListBox.addEventListener('click', e => {
+        var activedThuNgan = cont_thuNganListBox.querySelector('.thu-ngan.active');
+        if(activedThuNgan)
+            activedThuNgan.classList.remove('active');
+        var selectedThuNgan = e.target.closest('.thu-ngan');
+        selectedThuNgan.classList.add('active');
+        selectedThuNganId = selectedThuNgan.getAttribute('mathungan');
     })
     
     func_showBillListBtn.addEventListener('click', e => {
@@ -452,6 +516,34 @@ function handleEvents() {
     })
     
     top_capNhatThongTinThuNganBtn.addEventListener('click', e => {
+        if(selectedThuNganId == null) {
+            createAlert('Vui lòng chọn thu ngân', 'Bạn chưa chọn thu ngân', 'warning');
+            return;
+        }
+        getAllThuNgan()
+        .then(response => response.json())
+        .then(response => {
+            if(response.code != 1000) {
+                return;
+            }
+            // thanh cong
+            var DSThuNgan = response.result;
+            var selectedthuNgan = DSThuNgan.find((thuNgan) => {
+                return thuNgan.maThuNgan == selectedThuNganId;
+            })
+            updateThuNganForm.hoTenInput.value = selectedthuNgan.hoTen;
+            var ngaySinh = new Date(selectedthuNgan.ngaySinh);
+            var format = `${ngaySinh.getFullYear()}-${String(ngaySinh.getMonth()+1).padStart(2, '0')}-${String(ngaySinh.getDay()).padStart(2, '0')}`;
+            updateThuNganForm.ngaySinhInput.value = format;
+            updateThuNganForm.gioiTinhSelect.selectedIndex = selectedthuNgan.gioiTinhNu? 0 : 1;
+            updateThuNganForm.emailInput.value = selectedthuNgan.email;
+            updateThuNganForm.soDienThoaiInput.value = selectedthuNgan.soDienThoai;
+            updateThuNganForm.soCCCDInput.value = selectedthuNgan.soCCCD;
+            updateThuNganForm.matKhauInput.value = '';
+        })
+        .catch(err => {
+            console.log(err);
+        })
         enableContent('cap-nhat-thu-ngan');
     })
     
@@ -528,6 +620,57 @@ function handleEvents() {
                 showConfirmButton: false,
                 timer: 5000
             })
+            func_showBidaCashierListBtn.click();
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
+    
+    cont_timKiemThuNganBox.querySelector('.search-box button[name="search-cancle"]').onclick = e => {
+        func_showBidaCashierListBtn.click();
+    }
+    cont_timKiemThuNganBox.querySelector('.search-box button[name="search-button"]').onclick = e => {
+        var hoTenMuonTim = cont_timKiemThuNganBox.querySelector('.search-box input[name="search-thu-ngan"]').value;
+        findThuNganTheoHoTen(hoTenMuonTim)
+        .then(response => response.json())
+        .then(response => {
+            if(response.code != 1000) {
+                return;
+            }
+            // thanh cong
+            var DSThuNgan = response.result;
+            var thuNganListBox = cont_timKiemThuNganBox.querySelector('.body-thu-ngan-list');
+            renderThuNganList(DSThuNgan, thuNganListBox);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
+    
+    cont_capNhatThuNganBox.querySelector('.xac-nhan-them-thu-ngan button[name="huy-cap-nhat"]').onclick = e => {
+        func_showBidaCashierListBtn.click();
+    }
+
+    cont_capNhatThuNganBox.querySelector('.xac-nhan-them-thu-ngan button[name="xac-nhan-cap-nhat"]').onclick = e => {
+        var hoTen = updateThuNganForm.hoTenInput.value;
+        var ngaysinh = updateThuNganForm.ngaySinhInput.value;
+        var goiTinh = updateThuNganForm.gioiTinhSelect.options[updateThuNganForm.gioiTinhSelect.selectedIndex]; // lay the option da chon
+        var gioiTinhNu = goiTinh.value? true : false;
+        var email = updateThuNganForm.emailInput.value;
+        var soDienThoai = updateThuNganForm.soDienThoaiInput.value;
+        var soCCCD = updateThuNganForm.soCCCDInput.value;
+        var matKhau = updateThuNganForm.matKhauInput.value;
+        updateThuNgan(hoTen, ngaysinh, gioiTinhNu, email, soDienThoai, soCCCD, matKhau)
+        .then(response => response.json())
+        .then(response => {
+            if(response.code != 1000) {
+                alert(response.message);
+
+                return;
+            }
+            // cap nhat thanh cong
+            alert('Cập nhật thành công');
             func_showBidaCashierListBtn.click();
         })
         .catch(err => {
