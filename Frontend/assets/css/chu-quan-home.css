@@ -246,3 +246,14 @@
 .extension .content .tim-kiem-thu-ngan > div:last-child p {
     width: calc(100% / 5);
 }
+
+.extension .content .tim-kiem .search-box label {
+    margin-left: 20px;
+    margin-right: 10px;
+    padding-top: 7px;
+}
+
+.extension > .content > .tim-kiem .thong-ke {
+    background-color: blue;
+    height: 60%;
+}

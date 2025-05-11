@@ -37,6 +37,7 @@ var cont_thuNganListBox = document.querySelector('.content .danh-sach-thu-ngan .
 var cont_themThuNganBox = document.querySelector('.content .them-thu-ngan');
 var cont_timKiemThuNganBox = document.querySelector('.content .tim-kiem-thu-ngan');
 var cont_capNhatThuNganBox = document.querySelector('.content .cap-nhat-thu-ngan');
+var cont_xemThongKeDoanhThuBox = document.querySelector('.content .xem-thong-ke-doanh-thu');
 
 function main() {
 
@@ -328,11 +329,11 @@ function renderHoaDonList(hoaDonList, hoaDonListBox) {
         return `
             <div class="bill">
                 <p>${hoaDon.maHoaDon}</p>
-                <p>${hoaDon.thoiDiemVao}</p>
-                <p>${hoaDon.soGioChoi}</p>
+                <p>${formatDate(hoaDon.thoiDiemVao)}</p>
+                <p>${hoaDon.soGioChoi != null? hoaDon.soGioChoi : formatNullValue()}</p>
                 <p>${hoaDon.soBan}</p>
                 <p>${hoaDon.donGia}</p>
-                <p>${hoaDon.tongTien}</p>
+                <p>${hoaDon.tongTien != null? hoaDon.tongTien : formatNullValue()}</p>
             </div>
         `
     })
@@ -728,5 +729,14 @@ function handleEvents() {
         .catch(err => {
             console.log(err);
         })
+    }
+    
+    cont_xemThongKeDoanhThuBox.querySelector('.search-box button[name="search-cancle"]').onclick = e => {
+        func_showBillListBtn.click();
+    }
+
+    cont_xemThongKeDoanhThuBox.querySelector('.search-box button[name="search-button"]').onclick = e => {
+        var ngayBatDau = cont_xemThongKeDoanhThuBox.querySelector('.search-box input[name="ngay-bat-dau"]').value;
+        console.log(ngayBatDau);
     }
 }

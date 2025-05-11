@@ -336,8 +336,39 @@
                 </div>
             </div>
 
-            <div class="xem-thong-ke-doanh-thu">
-                <canvas id="myChart"></canvas>
+            <div class="xem-thong-ke-doanh-thu tim-kiem">
+                <div class="search-box">
+                    <label for="ngay-bat-dau">Từ ngày:</label>
+                    <input type="date" name="ngay-bat-dau">
+
+                    <label for="ngay-ket-thuc">Đến ngày:</label>
+                    <input type="date" name="ngay-ket-thuc">
+                    
+                    <button class="button" name="search-button"><i class="bi bi-search"></i></button>
+                    <button class="cancle" name="search-cancle"><i class="bi bi-x-lg"></i></button>
+                </div>
+
+                <div>
+                    <div class="body-thu-ngan-list thong-ke">
+                        <div>
+                            <div class="header-list">
+                                <p>Ngày</p>
+                                <p>Doanh thu</p>
+                            </div>
+
+                            <div>
+                                <div class="thu-ngan">
+                                    <p>19/01/2023</p>
+                                    <p>10000000</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <canvas id="myChart"></canvas>
+                    </div>
+
+                    <canvas class="bieu-do-duoi" id="myChart"></canvas>
+                </div>
             </div>
 
             <div class="xem-danh-sach-mat-hang"></div>
