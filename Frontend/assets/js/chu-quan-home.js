@@ -38,6 +38,7 @@ var cont_themThuNganBox = document.querySelector('.content .them-thu-ngan');
 var cont_timKiemThuNganBox = document.querySelector('.content .tim-kiem-thu-ngan');
 var cont_capNhatThuNganBox = document.querySelector('.content .cap-nhat-thu-ngan');
 var cont_xemThongKeDoanhThuBox = document.querySelector('.content .xem-thong-ke-doanh-thu');
+var thongKeDoanhThuNgayBottomChart = null;
 
 function main() {
 
@@ -339,6 +340,24 @@ function renderHoaDonList(hoaDonList, hoaDonListBox) {
     })
     
     hoaDonListBox.innerHTML = html.join('');
+}
+
+function thongKeDoanhThuTheoNgay(ngayBatDau, ngayKetThuc) {
+    var options = {
+        method: 'POST',
+        
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+        },
+
+        body: JSON.stringify({
+            "ngayBatDau": ngayBatDau,
+            "ngayKetThuc": ngayKetThuc
+        }),
+    }
+
+    return fetch(api.hoaDonApi + '/thongke', options);
 }
 
 // handle events
@@ -737,6 +756,46 @@ function handleEvents() {
 
     cont_xemThongKeDoanhThuBox.querySelector('.search-box button[name="search-button"]').onclick = e => {
         var ngayBatDau = cont_xemThongKeDoanhThuBox.querySelector('.search-box input[name="ngay-bat-dau"]').value;
-        console.log(ngayBatDau);
+        var ngayKetThuc = cont_xemThongKeDoanhThuBox.querySelector('.search-box input[name="ngay-ket-thuc"]').value;
+        thongKeDoanhThuTheoNgay(ngayBatDau, ngayKetThuc)
+        .then(response => response.json())
+        .then(response => {
+            if(response.code != 1000) {
+                return;
+            }
+            // thanh cong
+            var ketQuaThongKe = response.result;
+            var dsNgay = ketQuaThongKe.map(ketQua => {
+                return ketQua.ngay;
+            })
+            var dsDoanhThu = ketQuaThongKe.map(ketQua => {
+                return ketQua.doanhThu;
+            })
+            var thongKeDoanhThuNgayBottomChartCanvas = document.getElementById('thong-ke-doanh-thu-ngay-bottom-chart');
+            if(thongKeDoanhThuNgayBottomChart) {
+                thongKeDoanhThuNgayBottomChart.destroy();
+            }
+            thongKeDoanhThuNgayBottomChart = new Chart(thongKeDoanhThuNgayBottomChartCanvas, {
+                type: 'bar',
+                data: {
+                    labels: dsNgay,
+                    datasets: [{
+                        label: '# of Votes',
+                        data: dsDoanhThu,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        })
     }
 }
