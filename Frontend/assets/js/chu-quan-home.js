@@ -375,6 +375,31 @@ function findHoaDonsTheoNgay(ngay) {
     return fetch(api.hoaDonApi + '/findbydate', options);
 }
 
+function getAllMatHang() {
+    var options = {
+        method: 'GET',
+        
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+        },
+    }
+    return fetch(api.matHangApi, options);
+}
+
+function renderMatHangList(matHangList, matHangListBox) {
+    var html = matHangList.map(matHang => {
+        return `
+            <div class="thu-ngan">
+                <p>${matHang.maHang}</p>
+                <p>${matHang.tenHang}</p>
+                <p>${matHang.donGia}</p>
+            </div>
+        `
+    })
+    matHangListBox.innerHTML = html.join('');
+}
+
 // handle events
 function handleEvents() {
     
@@ -471,6 +496,20 @@ function handleEvents() {
         activeMainFunction('show-goods-list');
         enableExtensionFuncGroup('xem-danh-sach-mat-hang');
         enableContent('danh-sach-mat-hang');
+        getAllMatHang()
+        .then(response => response.json())
+        .then(response => {
+            if(response.code != 1000) {
+                return;
+            }
+            // thanh cong
+            var dsMatHang = response.result;
+            var matHangListBox = document.querySelector('.content .danh-sach-mat-hang .body-thu-ngan-list');
+            renderMatHangList(dsMatHang, matHangListBox);
+        })
+        .catch(err => {
+            console.log(err);
+        })
     })
     
     func_showTableTypeListBtn.addEventListener('click', e => {
