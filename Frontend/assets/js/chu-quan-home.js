@@ -38,7 +38,8 @@ var cont_themThuNganBox = document.querySelector('.content .them-thu-ngan');
 var cont_timKiemThuNganBox = document.querySelector('.content .tim-kiem-thu-ngan');
 var cont_capNhatThuNganBox = document.querySelector('.content .cap-nhat-thu-ngan');
 var cont_xemThongKeDoanhThuBox = document.querySelector('.content .xem-thong-ke-doanh-thu');
-var thongKeDoanhThuNgayBottomChart = null;
+var cont_timKiemHoaDonBox = document.querySelector('.content .tim-kiem-hoa-don');
+var thongKeDoanhThuNgayChart = null;
 
 function main() {
 
@@ -360,6 +361,20 @@ function thongKeDoanhThuTheoNgay(ngayBatDau, ngayKetThuc) {
     return fetch(api.hoaDonApi + '/thongke', options);
 }
 
+function findHoaDonsTheoNgay(ngay) {
+    var options = {
+        method: 'GET',
+        
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+        },
+
+        body: JSON.stringify(ngay),
+    }
+    return fetch(api.hoaDonApi + '/findbydate', options);
+}
+
 // handle events
 function handleEvents() {
     
@@ -455,25 +470,25 @@ function handleEvents() {
     func_showGoodsListBtn.addEventListener('click', e => {
         activeMainFunction('show-goods-list');
         enableExtensionFuncGroup('xem-danh-sach-mat-hang');
-        enableContent('xem-danh-sach-mat-hang');
+        enableContent('danh-sach-mat-hang');
     })
     
     func_showTableTypeListBtn.addEventListener('click', e => {
         activeMainFunction('show-table-type-list');
         enableExtensionFuncGroup('xem-danh-sach-loai-ban');
-        enableContent('xem-danh-sach-loai-ban');
+        enableContent('danh-sach-loai-ban');
     })
     
     func_showLevelListBtn.addEventListener('click', e => {
         activeMainFunction('show-level-list');
         enableExtensionFuncGroup('xem-danh-sach-cap-do-hoi-vien');
-        enableContent('xem-danh-sach-cap-do-hoi-vien');
+        enableContent('danh-sach-cap-do-hoi-vien');
     })
     
     func_showMemberListBtn.addEventListener('click', e => {
         activeMainFunction('show-member-list');
         enableExtensionFuncGroup('');
-        enableContent('xem-danh-sach-hoi-vien');
+        enableContent('danh-sach-hoi-vien');
     })
     
     banBidaListBox.addEventListener('click', e => {
@@ -771,16 +786,16 @@ function handleEvents() {
             var dsDoanhThu = ketQuaThongKe.map(ketQua => {
                 return ketQua.doanhThu;
             })
-            var thongKeDoanhThuNgayBottomChartCanvas = document.getElementById('thong-ke-doanh-thu-ngay-bottom-chart');
-            if(thongKeDoanhThuNgayBottomChart) {
-                thongKeDoanhThuNgayBottomChart.destroy();
+            var thongKeDoanhThuNgayChartCanvas = document.getElementById('thong-ke-doanh-thu-ngay-chart');
+            if(thongKeDoanhThuNgayChart) {
+                thongKeDoanhThuNgayChart.destroy();
             }
-            thongKeDoanhThuNgayBottomChart = new Chart(thongKeDoanhThuNgayBottomChartCanvas, {
+            thongKeDoanhThuNgayChart = new Chart(thongKeDoanhThuNgayChartCanvas, {
                 type: 'bar',
                 data: {
                     labels: dsNgay,
                     datasets: [{
-                        label: '# of Votes',
+                        label: '# Doanh thu',
                         data: dsDoanhThu,
                         borderWidth: 1
                     }]
@@ -788,11 +803,44 @@ function handleEvents() {
                 options: {
                     scales: {
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Đồng' // Tên trục Y
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Ngày' // Tên trục X
+                            }
                         }
                     }
                 }
             });
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
+    
+    cont_timKiemHoaDonBox.querySelector('.search-box button[name="search-cancle"]').onclick = e => {
+        func_showBillListBtn.click();
+    }
+
+    cont_timKiemHoaDonBox.querySelector('.search-box button[name="search-button"]').onclick = e => {
+        var ngayCanTim = cont_timKiemHoaDonBox.querySelector('.search-box input[name="search-hoa-don"]').value;
+        console.log(ngayCanTim);
+        findHoaDonsTheoNgay(ngayCanTim)
+        .then(response => response.join())
+        .then(response => {
+            if(response.code != 1000) {
+                return;
+            }
+            // thanh cong
+            var dsHoaDon = response.result;
+            var hoaDonListBox = cont_timKiemHoaDonBox.querySelector('.body-thu-ngan-list');
+            renderHoaDonList(dsHoaDon, hoaDonListBox);
         })
         .catch(err => {
             console.log(err);

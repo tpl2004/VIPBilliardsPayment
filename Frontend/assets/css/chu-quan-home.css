@@ -178,6 +178,13 @@
 .extension .content .thong-tin-thu-ngan .thong-tin-them div input {
     box-sizing: border-box;
     width: 410px;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+.extension .content .thong-tin-thu-ngan .thong-tin-them select {
+    border-radius: 5px;
+    border: 1px solid gray;
 }
 
 .extension .content .thong-tin-thu-ngan .xac-nhan-them-thu-ngan {
@@ -229,6 +236,7 @@
     flex-direction: column;
     box-sizing: border-box;
     height: calc(100% - 50px);
+    overflow: auto;
 }
 
 .extension .content .tim-kiem > div:last-child p {
@@ -253,7 +261,30 @@
     padding-top: 7px;
 }
 
-.extension > .content > .tim-kiem .thong-ke {
-    background-color: blue;
-    height: 60%;
+.extension .content .danh-sach-mat-hang p {
+    box-sizing: border-box;
+    width: calc(100% / 3);
+    text-align: center;
+}
+
+.extension .content > .them-mat-hang {
+    height: 200px;
+}
+
+.extension .content .cap-nhat-mat-hang {
+    height: 200px;
+}
+
+.extension .content .danh-sach-loai-ban p {
+    box-sizing: border-box;
+    width: calc(100% / 3);
+    text-align: center;
+}
+
+.extension .content > .them-loai-ban {
+    height: 200px;
+}
+
+.extension .content > .cap-nhat-loai-ban {
+    height: 200px;
 }
