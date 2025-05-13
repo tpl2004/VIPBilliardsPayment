@@ -56,7 +56,7 @@ public class HoaDonController {
             .build();
     }
 
-    @GetMapping("/findbydate")
+    @PostMapping("/findbydate")
     public ApiResponse<List<HoaDonResponse>> findHoaDonByDate(@RequestBody Date createdDate) {
         return ApiResponse.<List<HoaDonResponse>>builder()
                 .result(hoaDonService.findHoaDonByDate(createdDate))
