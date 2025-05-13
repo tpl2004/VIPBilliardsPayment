@@ -363,7 +363,7 @@ function thongKeDoanhThuTheoNgay(ngayBatDau, ngayKetThuc) {
 
 function findHoaDonsTheoNgay(ngay) {
     var options = {
-        method: 'GET',
+        method: 'POST',
         
         headers: {
             'Content-Type': 'application/json',
@@ -832,7 +832,7 @@ function handleEvents() {
         var ngayCanTim = cont_timKiemHoaDonBox.querySelector('.search-box input[name="search-hoa-don"]').value;
         console.log(ngayCanTim);
         findHoaDonsTheoNgay(ngayCanTim)
-        .then(response => response.join())
+        .then(response => response.json())
         .then(response => {
             if(response.code != 1000) {
                 return;
