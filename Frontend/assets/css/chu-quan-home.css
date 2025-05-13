@@ -239,11 +239,11 @@
     overflow: auto;
 }
 
-.extension .content .tim-kiem > div:last-child p {
+/* .extension .content .tim-kiem > div:last-child p {
     box-sizing: border-box;
     width: calc(100% / 6);
     text-align: center;
-}
+} */
 
 .extension > .content > .tim-kiem .body-thu-ngan-list {
     box-sizing: border-box;
