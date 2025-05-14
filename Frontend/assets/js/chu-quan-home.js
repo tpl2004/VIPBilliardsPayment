@@ -39,6 +39,7 @@ var cont_timKiemThuNganBox = document.querySelector('.content .tim-kiem-thu-ngan
 var cont_capNhatThuNganBox = document.querySelector('.content .cap-nhat-thu-ngan');
 var cont_xemThongKeDoanhThuBox = document.querySelector('.content .xem-thong-ke-doanh-thu');
 var cont_timKiemHoaDonBox = document.querySelector('.content .tim-kiem-hoa-don');
+var cont_themMatHangBox = document.querySelector('.content .them-mat-hang');
 var thongKeDoanhThuNgayChart = null;
 
 function main() {
@@ -398,6 +399,23 @@ function renderMatHangList(matHangList, matHangListBox) {
         `
     })
     matHangListBox.innerHTML = html.join('');
+}
+
+function createMatHang(tenHang, donGia) {
+    var options = {
+        method: 'POST',
+        
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+        },
+
+        body: JSON.stringify({
+            "tenHang": tenHang,
+            "donGia": donGia
+        }),
+    }
+    return fetch(api.matHangApi, options);
 }
 
 // handle events
@@ -880,6 +898,30 @@ function handleEvents() {
             var dsHoaDon = response.result;
             var hoaDonListBox = cont_timKiemHoaDonBox.querySelector('.body-thu-ngan-list');
             renderHoaDonList(dsHoaDon, hoaDonListBox);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
+    
+    cont_themMatHangBox.querySelector('.xac-nhan-them-thu-ngan button[name="huy-them-hang"]').onclick = e => {
+        func_showGoodsListBtn.click();
+    }
+
+    cont_themMatHangBox.querySelector('.xac-nhan-them-thu-ngan button[name="them-hang"]').onclick = e => {
+        var tenMatHang = cont_themMatHangBox.querySelector('.thong-tin-them input[name="ten-mat-hang"]').value;
+        var donGia = cont_themMatHangBox.querySelector('.thong-tin-them input[name="don-gia-hang"]').value;
+        donGia = Number.parseFloat(donGia);
+        createMatHang(tenMatHang, donGia)
+        .then(response => response.json())
+        .then(response => {
+            if(response.code != 1000) {
+                alert(response.message);
+                return;
+            }
+            // tao thanh cong
+            alert('Đã thêm mặt hàng ' + response.result.tenHang);
+            func_showGoodsListBtn.click();
         })
         .catch(err => {
             console.log(err);
