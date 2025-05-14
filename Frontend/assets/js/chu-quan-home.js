@@ -6,6 +6,7 @@ const TOKEN = localStorage.getItem(localStorageAdminTokenKey);
 var selectedTableNumber = null;
 var selectedLoaiBanId = null;
 var selectedThuNganId = null;
+var selectedMatHangId = null;
 
 var logOutBtn = document.querySelector('#log-out');
 var functionTaskbar = document.querySelector('.function-taskbar');
@@ -40,6 +41,9 @@ var cont_capNhatThuNganBox = document.querySelector('.content .cap-nhat-thu-ngan
 var cont_xemThongKeDoanhThuBox = document.querySelector('.content .xem-thong-ke-doanh-thu');
 var cont_timKiemHoaDonBox = document.querySelector('.content .tim-kiem-hoa-don');
 var cont_themMatHangBox = document.querySelector('.content .them-mat-hang');
+var cont_matHangListBox = document.querySelector('.content .danh-sach-mat-hang .body-thu-ngan-list');
+var cont_capNhatMangHangBox = document.querySelector('.content .cap-nhat-mat-hang');
+var cont_loaiBanListBox = document.querySelector('.content .danh-sach-loai-ban .body-thu-ngan-list');
 var thongKeDoanhThuNgayChart = null;
 
 function main() {
@@ -181,7 +185,7 @@ function getAllLoaiBanBida() {
     return fetch(api.loaiBanApi, options);
 }
 
-function renderLoaiBanBidaList(loaiBanList, loaiBanListBox) {
+function renderLoaiBanBidaListV1(loaiBanList, loaiBanListBox) {
     var html = loaiBanList.map(loaiBan => {
         return `
             <div loaiBan="${loaiBan.loaiBan}" class="loai-ban">
@@ -391,7 +395,7 @@ function getAllMatHang() {
 function renderMatHangList(matHangList, matHangListBox) {
     var html = matHangList.map(matHang => {
         return `
-            <div class="thu-ngan">
+            <div maHang="${matHang.maHang}" class="thu-ngan">
                 <p>${matHang.maHang}</p>
                 <p>${matHang.tenHang}</p>
                 <p>${matHang.donGia}</p>
@@ -418,6 +422,51 @@ function createMatHang(tenHang, donGia) {
     return fetch(api.matHangApi, options);
 }
 
+function updateMatHang(maHang, tenHang, donGia) {
+    var options = {
+        method: 'PUT',
+        
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+        },
+
+        body: JSON.stringify({
+            "tenHang": tenHang,
+            "donGia": donGia
+        }),
+    }
+
+    return fetch(api.matHangApi + '/' + maHang, options);
+}
+
+function getAllLoaiBan() {
+    var options = {
+        method: 'GET',
+        
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+        },
+    }
+    return fetch(api.loaiBanApi, options);
+}
+
+function renderLoaiBanBidaListV2(loaiBanList, loaiBanListBox) {
+
+    var html = loaiBanList.map(loaiBan => {
+        return `
+            <div maLoaiBan="${loaiBan.loaiBan}" class="thu-ngan">
+                <p>${loaiBan.loaiBan}</p>
+                <p>${loaiBan.tenLoai}</p>
+                <p>${loaiBan.donGia}</p>
+            </div>
+        `
+    })
+    
+    loaiBanListBox.innerHTML = html.join('');
+}
+
 // handle events
 function handleEvents() {
     
@@ -429,6 +478,11 @@ function handleEvents() {
         soDienThoaiInput: cont_capNhatThuNganBox.querySelector('.thong-tin-them input[name="sdt-thu-ngan"]'),
         soCCCDInput: cont_capNhatThuNganBox.querySelector('.thong-tin-them input[name="so-cccd"]'),
         matKhauInput: cont_capNhatThuNganBox.querySelector('.thong-tin-them input[name="mat-khau-thu-ngan"]'),
+    }
+    
+    var updateMatHangForm = {
+        tenHangInput: cont_capNhatMangHangBox.querySelector('.thong-tin-them input[name="ten-mat-hang"]'),
+        donGiaInput: cont_capNhatMangHangBox.querySelector('.thong-tin-them input[name="don-gia-hang"]')
     }
 
     logOutBtn.onclick = function(e) {
@@ -442,7 +496,7 @@ function handleEvents() {
         selectedTableNumber = null;
         selectedLoaiBanId = null;
         selectedThuNganId = null;
-        console.log(selectedTableNumber);
+        selectedMatHangId = null;
     })
     
     func_showBidaTableListBtn.addEventListener('click', e => {
@@ -522,8 +576,7 @@ function handleEvents() {
             }
             // thanh cong
             var dsMatHang = response.result;
-            var matHangListBox = document.querySelector('.content .danh-sach-mat-hang .body-thu-ngan-list');
-            renderMatHangList(dsMatHang, matHangListBox);
+            renderMatHangList(dsMatHang, cont_matHangListBox);
         })
         .catch(err => {
             console.log(err);
@@ -534,6 +587,19 @@ function handleEvents() {
         activeMainFunction('show-table-type-list');
         enableExtensionFuncGroup('xem-danh-sach-loai-ban');
         enableContent('danh-sach-loai-ban');
+        getAllLoaiBan()
+        .then(response => response.json())
+        .then(response => {
+            if(response.code != 1000) {
+                return;
+            }
+            // thanh cong
+            var dsLoaiBan = response.result;
+            renderLoaiBanBidaListV2(dsLoaiBan, cont_loaiBanListBox);
+        })
+        .catch(err => {
+            console.log(err);
+        })
     })
     
     func_showLevelListBtn.addEventListener('click', e => {
@@ -571,7 +637,7 @@ function handleEvents() {
             // thanh cong
             var loaiBanList = response.result;
             var loaiBanListBox = document.querySelector('.content .them-ban-bida .danh-sach-loai-ban');
-            renderLoaiBanBidaList(loaiBanList, loaiBanListBox);
+            renderLoaiBanBidaListV1(loaiBanList, loaiBanListBox);
         })
         .catch(err => {
             console.log(err);
@@ -696,6 +762,28 @@ function handleEvents() {
     })
     
     top_capNhatMatHangBtn.addEventListener('click', e => {
+        if (selectedMatHangId == null) {
+            createAlert('Vui lòng chọn mặt hàng', 'Bạn chưa chọn mặt hàng', 'warning');
+            return;
+        }
+        getAllMatHang()
+        .then(response => response.json())
+        .then(response => {
+            if(response.code != 1000) {
+                return;
+            }
+            // thanh cong
+            var dsMatHang = response.result;
+            var selectedMatHang = dsMatHang.find(matHang => {
+                return matHang.maHang == selectedMatHangId;
+            })
+            updateMatHangForm.tenHangInput.value = selectedMatHang.tenHang;
+            updateMatHangForm.donGiaInput.value = selectedMatHang.donGia;
+        })
+        .catch(err => {
+            console.log(err);
+        })
+
         enableContent('cap-nhat-mat-hang');
     })
     
@@ -916,11 +1004,59 @@ function handleEvents() {
         .then(response => response.json())
         .then(response => {
             if(response.code != 1000) {
-                alert(response.message);
+                // alert(response.message);
+                createToastMessage({
+                    text: response.message,
+                    icon: 'error',
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    position: "top-end",
+                    timer: 5000,
+                })
                 return;
             }
             // tao thanh cong
-            alert('Đã thêm mặt hàng ' + response.result.tenHang);
+            // alert('Đã thêm mặt hàng ' + response.result.tenHang);
+            createAlert('Đã thêm mặt hàng thành công', 'Đã tạo mặt hàng ' + response.result.tenHang, 'success');
+            func_showGoodsListBtn.click();
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
+    
+    cont_matHangListBox.addEventListener('click', e => {
+        var activedMatHang = cont_matHangListBox.querySelector('.thu-ngan.active');
+        if(activedMatHang) activedMatHang.classList.remove('active');
+        var selectedMatHang = e.target.closest('.thu-ngan');
+        selectedMatHang.classList.add('active');
+        selectedMatHangId = selectedMatHang.getAttribute('maHang');
+    })
+    
+    cont_capNhatMangHangBox.querySelector('.xac-nhan-them-thu-ngan button[name="huy-cap-nhat-mat-hang"]').onclick = e => {
+        func_showGoodsListBtn.click();
+    }
+
+    cont_capNhatMangHangBox.querySelector('.xac-nhan-them-thu-ngan button[name="cap-nhat-mat-hang"]').onclick = e => {
+        var tenHang = updateMatHangForm.tenHangInput.value;
+        var donGia = updateMatHangForm.donGiaInput.value;
+        var donGia = Number.parseFloat(donGia);
+        updateMatHang(selectedMatHangId, tenHang, donGia)
+        .then(response => response.json())
+        .then(response => {
+            if(response.code != 1000) {
+                createToastMessage({
+                    text: response.message,
+                    icon: 'error',
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    position: "top-end",
+                    timer: 5000,
+                })
+                return;
+            }
+            // cap nhat mat hang thanh cong
+            createAlert('Cập nhật thành công', 'Đã cập nhật mặt hàng ' + response.result.maHang, 'success');
             func_showGoodsListBtn.click();
         })
         .catch(err => {
