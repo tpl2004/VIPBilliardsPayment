@@ -7,6 +7,7 @@ var selectedTableNumber = null;
 var selectedLoaiBanId = null;
 var selectedThuNganId = null;
 var selectedMatHangId = null;
+var selectedCapDoHoiVienId = null;
 
 var logOutBtn = document.querySelector('#log-out');
 var functionTaskbar = document.querySelector('.function-taskbar');
@@ -46,6 +47,9 @@ var cont_capNhatMangHangBox = document.querySelector('.content .cap-nhat-mat-han
 var cont_loaiBanListBox = document.querySelector('.content .danh-sach-loai-ban .body-thu-ngan-list');
 var cont_themLoaiBanBox = document.querySelector('.content .them-loai-ban');
 var cont_capNhatLoaiBanBox = document.querySelector('.content .cap-nhat-loai-ban');
+var cont_capDoHoiVienListBox = document.querySelector('.content .danh-sach-cap-do-hoi-vien .body-thu-ngan-list');
+var cont_themCapDoHoiVienBox = document.querySelector('.content .them-cap-do');
+var cont_capNhatCapDoHoiVienBox = document.querySelector('.content .cap-nhat-cap-do');
 var thongKeDoanhThuNgayChart = null;
 
 function main() {
@@ -503,6 +507,96 @@ function updateLoaiBan(tenLoai, donGia) {
     return fetch(api.loaiBanApi + '/' + selectedLoaiBanId, options);
 }
 
+function getAllCapDoHoiVien() {
+    var options = {
+        method: 'GET',
+        
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+        },
+    }
+    return fetch(api.capDoHoiVienApi, options);
+}
+
+function renderCapDoHoiVienList(capDoHoiVienList, capDoHoiVienListBox) {
+    var html = capDoHoiVienList.map(capDoHoiVien => {
+        return `
+            <div maCapDo="${capDoHoiVien.capDo}" class="thu-ngan">
+                <p>${capDoHoiVien.capDo}</p>
+                <p>${capDoHoiVien.tenCapDo}</p>
+                <p>${capDoHoiVien.soGioChoi}</p>
+                <p>${capDoHoiVien.uuDai}</p>
+            </div>
+        `
+    })
+    capDoHoiVienListBox.innerHTML = html.join('');
+}
+
+function createCapDoHoiVien(tenCapDo, soGioChoi, uuDai) {
+    var options = {
+        method: 'POST',
+        
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+        },
+
+        body: JSON.stringify({
+            "tenCapDo": tenCapDo,
+            "soGioChoi": soGioChoi,
+            "uuDai": uuDai
+        }),
+    }
+    return fetch(api.capDoHoiVienApi, options);
+}
+
+function updateCapDoHoiVien(tenCapDo, soGioChoi, uuDai) {
+    var options = {
+        method: 'PUT',
+        
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+        },
+
+        body: JSON.stringify({
+            "tenCapDo": tenCapDo,
+            "soGioChoi": soGioChoi,
+            "uuDai": uuDai
+        }),
+    }
+    return fetch(api.capDoHoiVienApi + '/' + selectedCapDoHoiVienId, options);
+}
+
+function getAllHoiVien() {
+    var options = {
+        method: 'GET',
+        
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+        },
+    }
+    return fetch(api.hoiVienApi, options);
+}
+
+function renderHoiVienList(hoiVienList, hoiVienListBox) {
+    var html = hoiVienList.map(hoiVien => {
+        return `
+            <div class="thu-ngan">
+                <p>${hoiVien.maHoiVien}</p>
+                <p>${hoiVien.hoTen}</p>
+                <p>${hoiVien.soDienThoai}</p>
+                <p>${hoiVien.soGioChoi}</p>
+                <p>${formatDate(hoiVien.ngayDangKy)}</p>
+                <p>${hoiVien.tenCapDo}</p>
+            </div>
+        `
+    })
+    hoiVienListBox.innerHTML = html.join('');
+}
+
 // handle events
 function handleEvents() {
     
@@ -525,6 +619,12 @@ function handleEvents() {
         tenLoaiBanInput: cont_capNhatLoaiBanBox.querySelector('.thong-tin-them input[name="ten-loai-ban"]'),
         donGiaInput: cont_capNhatLoaiBanBox.querySelector('.thong-tin-them input[name="don-gia-loai-ban"]'),
     }
+    
+    var updateCapDoHoiVienForm = {
+        tenCapDoInput: cont_capNhatCapDoHoiVienBox.querySelector('.thong-tin-them input[name="cap-nhat-ten-cap-do"]'),
+        soGioChoiInput: cont_capNhatCapDoHoiVienBox.querySelector('.thong-tin-them input[name="cap-nhat-so-gio-choi"]'),
+        uuDaiInput: cont_capNhatCapDoHoiVienBox.querySelector('.thong-tin-them input[name="cap-nhat-uu-dai-cap-do"]'),
+    }
 
     logOutBtn.onclick = function(e) {
         if(confirm("Đăng xuất?")) {
@@ -538,6 +638,7 @@ function handleEvents() {
         selectedLoaiBanId = null;
         selectedThuNganId = null;
         selectedMatHangId = null;
+        selectedCapDoHoiVienId = null;
     })
     
     func_showBidaTableListBtn.addEventListener('click', e => {
@@ -647,12 +748,39 @@ function handleEvents() {
         activeMainFunction('show-level-list');
         enableExtensionFuncGroup('xem-danh-sach-cap-do-hoi-vien');
         enableContent('danh-sach-cap-do-hoi-vien');
+        getAllCapDoHoiVien()
+        .then(response => response.json())
+        .then(response => {
+            if(response.code != 1000) {
+                return;
+            }
+            // thanh cong
+            var dsCapDoHoiVien = response.result;
+            renderCapDoHoiVienList(dsCapDoHoiVien, cont_capDoHoiVienListBox);
+        })
+        .catch(err => {
+            console.log(err);
+        })
     })
     
     func_showMemberListBtn.addEventListener('click', e => {
         activeMainFunction('show-member-list');
         enableExtensionFuncGroup('xem-danh-sach-hoi-vien');
         enableContent('danh-sach-hoi-vien');
+        getAllHoiVien()
+        .then(response => response.json())
+        .then(response => {
+            if(response.code != 1000) {
+                return;
+            }
+            // thanh cong
+            var dsHoiVien = response.result;
+            var hoiVienListBox = document.querySelector('.content .danh-sach-hoi-vien .body-thu-ngan-list');
+            renderHoiVienList(dsHoiVien, hoiVienListBox);
+        })
+        .catch(err => {
+            console.log(err);
+        })
     })
     
     banBidaListBox.addEventListener('click', e => {
@@ -862,6 +990,28 @@ function handleEvents() {
     })
     
     top_capNhatCapDoHoiVienBtn.addEventListener('click', e => {
+        if(selectedCapDoHoiVienId == null) {
+            createAlert('Vui lòng chọn cấp độ hội viên', 'Bạn chưa chọn cấp độ hội viên', 'warning');
+            return;
+        }
+        getAllCapDoHoiVien()
+        .then(response => response.json())
+        .then(response => {
+            if(response.code != 1000) {
+                return;
+            }
+            // thanh cong
+            var dsCapDoHoiVien = response.result;
+            var selectedCapDoHoiVien = dsCapDoHoiVien.find(capDoHoiVien => {
+                return capDoHoiVien.capDo == selectedCapDoHoiVienId;
+            })
+            updateCapDoHoiVienForm.tenCapDoInput.value = selectedCapDoHoiVien.tenCapDo;
+            updateCapDoHoiVienForm.soGioChoiInput.value = selectedCapDoHoiVien.soGioChoi;
+            updateCapDoHoiVienForm.uuDaiInput.value = selectedCapDoHoiVien.uuDai;
+        })
+        .catch(err => {
+            console.log(err);
+        })
         enableContent('cap-nhat-cap-do');
     })
     
@@ -1190,6 +1340,80 @@ function handleEvents() {
             // cap nhat thanh cong
             createAlert('Đã cập nhật thành công', 'Đã cập nhật loại bàn ' + selectedLoaiBanId, 'success');
             func_showTableTypeListBtn.click();
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
+    
+    cont_themCapDoHoiVienBox.querySelector('.xac-nhan-them-thu-ngan button[name="huy-them-cap-do"]').onclick = e => {
+        func_showLevelListBtn.click();
+    }
+
+    cont_themCapDoHoiVienBox.querySelector('.xac-nhan-them-thu-ngan button[name="them-cap-do"]').onclick = e => {
+        var tenCapDo = cont_themCapDoHoiVienBox.querySelector('.thong-tin-them input[name="them-ten-cap-do"]').value;
+        var soGioChoi = cont_themCapDoHoiVienBox.querySelector('.thong-tin-them input[name="them-so-gio-choi"]').value;
+        soGioChoi = Number.parseFloat(soGioChoi);
+        var uuDai = cont_themCapDoHoiVienBox.querySelector('.thong-tin-them input[name="them-uu-dai-cap-do"]').value;
+        uuDai = Number.parseFloat(uuDai);
+        createCapDoHoiVien(tenCapDo, soGioChoi, uuDai)
+        .then(response => response.json())
+        .then(response => {
+            if(response.code != 1000) {
+                createToastMessage({
+                    text: response.message,
+                    icon: 'error',
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    position: "top-end",
+                    timer: 5000,
+                })
+                return;
+            }
+            // them cap do thanh cong
+            createAlert('Thêm cấp độ thành công', 'Đã thêm cấp độ ' + response.result.tenCapDo, 'success');
+            func_showLevelListBtn.click();
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
+    
+    cont_capDoHoiVienListBox.addEventListener('click', e => {
+        var activedCapDoHoiVien = cont_capDoHoiVienListBox.querySelector('.thu-ngan.active');
+        if(activedCapDoHoiVien) activedCapDoHoiVien.classList.remove('active');
+        var selectedCapDoHoiVien = e.target.closest('.thu-ngan');
+        selectedCapDoHoiVien.classList.add('active');
+        selectedCapDoHoiVienId = selectedCapDoHoiVien.getAttribute('macapdo');
+    })
+    
+    cont_capNhatCapDoHoiVienBox.querySelector('.xac-nhan-them-thu-ngan button[name="huy-cap-nhat-cap-do"]').onclick = e => {
+        func_showLevelListBtn.click();
+    }
+
+    cont_capNhatCapDoHoiVienBox.querySelector('.xac-nhan-them-thu-ngan button[name="cap-nhat-cap-do"]').onclick = e => {
+        var tenCapDo = updateCapDoHoiVienForm.tenCapDoInput.value;
+        var soGioChoi = updateCapDoHoiVienForm.soGioChoiInput.value;
+        soGioChoi = Number.parseFloat(soGioChoi);
+        var uuDai = updateCapDoHoiVienForm.uuDaiInput.value;
+        uuDai = Number.parseFloat(uuDai);
+        updateCapDoHoiVien(tenCapDo, soGioChoi, uuDai)
+        .then(response => response.json())
+        .then(response => {
+            if(response.code != 1000) {
+                createToastMessage({
+                    text: response.message,
+                    icon: 'error',
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    position: "top-end",
+                    timer: 5000,
+                })
+                return;
+            }
+            // cap nhat cap do thanh cong
+            createAlert('Cập nhật thành công', 'Đã cập nhật cấp độ hội viên ' + selectedCapDoHoiVienId, 'succcess');
+            func_showLevelListBtn.click();
         })
         .catch(err => {
             console.log(err);
