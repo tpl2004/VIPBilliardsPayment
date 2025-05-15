@@ -542,7 +542,7 @@ function handleEvents() {
     
     showBillListBtn.addEventListener('click', e => {
         activeMainFuntion(showBillListBtn.id);
-        enableExtendFuncGroup(null);
+        enableExtendFuncGroup('xem-danh-sach-hoa-don');
         enableContent('hoa-don-list');
         var billBox = document.querySelector('.content .hoa-don-list .body-bill-list');
         console.log(billBox);

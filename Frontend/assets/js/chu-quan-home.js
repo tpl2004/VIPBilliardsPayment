@@ -44,6 +44,8 @@ var cont_themMatHangBox = document.querySelector('.content .them-mat-hang');
 var cont_matHangListBox = document.querySelector('.content .danh-sach-mat-hang .body-thu-ngan-list');
 var cont_capNhatMangHangBox = document.querySelector('.content .cap-nhat-mat-hang');
 var cont_loaiBanListBox = document.querySelector('.content .danh-sach-loai-ban .body-thu-ngan-list');
+var cont_themLoaiBanBox = document.querySelector('.content .them-loai-ban');
+var cont_capNhatLoaiBanBox = document.querySelector('.content .cap-nhat-loai-ban');
 var thongKeDoanhThuNgayChart = null;
 
 function main() {
@@ -467,6 +469,40 @@ function renderLoaiBanBidaListV2(loaiBanList, loaiBanListBox) {
     loaiBanListBox.innerHTML = html.join('');
 }
 
+function createLoaiBan(tenLoai, donGia) {
+    var options = {
+        method: 'POST',
+        
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+        },
+
+        body: JSON.stringify({
+            "tenLoai": tenLoai,
+            "donGia": donGia
+        }),
+    }
+    return fetch(api.loaiBanApi, options);
+}
+
+function updateLoaiBan(tenLoai, donGia) {
+    var options = {
+        method: 'PUT',
+        
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`
+        },
+
+        body: JSON.stringify({
+            "tenLoai": tenLoai,
+            "donGia": donGia
+        }),
+    }
+    return fetch(api.loaiBanApi + '/' + selectedLoaiBanId, options);
+}
+
 // handle events
 function handleEvents() {
     
@@ -483,6 +519,11 @@ function handleEvents() {
     var updateMatHangForm = {
         tenHangInput: cont_capNhatMangHangBox.querySelector('.thong-tin-them input[name="ten-mat-hang"]'),
         donGiaInput: cont_capNhatMangHangBox.querySelector('.thong-tin-them input[name="don-gia-hang"]')
+    }
+    
+    var updateLoaiBanForm = {
+        tenLoaiBanInput: cont_capNhatLoaiBanBox.querySelector('.thong-tin-them input[name="ten-loai-ban"]'),
+        donGiaInput: cont_capNhatLoaiBanBox.querySelector('.thong-tin-them input[name="don-gia-loai-ban"]'),
     }
 
     logOutBtn.onclick = function(e) {
@@ -610,7 +651,7 @@ function handleEvents() {
     
     func_showMemberListBtn.addEventListener('click', e => {
         activeMainFunction('show-member-list');
-        enableExtensionFuncGroup('');
+        enableExtensionFuncGroup('xem-danh-sach-hoi-vien');
         enableContent('danh-sach-hoi-vien');
     })
     
@@ -792,6 +833,27 @@ function handleEvents() {
     })
     
     top_capNhatLoaiBanBtn.addEventListener('click', e => {
+        if(selectedLoaiBanId == null) {
+            createAlert('Vui lòng chọn loại bàn', 'Bạn chưa chọn loại bàn', 'warning');
+            return;
+        }
+        getAllLoaiBan()
+        .then(response => response.json())
+        .then(response => {
+            if(response.code != 1000) {
+                return;
+            }
+            // thanh cong
+            var dsLoaiBan = response.result;
+            var selectedLoaiBan = dsLoaiBan.find(loaiBan => {
+                return loaiBan.loaiBan == selectedLoaiBanId;
+            })
+            updateLoaiBanForm.tenLoaiBanInput.value = selectedLoaiBan.tenLoai;
+            updateLoaiBanForm.donGiaInput.value = selectedLoaiBan.donGia;
+        })
+        .catch(err => {
+            console.log(err);
+        })
         enableContent('cap-nhat-loai-ban');
     })
     
@@ -1058,6 +1120,76 @@ function handleEvents() {
             // cap nhat mat hang thanh cong
             createAlert('Cập nhật thành công', 'Đã cập nhật mặt hàng ' + response.result.maHang, 'success');
             func_showGoodsListBtn.click();
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
+    
+    cont_themLoaiBanBox.querySelector('.xac-nhan-them-thu-ngan button[name="huy-them-loai-ban"]').onclick = e => {
+        func_showTableTypeListBtn.click();
+    }
+
+    cont_themLoaiBanBox.querySelector('.xac-nhan-them-thu-ngan button[name="them-loai-ban"]').onclick = e => {
+        var tenLoaiBan = cont_themLoaiBanBox.querySelector('.thong-tin-them input[name="ten-loai-ban"]').value;
+        var donGia = cont_themLoaiBanBox.querySelector('.thong-tin-them input[name="don-gia-loai-ban"]').value;
+        donGia = Number.parseFloat(donGia);
+        createLoaiBan(tenLoaiBan, donGia)
+        .then(response => response.json())
+        .then(response => {
+            if(response.code != 1000) {
+                createToastMessage({
+                    text: response.message,
+                    icon: 'error',
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    position: "top-end",
+                    timer: 5000,
+                })
+                return;
+            }
+            // them loai ban thanh cong
+            createAlert('Đã thêm thành công', 'Đã tạo loại bàn ' + response.result.tenLoai, 'success');
+            func_showTableTypeListBtn.click();
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
+    
+    cont_loaiBanListBox.addEventListener('click', e => {
+        var activedLoaiBan = cont_loaiBanListBox.querySelector('.thu-ngan.active');
+        if(activedLoaiBan) activedLoaiBan.classList.remove('active');
+        var selectedloaiBan = e.target.closest('.thu-ngan');
+        selectedloaiBan.classList.add('active');
+        selectedLoaiBanId = selectedloaiBan.getAttribute('maloaiban');
+    })
+    
+    cont_capNhatLoaiBanBox.querySelector('.xac-nhan-them-thu-ngan button[name="huy-them-loai-ban"]').onclick = e => {
+        func_showTableTypeListBtn.click();
+    }
+
+    cont_capNhatLoaiBanBox.querySelector('.xac-nhan-them-thu-ngan button[name="cap-nhat-loai-ban"]').onclick = e => {
+        var tenLoai = updateLoaiBanForm.tenLoaiBanInput.value;
+        var donGia = updateLoaiBanForm.donGiaInput.value;
+        donGia = Number.parseFloat(donGia);
+        updateLoaiBan(tenLoai, donGia)
+        .then(response => response.json())
+        .then(response => {
+            if(response.code != 1000) {
+                createToastMessage({
+                    text: response.message,
+                    icon: 'error',
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    position: "top-end",
+                    timer: 5000,
+                })
+                return;
+            }
+            // cap nhat thanh cong
+            createAlert('Đã cập nhật thành công', 'Đã cập nhật loại bàn ' + selectedLoaiBanId, 'success');
+            func_showTableTypeListBtn.click();
         })
         .catch(err => {
             console.log(err);
