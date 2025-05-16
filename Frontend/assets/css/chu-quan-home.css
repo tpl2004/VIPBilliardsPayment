@@ -32,7 +32,7 @@
     padding: 20px;
 }
 
-.extension .content .them-ban-bida .danh-sach-loai-ban {
+.extension .content .them-ban-bida .danh-sach-loai-ban-bida {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -227,7 +227,7 @@
 .extension .content .tim-kiem .search-box > button {
     box-sizing: border-box;
     width: 60px;
-    border-radius: 50px;
+    border-radius: 50px !important;
     margin-left: 5px;
 }
 
@@ -252,7 +252,9 @@
 }
 
 .extension .content .tim-kiem-thu-ngan > div:last-child p {
+    box-sizing: border-box;
     width: calc(100% / 5);
+    text-align: center;
 }
 
 .extension .content .tim-kiem .search-box label {
