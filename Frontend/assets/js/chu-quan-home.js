@@ -805,7 +805,7 @@ function handleEvents() {
             }
             // thanh cong
             var loaiBanList = response.result;
-            var loaiBanListBox = document.querySelector('.content .them-ban-bida .danh-sach-loai-ban');
+            var loaiBanListBox = document.querySelector('.content .them-ban-bida .danh-sach-loai-ban-bida');
             renderLoaiBanBidaListV1(loaiBanList, loaiBanListBox);
         })
         .catch(err => {
@@ -839,8 +839,8 @@ function handleEvents() {
         }
     })
     
-    cont_themBanBidaBox.querySelector('.danh-sach-loai-ban').addEventListener('click', e => {
-        var activedLoaiBan = cont_themBanBidaBox.querySelector('.danh-sach-loai-ban .loai-ban.active');
+    cont_themBanBidaBox.querySelector('.danh-sach-loai-ban-bida').addEventListener('click', e => {
+        var activedLoaiBan = cont_themBanBidaBox.querySelector('.danh-sach-loai-ban-bida .loai-ban.active');
         if(activedLoaiBan) {
             activedLoaiBan.classList.remove('active');
         }
