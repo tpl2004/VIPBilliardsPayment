@@ -1,4 +1,4 @@
 FROM openjdk:21
-COPY target/*.jar vipbilliardspaymentapp.jar
+COPY jar/*.jar vipbilliardspaymentapp.jar
 ENTRYPOINT ["java","-jar","/vipbilliardspaymentapp.jar"]
 EXPOSE 8080
