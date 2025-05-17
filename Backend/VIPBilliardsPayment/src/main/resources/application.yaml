@@ -5,10 +5,10 @@ server:
 
 spring:
   datasource:
-    url: ${DB_CONNECTION}
+    url: "jdbc:sqlserver://VIPBilliardsPaymentDB.mssql.somee.com:1433;databaseName=VIPBilliardsPaymentDB;trustServerCertificate=true"
     driverClassName: "com.microsoft.sqlserver.jdbc.SQLServerDriver"
-    password: ${DB_PASSWORD}
-    username: ${DB_USERNAME}
+    password: "vipbilliards2801"
+    username: "tpl2801"
 
   jpa:
     properties:
